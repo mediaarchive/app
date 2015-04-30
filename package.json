@@ -1,0 +1,27 @@
+{
+  "name": "schoolmediaapp",
+  "version": "1.0.0",
+  "description": "",
+  "main": "app.js",
+  "scripts": {
+    "site": "grunt site && node site.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://bitbucket.org/atnartur/schoolmediaapp.git"
+  },
+  "author": "atnartur",
+  "license": "ISC",
+  "devDependencies": {
+    "grunt": "^0.4.5",
+    "grunt-swig": "^0.2.1",
+    "grunt-swig-templates": "^0.1.4"
+  },
+  "dependencies": {
+    "body-parser": "^1.12.3",
+    "cookie-parser": "^1.3.4",
+    "express": "^4.12.3",
+    "morgan": "^1.5.2",
+    "serve-favicon": "^2.2.0"
+  }
+}
