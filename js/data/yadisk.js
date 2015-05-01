@@ -1,4 +1,4 @@
-var data_yadisk = {
+data.yadisk = {
     request: function(method, url, params, callback){
         method = method.toUpperCase();
         $.ajax({
@@ -22,7 +22,7 @@ var data_yadisk = {
         if (cookie == null) {
             if (confirm('Для продолжения нужно войти на Яндекс.Диск. Продолжить?')) {
                 var win = window.open(
-                    'https://oauth.yandex.ru/authorize?client_id=' + config.yadisk.id + '&response_type=token',
+                    'https://oauth.yandex.ru/authorize?client_id=' + global.config.yadisk.id + '&response_type=token',
                     'yandexauth',
                     'width=500,height=500,resizable=yes,scrollbars=yes,status=yes'
                 );
@@ -40,8 +40,8 @@ var data_yadisk = {
                         data: {
                             grant_type: 'authorization_code',
                             code: code,
-                            client_id: config.yadisk.id,
-                            cliend_secret: config.yadisk.pass
+                            client_id: global.config.yadisk.id,
+                            cliend_secret: global.config.yadisk.pass
                         },
                         success: function( response ) {
                             console.log( response ); // server response
@@ -59,8 +59,8 @@ var data_yadisk = {
 }
 
 data.get = function(path, callback){
-    data_yadisk.request('get', 'resources', {
-        path: config.yadisk.root_dir + path
+    data.yadisk.request('get', 'resources', {
+        path: global.config.yadisk.root_dir + path
     }, function(msg){
         console.log(msg);
     })

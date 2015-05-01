@@ -5,6 +5,9 @@ var data = {
     get: function(path, callback){
         __error('method not defined');
         callback()
+    },
+    get_file: function(path, callback){
+        __error('method not defined');
+        callback()
     }
-    
 }
