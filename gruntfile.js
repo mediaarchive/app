@@ -1,4 +1,10 @@
 module.exports = function(grunt) {
+        
+    grunt.registerTask('site', ['remove:site', 'swig_it:site']);
+    grunt.registerTask('app', ['remove:site', 'swig_it:app']);
+    grunt.registerTask('watch_site', ['watch:site']);
+    grunt.registerTask('default', ['site']);
+    
     grunt.initConfig({
         pkg: grunt.file.readJSON('package.json'),
         //uglify: {
@@ -41,27 +47,6 @@ module.exports = function(grunt) {
         //        }
         //    }
         //},
-        //watch: {
-        //    main: {
-        //        files: [
-        //            'public/styles/site/less/*',
-        //            'public/styles/webapp/less/*'
-        //        ],
-        //        tasks: ['less:main'],
-        //        options: {
-        //            spawn: false
-        //        },
-        //    },
-        //    bootstrap: {
-        //        files: [
-        //            'public/styles/libs/bootstrap/src/less/*'
-        //        ],
-        //        tasks: ['less:bootstrap'],
-        //        options: {
-        //            spawn: false
-        //        },
-        //    }
-        //},
         ////copyto: {
         ////    main: {
         ////        files: [
@@ -88,14 +73,6 @@ module.exports = function(grunt) {
         //            dest
         //        ]
         //    }
-        //},
-        //clean: {
-        //    options:{
-        //        force: true
-        //    },
-        //    main: {
-        //        src: [dest]
-        //    },
         //},
         //copy: {
         //    main: {
@@ -209,39 +186,71 @@ module.exports = function(grunt) {
         //        }]
         //    }
         //}
-        swig: {
-            //site: {
-            //    init: {
-            //        autoescape: true
-            //    },
-            //    dest: "./",
-            //    src: ['templates/*.html'],
-            //    //generateSitemap: true,
-            //    //generateRobotstxt: true,
-            //    //siteUrl: 'http://mydomain.net/',
-            //    site: true
-            //},
-            site:{
+        swig_it: {
+            site: {
                 options: {
+                    swigDefaults: {
+                        //allowErrors: false,
+                        //autoescape: true
+                    },
                     data: {
                         site: true
                     }
                 },
-                expand: true,
-                cwd: 'templates',
-                dest: './',
-                src: ['*.html'],
-                ext: '.html'
+                src: ['templates/*.html'],
+                dest: "."
+            },
+            app: {
+                options: {
+                    swigDefaults: {
+                        //allowErrors: false,
+                        //autoescape: true
+                    },
+                    data: {
+                        //site: true
+                    }
+                },
+                src: ['templates/*.html'],
+                dest: "."
             }
-        }
-        
+        },
+        watch: {
+            site: {
+                files: [
+                    'templates/index.html',
+                    'static/*'
+                ],
+                tasks: ['site'],
+                options: {
+                    spawn: false
+                },
+            }
+        },
+        clean: {
+            options:{
+                force: true
+            },
+            site: {
+                src: ['./index.html']
+            },
+        },
+        remove: {
+            options: {
+                trace: true
+            },
+            site:{
+                fileList: ['index.html']
+            },
+            //dirList: ['path_to_dir_1', 'path_to_dir2/']
+        },
     });
     
-    grunt.loadNpmTasks('grunt-swig-templates');
+    //grunt.loadNpmTasks('grunt-wait');
+    grunt.loadNpmTasks('grunt-swig-it');
     //grunt.loadNpmTasks('grunt-contrib-less');
-    //grunt.loadNpmTasks('grunt-contrib-watch');
-    //grunt.loadNpmTasks('grunt-remove');
-    //grunt.loadNpmTasks('grunt-contrib-clean');
+    grunt.loadNpmTasks('grunt-contrib-watch');
+    grunt.loadNpmTasks('grunt-remove');
+    grunt.loadNpmTasks('grunt-contrib-clean');
     //grunt.loadNpmTasks('grunt-contrib-copy');
     //grunt.loadNpmTasks('grunt-file-creator');
     //grunt.loadNpmTasks('grunt-exec');
@@ -249,6 +258,4 @@ module.exports = function(grunt) {
     //grunt.loadNpmTasks('grunt-contrib-cssmin');
     //grunt.loadNpmTasks('grunt-contrib-uglify');
     
-    
-    grunt.registerTask('site', ['swig:site']);
 }

@@ -42,10 +42,11 @@ app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
-app.use(express.static(path.join(__dirname, 'public')));
+app.use('/static', express.static(path.join(__dirname, 'static')));
 
 app.get('/', function(req, res){
-    res.send()
+    res.set('Content-Type', 'text/html');
+    res.send(index_html);
 })
 
 //app.use('/', routes);

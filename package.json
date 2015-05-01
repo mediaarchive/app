@@ -2,7 +2,7 @@
   "name": "schoolmediaapp",
   "version": "1.0.0",
   "description": "",
-  "main": "app.js",
+  "main": "index.html",
   "scripts": {
     "site": "grunt site && node site.js"
   },
@@ -14,8 +14,11 @@
   "license": "ISC",
   "devDependencies": {
     "grunt": "^0.4.5",
-    "grunt-swig": "^0.2.1",
-    "grunt-swig-templates": "^0.1.4"
+    "grunt-contrib-clean": "^0.6.0",
+    "grunt-contrib-watch": "^0.6.1",
+    "grunt-remove": "^0.1.0",
+    "grunt-swig-it": "0.0.4",
+    "grunt-wait": "^0.1.0"
   },
   "dependencies": {
     "body-parser": "^1.12.3",
@@ -23,5 +26,16 @@
     "express": "^4.12.3",
     "morgan": "^1.5.2",
     "serve-favicon": "^2.2.0"
+  },
+  "window": {
+    "title": "Школьный медиаархив",
+    "icon": "static/images/favicon.png",
+    "frame": true,
+    "width": 1000,
+    "height": 600,
+    "min_width": 800,
+    "min_height": 600,
+    "max_width": "100%",
+    "max_height": "100%"
   }
 }
