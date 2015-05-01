@@ -1,5 +1,6 @@
 if (!site) {
     var async = require('async');
+    var exec = require('exec');
 }
 
 function datepicker_init() {
@@ -27,19 +28,43 @@ function datepicker_init() {
     })
 }
 
+function render_events_list(events){
+    
+}
+
 function events_list_init() {
+    var json;
+    function error() {
+        $('.screen').hide();
+            
+        if (site)
+            window.close();
+        else
+            process.exit();  
+    }
+    
     async.series([
         function(callback){
+            $('#loading #str').text('Подготовка');
             if (site) {
                 data.yadisk.auth(function(status){
                     
                 });
             }
             else{
+                var root_dir = local_data.get('root_dir');
+                
+                if (root_dir != '' && root_dir != null && root_dir != undefined) {
+                    global.config.file.root_dir = root_dir;
+                    callback();
+                    return true;
+                }
+                
                 var root_dir = prompt('Укажите корневую директорию медиаархива');
                 
                 if (root_dir == null || root_dir == '') {
                     alert('Невозможно продолжить работу');
+                    error();
                     return false;
                 }
                 
@@ -47,32 +72,47 @@ function events_list_init() {
                     global.config.file = {};
                 
                 global.config.file.root_dir = root_dir;
+                local_data.set('root_dir', root_dir);
                 
                 callback();
                 return true;
             }
         },
         function (callback) {
-            data.get_file('/index.json', function(msg){
-                if (msg == false) {
-                    alert('Ошибка при открытии файла со списком мероприятий');
-                    $('.screen').hide();
-                    
-                    if (site)
-                        window.close();
-                    else
-                        process.exit();    
-                    
-                    return false;
-                }
-                callback();
-                return true;
-            });
+            function get_file() {
+                $('#loading #str').text('Получение индекса...');
+                
+                data.get_file('/index.json', function(msg){
+                    if (msg == false) {
+                        alert('Ошибка при открытии файла со списком мероприятий');
+                        error();   
+                    }
+                    else{
+                       json = msg;
+                       callback();
+                    }
+                });
+            }
+            
+            get_file();
+        },
+        function (callback) {
+            json = JSON.parse(json);
+            if (!json) {
+                alert('Ошибка разбора файла со списком мероприятий');
+                error();
+            }
+            
+            global.index = json;
+            
+            callback();
+            return true;
         },
         function (callback) {
             datepicker_init();
             $('.screen').hide();
             $('#main.screen').show();
+            render_events_list(global.index);
             callback();
         }
     ])
