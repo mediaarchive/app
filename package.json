@@ -32,7 +32,7 @@
     "title": "Медиаархив",
     "icon": "static/images/favicon.png",
     "frame": true,
-    "toolbar": false,
+    "toolbar": true,
     "width": 1000,
     "height": 600,
     "min_width": 800,

@@ -1,0 +1,23 @@
+<script id="events_main_template" type="text/x-handlebars-template">
+    <table class="table table-condensed table-striped" id="events_table">
+        <thead>
+            <tr>
+                <th>Название</th>
+                <th>Дата</th>
+                <th>Материалы</th>
+            </tr>
+        </thead>
+        <tbody>
+            {{#each events}}
+                <tr>
+                    <td>{{name}}</td>
+                    <td>
+                        <!--{{date.year}}-{{date.month}}-{{date.day}}-->
+                        {{date.day}}.{{date.month}}.{{date.year}}
+                    </td>
+                    <td>...</td>
+                </tr>
+            {{/each}}
+        </tbody>
+    </table>
+</script>

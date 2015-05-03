@@ -4,3 +4,4 @@ public/files
 node_modules
 composer.lock
 vendor
+/index.html

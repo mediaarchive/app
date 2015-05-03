@@ -29,7 +29,11 @@ function datepicker_init() {
 }
 
 function render_events_list(events){
-    
+    var template = Handlebars.compile($('#events_main_template').html());
+    $('#content').html(template({
+        events: events
+    }));
+    new List('events_table')
 }
 
 function events_list_init() {
@@ -109,6 +113,14 @@ function events_list_init() {
             return true;
         },
         function (callback) {
+            $('#loading #str').text('Получение шаблонов...');
+            $.get('client_templates.html', function(data){
+                $('body').append(data);
+                callback();
+            });
+        },
+        function (callback) {
+            $('#loading #str').text('Запуск приложения...');
             datepicker_init();
             $('.screen').hide();
             $('#main.screen').show();
