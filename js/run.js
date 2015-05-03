@@ -71,7 +71,7 @@ function events_list_init() {
                 var root_dir = local_data.get('root_dir');
                 
                 if (root_dir != '' && root_dir != null && root_dir != undefined) {
-                    global.config.file.root_dir = root_dir;
+                    global.config.root_dir = root_dir;
                     callback();
                     return true;
                 }
@@ -84,10 +84,7 @@ function events_list_init() {
                     return false;
                 }
                 
-                if(global.config.file == undefined)
-                    global.config.file = {};
-                
-                global.config.file.root_dir = root_dir;
+                global.config.root_dir = root_dir;
                 local_data.set('root_dir', root_dir);
                 
                 callback();

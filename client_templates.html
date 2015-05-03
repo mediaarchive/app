@@ -10,10 +10,10 @@
         <tbody>
             {{#each events}}
                 <tr class="event_row" data-dir="{{dir}}">
-                    <td>{{name}}</td>
+                    <td class="name">{{name}}</td>
                     <td>
-                        <span style="display: none;">{{date.year}}-{{date.month}}-{{date.day}}</span>
-                        {{date.day}}.{{date.month}}.{{date.year}}
+                        <span class="date_tech" style="display: none;">{{date.year}}-{{date.month}}-{{date.day}}</span>
+                        <span class="data">{{date.day}}.{{date.month}}.{{date.year}}</span>
                     </td>
                     <td>...</td>
                 </tr>
@@ -22,3 +22,15 @@
     </table>
 </script>
 
+<script id="event_modal_template" type="text/x-handlebars-template">
+    <div class="row">
+        <div class="col-md-3">
+            {{#if preview_photo}}
+                <img src="{{dir}}{{preview_photo}}" class="col-md-12">
+            {{else}}
+                <small>нет главной фотографии</small>
+            {{/if}}
+        </div>
+        <div class="col-md-9" id="text">загрузка...</div>
+    </div>
+</script>

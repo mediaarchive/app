@@ -60,7 +60,7 @@ data.yadisk = {
 
 data.get = function(path, callback){
     data.yadisk.request('get', 'resources', {
-        path: global.config.yadisk.root_dir + path
+        path: global.config.root_dir + path
     }, function(msg){
         console.log(msg);
     })
