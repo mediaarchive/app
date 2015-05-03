@@ -11,6 +11,7 @@ data.get = function(path, callback){
         if (e.code == 'ENOTDIR') {
             
         }
+        console.log(e,r)
     })
 }
 

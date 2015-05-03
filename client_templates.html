@@ -9,7 +9,7 @@
         </thead>
         <tbody>
             {{#each events}}
-                <tr class="event_row">
+                <tr class="event_row" data-dir="{{dir}}">
                     <td>{{name}}</td>
                     <td>
                         <span style="display: none;">{{date.year}}-{{date.month}}-{{date.day}}</span>
@@ -21,3 +21,4 @@
         </tbody>
     </table>
 </script>
+

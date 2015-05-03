@@ -45,6 +45,7 @@ function render_events_list(events){
         events: events
     }));
     events_list_datatable_init();
+    event_modal_init();
 }
 
 function events_list_init() {
