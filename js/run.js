@@ -28,12 +28,23 @@ function datepicker_init() {
     })
 }
 
+function events_list_datatable_init() {
+    $('#events_table').DataTable({
+        order: [ 1, 'desc' ],
+        language: {
+            url: 'js/client_libs/dataTables/Russian.json'
+        },
+        paging: false,
+        searching: false
+    });
+}
+
 function render_events_list(events){
     var template = Handlebars.compile($('#events_main_template').html());
     $('#content').html(template({
         events: events
     }));
-    new List('events_table')
+    events_list_datatable_init();
 }
 
 function events_list_init() {
