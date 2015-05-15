@@ -1,15 +1,37 @@
 data.yadisk = {
     request: function(method, url, params, callback){
         method = method.toUpperCase();
-        $.ajax({
+        
+        var settings = {
             method: method,
             url: "https://cloud-api.yandex.net:443/v1/disk/" + url,
-            dataType: "jsonp",
+            //dataType: "jsonp",
             data: params,
             success: function( response ) {
-                console.log( response ); // server response
+                callback(response);
             }
-        });
+        };
+        
+        if (params.raw_url == true) 
+            settings.url = url;
+            
+        if (params.jsonp == true) 
+            settings.dataType = "jsonp";
+        
+        delete settings.raw_url;
+        delete settings.dataType;
+        
+        if (data.yadisk.token != undefined && data.yadisk.token != '') {
+            console.log(1)
+            settings.beforeSend = function(xhr, settings) {
+                xhr.setRequestHeader('Authorization', 'OAuth ' + data.yadisk.token);
+            } 
+            //settings.headers = {
+            //    Authorization: 'OAuth ' + data.yadisk.token
+            //};
+        }
+        console.log(data.yadisk.token, settings)
+        $.ajax(settings);
     },
     auth: function(callback){
         
@@ -18,7 +40,7 @@ data.yadisk = {
             callback(false);
         }
         
-        var cookie = getcookie('yadisk_token');
+        var cookie = local_data.get('yadisk_token');
         if (cookie == null) {
             if (confirm('Для продолжения нужно войти на Яндекс.Диск. Продолжить?')) {
                 var win = window.open(
@@ -33,20 +55,9 @@ data.yadisk = {
                 
                 if (code != '' && code != null) {
                     console.log(code);
-                    $.ajax({
-                        method: "POST",
-                        url: "https://oauth.yandex.ru/token",
-                        //dataType: "jsonp",
-                        data: {
-                            grant_type: 'authorization_code',
-                            code: code,
-                            client_id: global.config.yadisk.id,
-                            cliend_secret: global.config.yadisk.pass
-                        },
-                        success: function( response ) {
-                            console.log( response ); // server response
-                        }
-                    });
+                    data.yadisk.token = code;
+                    local_data.set('yadisk_token', code);
+                    callback(true);
                 }
                 else
                     error();
@@ -54,6 +65,10 @@ data.yadisk = {
             else{
                 error();
             }
+        }
+        else{
+            data.yadisk.token = cookie;
+            callback(true);
         }
     }
 }
@@ -63,5 +78,19 @@ data.get = function(path, callback){
         path: global.config.root_dir + path
     }, function(msg){
         console.log(msg);
+    })
+}
+
+data.get_file = function(path, callback){
+    data.yadisk.request('get', 'resources/download', {
+        path: global.config.root_dir + path
+    }, function(msg){
+        console.log(111);
+        data.yadisk.request('get', msg.href, {
+            raw_url: true,
+            jsonp: true
+        }, function(file){
+            console.log(file);
+        });
     })
 }

@@ -23,10 +23,6 @@
     {% endif %}
 </head>
 <body>
-    <div id="loading" class="screen" style="display: block;">
-        <i class="fa fa-4x fa-spin fa-spinner loader"></i>
-        <h1 id="str">Загрузка...</h1>
-    </div>
     <div id="main" class="screen">
         <nav class="navbar navbar-inverse navbar-fixed-top">
             <div class="container-fluid">
@@ -59,17 +55,48 @@
                             </div><!-- /btn-group -->
                         </div>
                     </div>
-                    <ul class="nav navbar-nav">
-                        
+                    <ul class="nav navbar-nav navbar-right">
+                        <li><a href="#settings"><i class="fa fa-cog"></i> Настройки</a></li>
                     </ul>
                 </div>
             </div>
         </nav>
     
-        <div class="container-fluid"> 
-            <div class="row">
-                <div class="col-sm-12" id="content"></div>
+        <div class="container-fluid" id="pages">
+            <div data-page="settings" class="page">
+                <form class="form-horizontal" id="settings_form">
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">Тип данных</label>
+                        <div class="col-sm-10">
+                            <div class="btn-group btn-block btn_selector" id="data_type">
+                                <div class="btn btn-default" id="files">Файлы</div>
+                                <div class="btn btn-default" id="yadisk">Яндекс Диск API</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="inputPassword3" class="col-sm-2 control-label">Корневая директория</label>
+                        <div class="col-sm-10" id="root_dir">
+                            <div id="files">
+                                <input type="file" webkitdirectory id="file_root_dir_selector" />
+                            </div>
+                            <div id="yadisk">
+                                <div class="btn btn-default" id="choose">Выбрать</div>
+                            </div>
+                            <div id="nothing">
+                                <p class="help-block">выберите тип данных</p>
+                            </div>
+                            <p class="help-block">Сейчас: <span id="dir">(пусто)</span></p>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-sm-offset-2 col-sm-10">
+                            <button type="button" id="start_button" class="btn btn-primary">Продолжить</button>
+                        </div>
+                    </div>
+                </form>
             </div>
+            <div data-page="events" class="page"></div>
         </div>
     </div>
     
@@ -117,6 +144,9 @@
     <script src="js/general.js"></script>
     <script src="js/local_data.js"></script>
     <script src="js/event_modal.js"></script>
+    <script src="js/pages.js"></script>
+    <script src="js/settings.js"></script>
+    <script src="js/view.js"></script>
     <script src="js/data/base.js"></script>
     
     {% if site %}

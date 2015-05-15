@@ -48,7 +48,7 @@ function render_events_list(events){
     event_modal_init();
 }
 
-function events_list_init() {
+function main_init() {
     var json;
     function error() {
         $('.screen').hide();
@@ -59,55 +59,76 @@ function events_list_init() {
             process.exit();  
     }
     
+    pages._start();
+    btn_selector_init();
+    settings_init();
+    
     async.series([
-        function(callback){
-            $('#loading #str').text('Подготовка');
-            if (site) {
-                data.yadisk.auth(function(status){
-                    
-                });
+        function (callback) {
+            if(check_settings()){
+                callback();
             }
             else{
-                var root_dir = local_data.get('root_dir');
+                $("#pages .page").hide();
+                $('#pages [data-page=settings]').show();
+            }
+        },
+        function(callback){
+            $('#loading #str').text('Подготовка');
+            
+            var data_type = local_data.get('data_type');
+            if (data_type == null) {
                 
-                if (root_dir != '' && root_dir != null && root_dir != undefined) {
-                    global.config.root_dir = root_dir;
-                    callback();
-                    return true;
-                }
+            }
+            
+            //if (site) {
+            //    data.yadisk.auth(function(status){
+            //        if (status == false) {
+            //            $('#loading .loader').hide();
+            //            $('#loading #str').text('Нет доступа к данным');
+            //        }
+            //        else{
+            //            callback();
+            //        }
+            //    });
+            //}
+            //else
+            //    callback();
+        },
+        function(callback) {
+            var root_dir = local_data.get('root_dir');
                 
-                var root_dir = prompt('Укажите корневую директорию медиаархива');
-                
-                if (root_dir == null || root_dir == '') {
-                    alert('Невозможно продолжить работу');
-                    error();
-                    return false;
-                }
-                
+            if (root_dir != '' && root_dir != null && root_dir != undefined) {
                 global.config.root_dir = root_dir;
-                local_data.set('root_dir', root_dir);
-                
                 callback();
                 return true;
             }
-        },
-        function (callback) {
-            function get_file() {
-                $('#loading #str').text('Получение индекса...');
-                
-                data.get_file('/index.json', function(msg){
-                    if (msg == false) {
-                        alert('Ошибка при открытии файла со списком мероприятий');
-                        error();   
-                    }
-                    else{
-                       json = msg;
-                       callback();
-                    }
-                });
+            
+            var root_dir = prompt('Укажите корневую директорию медиаархива');
+            
+            if (root_dir == null || root_dir == '') {
+                alert('Невозможно продолжить работу');
+                error();
+                return false;
             }
             
-            get_file();
+            global.config.root_dir = root_dir;
+            local_data.set('root_dir', root_dir);
+            
+            callback();
+        },
+        function (callback) {    
+            $('#loading #str').text('Получение индекса...');
+            data.get_file('/index.json', function(msg){
+                if (msg == false) {
+                    alert('Ошибка при открытии файла со списком мероприятий');
+                    error();   
+                }
+                else{
+                   json = msg;
+                   callback();
+                }
+            });
         },
         function (callback) {
             json = JSON.parse(json);
@@ -140,8 +161,8 @@ function events_list_init() {
 }
 
 $(document).ready(function(){
-    $.get('js/config.json', function(msg){
-        global.config = JSON.parse(msg);
-        events_list_init();
+    $.getJSON('js/config.json', function(msg){
+        global.config = msg;
+        main_init();
     })
 });

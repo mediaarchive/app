@@ -3,11 +3,11 @@ var data = {
         console.error('data error', msg);
     },
     get: function(path, callback){
-        __error('method not defined');
+        data.__error('method get not defined');
         callback()
     },
     get_file: function(path, callback){
-        __error('method not defined');
+        data.__error('method get_file not defined');
         callback()
     }
 }
