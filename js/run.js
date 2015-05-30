@@ -41,11 +41,60 @@ function events_list_datatable_init() {
 
 function render_events_list(events){
     var template = Handlebars.compile($('#events_main_template').html());
-    $('#content').html(template({
+    $('.page[data-page=events]').html(template({
         events: events
     }));
     events_list_datatable_init();
     event_modal_init();
+}
+
+function events_init(){
+    $.smkProgressBar({element: 'body', status: 'start'});
+    $('.page').hide();
+    $('.page[data-page=events]').show();
+    
+    
+    async.series([
+        function (callback) {    
+            $.smkAlert({text:'Получение индекса', type:'info', time:1});
+            data.get_file('/index.json', function(msg){
+                if (msg == false) {
+                    $.smkAlert({text:'Не удалось загрузить список мероприятий', type:'danger', permanent:true});
+                    $.smkProgressBar({element: 'body', status: 'end'});
+                }
+                else{
+                   json = msg;
+                   callback();
+                }
+            });
+        },
+        function (callback) {
+            json = JSON.parse(json);
+            if (!json) {
+                $.smkAlert({text:'Ошибка разбора индекса', type:'danger', permanent:true});
+                $.smkProgressBar({element: 'body', status: 'end'});
+            }
+            
+            global.index = json;
+            
+            callback();
+            return true;
+        },
+        function (callback) {
+            $.smkAlert({text:'Получение шаблонов', type:'info', time:1});
+            $.get('client_templates.html', function(data){
+                $('body').append(data);
+                callback();
+            });
+        },
+        function (callback) {
+            $.smkAlert({text:'Запуск', type:'info', time:1});
+            datepicker_init();
+            render_events_list(global.index);
+            $.smkProgressBar({element: 'body', status: 'end'});
+            callback();
+        }
+    ])
 }
 
 function main_init() {
@@ -63,101 +112,13 @@ function main_init() {
     btn_selector_init();
     settings_init();
     
-    async.series([
-        function (callback) {
-            if(check_settings()){
-                callback();
-            }
-            else{
-                $("#pages .page").hide();
-                $('#pages [data-page=settings]').show();
-            }
-        },
-        function(callback){
-            $('#loading #str').text('Подготовка');
-            
-            var data_type = local_data.get('data_type');
-            if (data_type == null) {
-                
-            }
-            
-            //if (site) {
-            //    data.yadisk.auth(function(status){
-            //        if (status == false) {
-            //            $('#loading .loader').hide();
-            //            $('#loading #str').text('Нет доступа к данным');
-            //        }
-            //        else{
-            //            callback();
-            //        }
-            //    });
-            //}
-            //else
-            //    callback();
-        },
-        function(callback) {
-            var root_dir = local_data.get('root_dir');
-                
-            if (root_dir != '' && root_dir != null && root_dir != undefined) {
-                global.config.root_dir = root_dir;
-                callback();
-                return true;
-            }
-            
-            var root_dir = prompt('Укажите корневую директорию медиаархива');
-            
-            if (root_dir == null || root_dir == '') {
-                alert('Невозможно продолжить работу');
-                error();
-                return false;
-            }
-            
-            global.config.root_dir = root_dir;
-            local_data.set('root_dir', root_dir);
-            
-            callback();
-        },
-        function (callback) {    
-            $('#loading #str').text('Получение индекса...');
-            data.get_file('/index.json', function(msg){
-                if (msg == false) {
-                    alert('Ошибка при открытии файла со списком мероприятий');
-                    error();   
-                }
-                else{
-                   json = msg;
-                   callback();
-                }
-            });
-        },
-        function (callback) {
-            json = JSON.parse(json);
-            if (!json) {
-                alert('Ошибка разбора файла со списком мероприятий');
-                error();
-            }
-            
-            global.index = json;
-            
-            callback();
-            return true;
-        },
-        function (callback) {
-            $('#loading #str').text('Получение шаблонов...');
-            $.get('client_templates.html', function(data){
-                $('body').append(data);
-                callback();
-            });
-        },
-        function (callback) {
-            $('#loading #str').text('Запуск приложения...');
-            datepicker_init();
-            $('.screen').hide();
-            $('#main.screen').show();
-            render_events_list(global.index);
-            callback();
-        }
-    ])
+    if(check_settings()){
+        events_init();
+    }
+    else{
+        $("#pages .page").hide();
+        $('#pages [data-page=settings]').show();
+    }
 }
 
 $(document).ready(function(){

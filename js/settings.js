@@ -47,6 +47,12 @@ function settings_init(){
     var root_dir = local_data.get('root_dir');
     settings_root_dir_selector_init();
         
-    if (root_dir != null) 
+    if (root_dir != null) {
+        global.config.root_dir = root_dir;
         $('#settings_form #root_dir #dir').text(root_dir);
+    }
+        
+    $('#start_button').click(function(){
+        events_init();
+    });
 }
