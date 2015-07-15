@@ -1,3 +1,5 @@
+var path = require('path');
+
 var Event = Class({
     'extends': MK.Object,
     constructor: function(data, collection) {
@@ -18,9 +20,13 @@ var Event = Class({
                     self.$(this).data('dir', v);
                 }
             });
-            this.$(':sandbox').click(function(){
+            this.$('.show_modal').click(function(){
                 self.show_modal();
             })
+            
+            this.$('.open_folder').click(function(){
+                gui.Shell.openItem(path.normalize(global.config.root_dir + '/архив/' + self.dir));
+            });
         });
     },
     show_modal: function(){

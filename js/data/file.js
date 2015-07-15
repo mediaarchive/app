@@ -3,6 +3,7 @@
 var fs = require('fs');
 var path_module = require('path');
 var iconv = require('iconv-lite');
+var exec = require('exec');
 
 data.file = {
     
@@ -17,7 +18,7 @@ data.get = function(path, callback){
         callback(r);
     })
 }
-
+data.exec = exec;
 data.get_file = function(path, callback){
     fs.readFile(global.config.root_dir + path, function(err, data){
             if (err) {
@@ -34,7 +35,7 @@ data.get_file = function(path, callback){
                 iconv.undoExtendNodeEncodings();
             }
             else if (ext == '.doc' ) {
-                //code
+                
             }
             
             callback(data);

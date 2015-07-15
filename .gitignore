@@ -2,6 +2,7 @@ public/pdw-assets/
 app/config/server.php
 public/files
 node_modules
+bower_components
 composer.lock
 vendor
 /index.html
