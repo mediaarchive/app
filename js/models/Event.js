@@ -35,7 +35,7 @@ var EventModel = Class({
         
         var date = this.date.day + '.' + this.date.month + '.' + this.date.year;
         var date_tech =  this.date.year + '-' + this.date.month + '-' + this.date.day;
-        console.log(this.toNative(), this.dir);
+        
         data.get('/архив/' + this.dir, function(files){
             if (files == false) {
                 alert('Ошибка при получении файлов мероприятия');
