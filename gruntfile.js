@@ -182,29 +182,7 @@ module.exports = function(grunt) {
         //    }
         //}
         swig_it: {
-            site: {
-                options: {
-                    swigDefaults: {
-                        //allowErrors: false,
-                        //autoescape: true
-                    },
-                    data: {
-                        site: true
-                    }
-                },
-                src: ['templates/*.html'],
-                dest: "."
-            },
-            app: {
-                options: {
-                    swigDefaults: {
-                        //allowErrors: false,
-                        //autoescape: true
-                    },
-                    data: {
-                        //site: true
-                    }
-                },
+            index: {
                 src: ['templates/*.html'],
                 dest: "."
             }
@@ -233,10 +211,16 @@ module.exports = function(grunt) {
             options: {
                 trace: true
             },
-            site:{
+            index:{
                 fileList: ['index.html']
             },
-            //dirList: ['path_to_dir_1', 'path_to_dir2/']
+        },
+        nodewebkit: {
+            options: {
+                platforms: ['win'],
+                buildDir: './builds', // Where the build version of my node-webkit app is saved 
+            },
+            src: ['./**/*'] // Your node-webkit app 
         },
     });
     
@@ -246,6 +230,7 @@ module.exports = function(grunt) {
     grunt.loadNpmTasks('grunt-contrib-watch');
     grunt.loadNpmTasks('grunt-remove');
     grunt.loadNpmTasks('grunt-contrib-clean');
+    grunt.loadNpmTasks('grunt-node-webkit-builder');
     //grunt.loadNpmTasks('grunt-contrib-copy');
     //grunt.loadNpmTasks('grunt-file-creator');
     //grunt.loadNpmTasks('grunt-exec');
@@ -253,8 +238,7 @@ module.exports = function(grunt) {
     //grunt.loadNpmTasks('grunt-contrib-cssmin');
     //grunt.loadNpmTasks('grunt-contrib-uglify');
     
-    grunt.registerTask('site', ['remove:site', 'swig_it:site']);
-    grunt.registerTask('app', ['remove:site', 'swig_it:app']);
-    grunt.registerTask('watch_site', ['watch:site']);
-    grunt.registerTask('default', ['site']);
+    grunt.registerTask('default', ['remove:index', 'swig_it:index']);
+    grunt.registerTask('build', ['default', 'nodewebkit']);
+    
 }

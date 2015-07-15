@@ -24,6 +24,6 @@
     "smoke": "~2.2.4",
     "DataTables": "~1.10.7",
     "datatables-bootstrap3-plugin": "~0.4.0",
-    "bootstrap-daterangepicker": "atnartur/bootstrap-daterangepicker#~1.3.23"
+    "bootstrap-daterangepicker": "https://github.com/atnartur/bootstrap-daterangepicker.git#master"
   }
 }
