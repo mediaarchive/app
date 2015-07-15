@@ -72,6 +72,7 @@ function events_init(){
             new EventsCollection(global.index);
             
             $.smkProgressBar({element: 'body', status: 'end'});
+            
             callback();
         }
     ])

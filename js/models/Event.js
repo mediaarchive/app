@@ -18,14 +18,18 @@ var Event = Class({
                     self.$(this).data('dir', v);
                 }
             });
+            this.$(':sandbox').click(function(){
+                self.show_modal();
+            })
         });
     },
     show_modal: function(){
-        var dir = $(this).data('dir');
-        var name = $(this).find('.name').text();
-        var date = $(this).find('.date').text();
-        var date_tech = $(this).find('.date_tech').text();
+        $.smkProgressBar({element: 'body', status: 'end'});
+        var self = this;
         
+        var date = this.date.day + '.' + this.date.month + '.' + this.date.year;
+        var date_tech =  this.date.year + '-' + this.date.month + '-' + this.date.day;
+        console.log(this.toNative(), this.dir);
         data.get('/архив/' + this.dir, function(files){
             if (files == false) {
                 alert('Ошибка при получении файлов мероприятия');
@@ -48,22 +52,22 @@ var Event = Class({
             }
             
             var template = Handlebars.compile($('#event_modal_template').html());
-            $('#modal .modal-title').text(name);
+            $('#modal .modal-title').text(self.name);
             $('#modal .modal-body').html(template({
-                dir: global.config.root_dir + '/архив/' + dir + '/',
+                dir: global.config.root_dir + '/архив/' + self.dir + '/',
                 preview_photo: preview_photo,
                 text_file: text_file,
                 photo_dir: photo_dir,
                 files: files,
                 date: date,
                 date_tech: date_tech,
-                name: name
+                name: self.name
             }));
             
             if (text_file == false) 
                 $('#modal .modal-body #text').text('(нет текста)');
             else
-                data.get_file('/архив/' + dir + '/' + text_file, function(text_file_data){
+                data.get_file('/архив/' + self.dir + '/' + text_file, function(text_file_data){
                     if (text_file_data == false) {
                         $('#modal .modal-body #text').text('(не удалось получить текст)');
                         return false;
@@ -75,8 +79,6 @@ var Event = Class({
                 });
             
             $('#modal').modal();
-            
-            console.log(files, preview_photo, text_file, photo_dir);
             
             return true;
         });

@@ -33,6 +33,9 @@ data.get_file = function(path, callback){
                 data = data.toString('win1251');
                 iconv.undoExtendNodeEncodings();
             }
+            else if (ext == '.doc' ) {
+                //code
+            }
             
             callback(data);
             return true;
