@@ -1,7 +1,5 @@
-if (!site) {
-    var async = require('async');
-    var exec = require('exec');
-}
+var async = require('async');
+var exec = require('exec');
 
 function datepicker_init() {
     var datepicker = $('#datepicker_form #datepicker');
@@ -28,31 +26,10 @@ function datepicker_init() {
     })
 }
 
-function events_list_datatable_init() {
-    $('#events_table').DataTable({
-        order: [ 1, 'desc' ],
-        language: {
-            url: 'js/client_libs/dataTables/Russian.json'
-        },
-        paging: false,
-        searching: false
-    });
-}
-
-function render_events_list(events){
-    var template = Handlebars.compile($('#events_main_template').html());
-    $('.page[data-page=events]').html(template({
-        events: events
-    }));
-    events_list_datatable_init();
-    event_modal_init();
-}
-
 function events_init(){
     $.smkProgressBar({element: 'body', status: 'start'});
     $('.page').hide();
     $('.page[data-page=events]').show();
-    
     
     async.series([
         function (callback) {    
@@ -69,6 +46,8 @@ function events_init(){
             });
         },
         function (callback) {
+            console.log(json);
+            
             json = JSON.parse(json);
             if (!json) {
                 $.smkAlert({text:'Ошибка разбора индекса', type:'danger', permanent:true});
@@ -90,7 +69,8 @@ function events_init(){
         function (callback) {
             $.smkAlert({text:'Запуск', type:'info', time:1});
             datepicker_init();
-            render_events_list(global.index);
+            new EventsCollection(global.index);
+            
             $.smkProgressBar({element: 'body', status: 'end'});
             callback();
         }

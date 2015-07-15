@@ -1,25 +1,12 @@
-<script id="events_main_template" type="text/x-handlebars-template">
-    <table class="table table-condensed table-striped" id="events_table">
-        <thead>
-            <tr>
-                <th>Название</th>
-                <th>Дата</th>
-                <th>Материалы</th>
-            </tr>
-        </thead>
-        <tbody>
-            {{#each events}}
-                <tr class="event_row" data-dir="{{dir}}">
-                    <td class="name">{{name}}</td>
-                    <td>
-                        <span class="date_tech" style="display: none;">{{date.year}}-{{date.month}}-{{date.day}}</span>
-                        <span class="data">{{date.day}}.{{date.month}}.{{date.year}}</span>
-                    </td>
-                    <td>...</td>
-                </tr>
-            {{/each}}
-        </tbody>
-    </table>
+<script id="eventTemplate" type="text/x-handlebars-template">
+    <tr class="event_row" data-dir="{{dir}}">
+        <td class="name">{{name}}</td>
+        <td>
+            <span class="date_tech" style="display: none;">{{date.year}}-{{date.month}}-{{date.day}}</span>
+            <span class="data">{{date.day}}.{{date.month}}.{{date.year}}</span>
+        </td>
+        <td>...</td>
+    </tr>
 </script>
 
 <script id="event_modal_template" type="text/x-handlebars-template">

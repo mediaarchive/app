@@ -1,9 +1,4 @@
 module.exports = function(grunt) {
-        
-    grunt.registerTask('site', ['remove:site', 'swig_it:site']);
-    grunt.registerTask('app', ['remove:site', 'swig_it:app']);
-    grunt.registerTask('watch_site', ['watch:site']);
-    grunt.registerTask('default', ['site']);
     
     grunt.initConfig({
         pkg: grunt.file.readJSON('package.json'),
@@ -220,7 +215,7 @@ module.exports = function(grunt) {
                     'templates/index.html',
                     'static/*'
                 ],
-                tasks: ['site'],
+                tasks: ['app'],
                 options: {
                     spawn: false
                 },
@@ -258,4 +253,8 @@ module.exports = function(grunt) {
     //grunt.loadNpmTasks('grunt-contrib-cssmin');
     //grunt.loadNpmTasks('grunt-contrib-uglify');
     
+    grunt.registerTask('site', ['remove:site', 'swig_it:site']);
+    grunt.registerTask('app', ['remove:site', 'swig_it:app']);
+    grunt.registerTask('watch_site', ['watch:site']);
+    grunt.registerTask('default', ['site']);
 }
