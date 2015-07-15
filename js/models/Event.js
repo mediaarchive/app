@@ -1,6 +1,6 @@
 var path = require('path');
 
-var Event = Class({
+var EventModel = Class({
     'extends': MK.Object,
     constructor: function(data, collection) {
         this.jset(data);

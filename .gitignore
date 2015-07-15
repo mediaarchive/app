@@ -8,3 +8,7 @@ vendor
 /index.html
 *.komodoproject
 *.komodotools
+cache
+libs.min.js
+scripts.min.js
+scripts.min.js.map
