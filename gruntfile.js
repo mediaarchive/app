@@ -107,6 +107,7 @@ module.exports = function(grunt) {
             site: {
                 src: ['./index.html']
             },
+            
         },
         remove: {
             options: {
@@ -115,25 +116,69 @@ module.exports = function(grunt) {
             index:{
                 fileList: ['index.html']
             },
+            after_build: {
+                options:{
+                    trace: false
+                },
+                dirList: ['cache/app'],
+                fileList: ['scripts.bin']
+            }
         },
-        nodewebkit: {
+        nwjs: {
             options: {
                 platforms: ['win'],
                 buildDir: './builds', // Where the build version of my node-webkit app is saved 
             },
-            src: [
-                './**/*',
-                '!./styles/less',
-                '!./js',
-                '!./scripts.min.js',
-                '!./templates',
-                '!./.gitignore',
-                '!./gruntfile.js',
+            build: [
+                './cache/app/**/*'
             ] // Your node-webkit app 
         },
         exec: {
-            compile_scriptsbin: {
-                cmd: 'nwjc scripts.min.js scripts.bin'
+            build_npm_install: {
+                cmd: 'npm install --production',
+                cwd: 'cache/app',
+                stdout: true,
+                stderr: true
+            }
+        },
+        mkdir: {
+            cache: {
+                options: {
+                    mode: 700,
+                    create: ['cache']
+                },
+            },
+            cache_app: {
+                options: {
+                    mode: 700,
+                    create: ['cache/app']
+                },
+            },
+        },
+        copy: {
+            before_build: {
+                files: [
+                    {
+                        expand: true,
+                        filter: 'isFile',
+                        src: [
+                            './**/*',
+                            '!./builds/**/*',
+                            '!./cache/**/*',
+                            '!./static/styles/less/**/*',
+                            '!./js/**/*',
+                            './js/config.json',
+                            '!./node_modules/**/*',
+                            '!./templates/**',
+                            '!./.gitignore',
+                            '!./*.log',
+                            '!./*.komodoproject',
+                            '!./bower.json',
+                            '!./gruntfile.js',
+                        ],
+                        dest: 'cache/app'
+                    },
+                ],
             }
         },
     });
@@ -143,13 +188,42 @@ module.exports = function(grunt) {
     grunt.loadNpmTasks('grunt-contrib-watch');
     grunt.loadNpmTasks('grunt-remove');
     grunt.loadNpmTasks('grunt-contrib-clean');
-    grunt.loadNpmTasks('grunt-node-webkit-builder');
     grunt.loadNpmTasks('grunt-exec');
+    grunt.loadNpmTasks('grunt-nw-builder');
     //grunt.loadNpmTasks('grunt-contrib-cssmin');
     grunt.loadNpmTasks('grunt-contrib-uglify');
+    grunt.loadNpmTasks('grunt-contrib-copy');
     grunt.loadNpmTasks('grunt-mkdir');
     
     grunt.registerTask('default', ['clean', 'remove', 'swig_it', 'less', 'uglify:scripts']);
-    grunt.registerTask('build', ['default', 'uglify:scripts_stable', 'exec:compile_scriptsbin', 'nodewebkit']);
+    grunt.registerTask('prod_build', [
+        'default',
+        
+        'uglify:scripts_stable',
+        
+        'mkdir:cache',
+        'mkdir:cache_app',
+        'copy:before_build',
+        'exec:build_npm_install',
+        
+        'nwjs:build',
+        
+        'remove:after_build'
+    ]);
+    grunt.registerTask('test_build', [
+        'default',
+        
+        'uglify:scripts_stable',
+        
+        'mkdir:cache',
+        'mkdir:cache_app',
+        'copy:before_build',
+        'copy:before_test_build',
+        'exec:build_npm_install',
+        
+        'nwjs:build',
+        
+        'remove:after_build'
+    ]);
     
 }

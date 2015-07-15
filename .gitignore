@@ -13,4 +13,4 @@ libs.min.js
 scripts.min.js
 scripts.min.js.map
 *.log
-scripts.bin
+builds
