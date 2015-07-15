@@ -15,7 +15,7 @@ var EventsCollection = Class({
         this.$(':sandbox').DataTable({
             order: [ 1, 'desc' ],
             language: {
-                url: 'js/client_libs/dataTables_Russian.json'
+                url: 'client_libs/datatables_Russian.json'
             },
             paging: false,
             searching: false

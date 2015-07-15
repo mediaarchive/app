@@ -69,7 +69,7 @@ function events_init(){
         function (callback) {
             $.smkAlert({text:'Запуск', type:'info', time:1});
             datepicker_init();
-            console.log(new EventsCollection(global.index));
+            new EventsCollection(global.index);
             
             $.smkProgressBar({element: 'body', status: 'end'});
             
@@ -93,9 +93,8 @@ function main_init() {
     btn_selector_init();
     settings_init();
     
-    if(check_settings()){
+    if(check_settings())
         events_init();
-    }
     else{
         $("#pages .page").hide();
         $('#pages [data-page=settings]').show();
@@ -103,6 +102,9 @@ function main_init() {
 }
 
 $(document).ready(function(){
+    if (typeof ver_stable == 'undefined') // если не стабильная
+        win.showDevTools();
+    
     $.getJSON('js/config.json', function(msg){
         global.config = msg;
         main_init();
