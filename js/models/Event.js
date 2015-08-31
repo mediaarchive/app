@@ -86,8 +86,8 @@ var EventModel = Class({
                     });
 
                     $('#modal .modal-body .vk_post').click(function(){
-                        gui.Shell.openItem(path.normalize(global.config.root_dir + '/архив/' + self.dir));
-                    })
+
+                    });
 
                     return true;
                 });

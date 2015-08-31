@@ -9,9 +9,9 @@ var vk = {
             });
         }
         else{
-            $("#vk_auth_start").val('Загрузка...');
+            $("#vk_auth_start").text('Загрузка...').attr('disabled', 'disabled');
             this.get('users.get', {user_ids: this.settings.user_id}, function(res){
-                console.log(res);
+                $("#vk_auth_start").text('Авторизованы как ' + res.response[0].first_name + ' ' + res.response[0].last_name);
             });
         }
     },
