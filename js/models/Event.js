@@ -85,8 +85,24 @@ var EventModel = Class({
                         gui.Shell.openItem(path.normalize(global.config.root_dir + '/архив/' + self.dir));
                     });
 
-                    $('#modal .modal-body .vk_post').click(function(){
+                    // @TODO: формирование шаблона текста
+                    // @TODO: предпросмотр текста перед публикацией
+                    // @TODO: загрузка фото
 
+                    $('#modal .modal-body .vk_post').click(function(){
+                        $(this).attr('disabled', 'disabled');
+                        // публикуем пост
+                        vk.get('wall.post', {
+                            access_token: vk.settings.access_token,
+                            owner_id: Number(config.api.vk.group_id) * -1, // id группы
+                            from_group: 1, // от имени группы
+                            message:
+                                self.name + "\n" +
+                                "#news@school42_kazan\n\n" +
+                                text_file_data
+                        }, function(res){
+                            console.log(res);
+                        })
                     });
 
                     return true;

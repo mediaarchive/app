@@ -2,7 +2,8 @@
   "api": {
     "vk": {
       "app_id": "",
-      "app_secret": ""
+      "app_secret": "",
+      "group_id": ""
     }
   }
 }
