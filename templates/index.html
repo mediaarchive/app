@@ -12,6 +12,7 @@
     <script>
         var gui = require('nw.gui');
         var win = gui.Window.get();
+        var config = require('./config');
     </script>
 </head>
 <body>
@@ -67,7 +68,7 @@
                         </div>
                     </div>
                     <div class="form-group">
-                        <label for="inputPassword3" class="col-sm-2 control-label">Корневая директория</label>
+                        <label class="col-sm-2 control-label">Корневая директория</label>
                         <div class="col-sm-10" id="root_dir">
                             <div id="files">
                                 <input type="file" webkitdirectory id="file_root_dir_selector" />
@@ -79,6 +80,13 @@
                                 <p class="help-block">выберите тип данных</p>
                             </div>
                             <p class="help-block">Сейчас: <span id="dir">(пусто)</span></p>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">ВКонтакте</label>
+                        <div class="col-sm-10" id="vk">
+                            <button class="btn btn-primary" type="button"><i class="fa fa-vk"></i> Подключтиь ВКонтакте</button>
+                            <p class="help-block">Сейчас: <span id="vk_account">(пусто)</span></p>
                         </div>
                     </div>
                     <div class="form-group">
