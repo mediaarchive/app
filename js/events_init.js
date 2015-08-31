@@ -5,10 +5,10 @@ function events_init(){
 
     async.series([
         function (callback) {
-            $.smkAlert({text:'Получение индекса', type:'info', time:1});
+            $.smkAlert({text:'РџРѕР»СѓС‡РµРЅРёРµ РёРЅРґРµРєСЃР°', type:'info', time:1});
             data.get_file('/index.json', function(msg){
                 if (msg == false) {
-                    $.smkAlert({text:'Не удалось загрузить список мероприятий', type:'danger', permanent:true});
+                    $.smkAlert({text:'РќРµ СѓРґР°Р»РѕСЃСЊ Р·Р°РіСЂСѓР·РёС‚СЊ СЃРїРёСЃРѕРє РјРµСЂРѕРїСЂРёСЏС‚РёР№', type:'danger', permanent:true});
                     $.smkProgressBar({element: 'body', status: 'end'});
                 }
                 else{
@@ -22,7 +22,7 @@ function events_init(){
 
             json = JSON.parse(json);
             if (!json) {
-                $.smkAlert({text:'Ошибка разбора индекса', type:'danger', permanent:true});
+                $.smkAlert({text:'РћС€РёР±РєР° СЂР°Р·Р±РѕСЂР° РёРЅРґРµРєСЃР°', type:'danger', permanent:true});
                 $.smkProgressBar({element: 'body', status: 'end'});
             }
 
@@ -32,14 +32,14 @@ function events_init(){
             return true;
         },
         function (callback) {
-            $.smkAlert({text:'Получение шаблонов', type:'info', time:1});
+            $.smkAlert({text:'РџРѕР»СѓС‡РµРЅРёРµ С€Р°Р±Р»РѕРЅРѕРІ', type:'info', time:1});
             $.get('client_templates.html', function(data){
                 $('body').append(data);
                 callback();
             });
         },
         function (callback) {
-            $.smkAlert({text:'Запуск', type:'info', time:1});
+            $.smkAlert({text:'Р—Р°РїСѓСЃРє', type:'info', time:1});
             datepicker_init();
             new EventsCollection(global.index);
 
