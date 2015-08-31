@@ -80,7 +80,15 @@ var EventModel = Class({
                     }
                     
                     $('#modal .modal-body #text').text(text_file_data);
-                    
+
+                    $('#modal .modal-body .open_dir').click(function(){
+                        gui.Shell.openItem(path.normalize(global.config.root_dir + '/архив/' + self.dir));
+                    });
+
+                    $('#modal .modal-body .vk_post').click(function(){
+                        gui.Shell.openItem(path.normalize(global.config.root_dir + '/архив/' + self.dir));
+                    })
+
                     return true;
                 });
             

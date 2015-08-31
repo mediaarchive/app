@@ -56,8 +56,5 @@ function settings_init(){
         events_init();
     });
 
-    $("#vk_auth_start").click(function(){
-        $(this).attr('disabled', 'disabled');
-        vk.start_auth();
-    })
+    vk.init();
 }

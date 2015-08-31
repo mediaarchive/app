@@ -1,14 +1,19 @@
 var local_data = {
     get: function(key){
-        var data;
-        data = localStorage[key];
-        
-        if (data != '' && data != null && data != undefined) 
-            return JSON.parse(data);
+        var data = localStorage[key];
+
+        if (data != '' && data != null && typeof data !== 'undefined'){
+            try {
+                return JSON.parse(data);
+            }
+            catch (e) {
+                console.error('json parse error', e);
+            }
+        }
         else
-            return null;
+            return undefined;
     },
     set: function(key, value){
         localStorage[key] = JSON.stringify(value);
     }
-}
+};
