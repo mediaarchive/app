@@ -4,6 +4,9 @@ module.exports = function(grunt) {
         pkg: grunt.file.readJSON('package.json'),
         uglify: {
             scripts: {
+                options:{
+                    sourceMap: true,
+                },
                 src: [  
                     'js/general.js',
                     'js/base.js',
@@ -24,28 +27,28 @@ module.exports = function(grunt) {
                 dest: 'scripts.min.js',
                 sourceMap: true
             },
-            scripts_stable: {
-                options:{
-                    banner: 'var ver_stable=true;',
-                },
-                src: [  
-                    'js/general.js',
-                    'js/base.js',
-                    'js/local_data.js',
-                    'js/pages.js',
-                    'js/settings.js',
-                    'js/view.js',
-                    'js/data/base.js',
-                    'js/data/file.js',
-                    
-                    'js/models/Event.js',
-                    'js/collections/Events.js',
-                    
-                    'js/run.js',
-                ],
-                dest: 'scripts.min.js',
-                sourceMap: true
-            }
+            //scripts_stable: {
+            //    options:{
+            //        banner: 'var ver_stable=true;',
+            //    },
+            //    src: [
+            //        'js/general.js',
+            //        'js/base.js',
+            //        'js/local_data.js',
+            //        'js/pages.js',
+            //        'js/settings.js',
+            //        'js/view.js',
+            //        'js/data/base.js',
+            //        'js/data/file.js',
+            //
+            //        'js/models/Event.js',
+            //        'js/collections/Events.js',
+            //
+            //        'js/run.js',
+            //    ],
+            //    dest: 'scripts.min.js',
+            //    sourceMap: true
+            //}
         },
         //cssmin: {
         //    main: {

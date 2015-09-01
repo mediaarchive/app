@@ -17,7 +17,7 @@ var vk = {
     },
     start_auth: function(){
         var vk_auth_link = 'https://oauth.vk.com/authorize?client_id=' + config.api.vk.app_id + '&'+
-            'redirect_uri=https://oauth.vk.com/blank.html&display=page&scope=groups,wall&response_type=token&v=5.37';
+            'redirect_uri=https://oauth.vk.com/blank.html&display=page&scope=groups,wall,photos,offline&response_type=token&v=5.37';
         var vk_win = gui.Window.open(vk_auth_link);
         vk_win.show();
         vk_win.on('loaded', function(e){

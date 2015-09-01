@@ -28,7 +28,7 @@ pages._url_init = function(){
         pages.change(url);
     }
     
-    window.onhashchange = function(e){
+     window.onhashchange = function(e){
         var href = location.hash;
         var url = pages.url_parse(href);
 

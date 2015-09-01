@@ -1,4 +1,26 @@
 var path = require('path');
+var VK = require('vksdk');
+var restler = require('restler');
+
+function dataURItoBlob(dataURI) {
+    // convert base64/URLEncoded data component to raw binary data held in a string
+    var byteString;
+    if (dataURI.split(',')[0].indexOf('base64') >= 0)
+        byteString = atob(dataURI.split(',')[1]);
+    else
+        byteString = unescape(dataURI.split(',')[1]);
+
+    // separate out the mime component
+    var mimeString = dataURI.split(',')[0].split(':')[1].split(';')[0];
+
+    // write the bytes of the string to a typed array
+    var ia = new Uint8Array(byteString.length);
+    for (var i = 0; i < byteString.length; i++) {
+        ia[i] = byteString.charCodeAt(i);
+    }
+
+    return new Blob([ia], {type:mimeString});
+}
 
 var EventModel = Class({
     'extends': MK.Object,
@@ -90,19 +112,93 @@ var EventModel = Class({
                     // @TODO: загрузка фото
 
                     $('#modal .modal-body .vk_post').click(function(){
-                        $(this).attr('disabled', 'disabled');
+                        $button = $(this);
+                        $button.attr('disabled', 'disabled');
+                        $button.text('Отправка...');
                         // публикуем пост
-                        vk.get('wall.post', {
-                            access_token: vk.settings.access_token,
-                            owner_id: Number(config.api.vk.group_id) * -1, // id группы
-                            from_group: 1, // от имени группы
-                            message:
-                                self.name + "\n" +
-                                "#news@school42_kazan\n\n" +
-                                text_file_data
-                        }, function(res){
-                            console.log(res);
-                        })
+
+                        var photo_obj;
+
+                        async.series([
+                            function(callback) {
+                                if (typeof preview_photo !== 'undefined') {
+                                    $button.text('Подготовка к загрузке фото...');
+
+                                    vk.get('photos.getWallUploadServer', {
+                                        group_id: config.api.vk.group_id,
+                                        access_token: vk.settings.access_token
+                                    }, function (res) {
+                                        if(typeof res.error !== 'undefined'){
+                                            alert('Не получилось загрузить фотографию');
+                                            return;
+                                        }
+
+                                        console.log(res);
+
+                                        $button.text('Загрузка фото...');
+
+                                        var photo_path = global.config.root_dir + '/архив/' + self.dir + '/' + preview_photo;
+
+                                        // @TODO: вынести функцию загрузки фото в vk.js
+                                        restler.post(res.response.upload_url, {
+                                            multipart:true,
+                                            data: {
+                                                // @TODO: определение формата фотографии и замена MIME-type
+                                                photo: restler.file(photo_path, null, fs.statSync(photo_path).size, null, 'image/jpg')
+                                            }
+                                        }).on('complete', function(res){
+                                            res = JSON.parse(res);
+                                            console.log(res);
+
+                                            $button.text('Прикрепление фото...');
+
+                                            var photo_arr = JSON.parse(res.photo);
+                                            console.log(photo_arr, photo_arr[0]);
+
+                                            vk.get('photos.saveWallPhoto', {
+                                                access_token: vk.settings.access_token,
+                                                group_id: config.api.vk.group_id,
+                                                photo: res.photo, //JSON.stringify(photo_arr[0]),
+                                                server: res.server,
+                                                hash: res.hash
+                                            }, function(res){
+                                                if(typeof res.error !== 'undefined'){
+                                                    alert('Не удалось прикрепить фотографию. Запись будет размещена без фотографии');
+                                                    console.error(res.error);
+                                                }
+                                                console.log(res);
+                                                photo_obj = res.response[0];
+                                                callback();
+                                            });
+                                        });
+                                    });
+                                }
+                                else
+                                    callback();
+                            },
+                            function(callback){
+                                $button.text('Размещение записи...');
+
+                                var attachments = '';
+
+                                if(typeof photo_obj !== 'undefined')
+                                    attachments = photo_obj.id
+
+                                vk.get('wall.post', {
+                                    access_token: vk.settings.access_token,
+                                    owner_id: Number(config.api.vk.group_id) * -1, // id группы
+                                    from_group: 1, // от имени группы
+                                    attachments: attachments,
+                                    message:
+                                        self.name + "\n" +
+                                        "#news@school42_kazan\n\n" +
+                                        text_file_data
+                                }, function(res){
+                                    console.log(res);
+                                    callback();
+                                })
+                            }
+                        ]);
                     });
 
                     return true;
