@@ -31,13 +31,19 @@ data.get_file = function(path, callback){
             
             if (ext == '.txt') {
                 iconv.extendNodeEncodings();
-                data = data.toString('win1251');
+
+                var new_data = data.toString('utf8');
+
+                if(new_data.indexOf('�') !== -1)
+                    new_data = data.toString('win1251');
+
+                data = new_data;
                 iconv.undoExtendNodeEncodings();
             }
             else if (ext == '.doc' ) {
                 
             }
-            
+
             callback(data);
             return true;
         }
