@@ -195,6 +195,12 @@ var EventModel = Class({
                                         text_file_data
                                 }, function(res){
                                     console.log(res);
+
+                                    $button.html('<i class="fa fa-vk"></i> <i class="fa fa-check"></i> Опубликовано');
+
+                                    if(confirm('Пост опубликован. Открыть его?'))
+                                        gui.Shell.openItem('http://vk.com/wall-' + config.api.vk.group_id + '_' + res.response.post_id);
+
                                     callback();
                                 })
                             }
