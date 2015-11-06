@@ -5,7 +5,6 @@ var path_module = require('path');
 var iconv = require('iconv-lite');
 var exec = require('exec');
 var mammoth = require("mammoth");
-
 data.file = {};
 
 data.get = function(path, callback){
@@ -16,8 +15,10 @@ data.get = function(path, callback){
         }
         callback(r);
     })
-}
+};
+
 data.exec = exec;
+
 data.get_file = function(path, callback){
     fs.readFile(global.config.root_dir + path, function(err, data){
             if (err) {
@@ -40,8 +41,11 @@ data.get_file = function(path, callback){
                 iconv.undoExtendNodeEncodings();
                 callback(data);
             }
-            else if (ext == '.doc' || ext == '.docx') {
-                mammoth.extractRawText({path: "path/to/document.docx"}).then(function(result){
+            else if (ext == '.doc') {
+
+            }
+            else if (ext == '.docx') {
+                mammoth.extractRawText({buffer: data}).then(function(result){
                     var data = result.value; // The raw text
                     callback(data);
                 });
