@@ -13,6 +13,7 @@ module.exports = function(grunt) {
                     'js/local_data.js',
                     'js/pages.js',
                     'js/events_init.js',
+                    'js/index_update.js',
                     'js/vk.js',
                     'js/settings.js',
                     'js/view.js',

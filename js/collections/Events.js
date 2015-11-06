@@ -11,8 +11,13 @@ var EventsCollection = Class({
             .bindNode('sandbox', '.page[data-page=events] table')
             .bindNode('container', ':sandbox tbody')
             .recreate(data);
-        
-        this.$(':sandbox').DataTable({
+
+        //var dt = this.$(':sandbox').DataTable();
+
+        if(typeof events_datatable !== 'undefined')
+            events_datatable.destroy();
+
+        events_datatable = this.$(':sandbox').DataTable({
             order: [ 1, 'desc' ],
             language: {
                 url: 'client_libs/datatables_Russian.json'

@@ -1,17 +1,17 @@
-function events_init(){
+function events_init(index){
     $.smkProgressBar({element: 'body', status: 'start'});
     $('.page').hide();
     $('.page[data-page=events]').show();
 
     async.series([
         function (callback) {
-            $.smkAlert({text:'Получение индекса', type:'info', time:1});
-            data.get_file('/index.json', function(msg){
+            $.smkAlert({text: 'Получение индекса', type: 'info', time: 1});
+            data.get_file('/index.json', function (msg) {
                 if (msg == false) {
-                    $.smkAlert({text:'Не удалось загрузить список мероприятий', type:'danger', permanent:true});
+                    $.smkAlert({text: 'Не удалось загрузить список мероприятий', type: 'danger', permanent: true});
                     $.smkProgressBar({element: 'body', status: 'end'});
                 }
-                else{
+                else {
                     json = msg;
                     callback();
                 }
@@ -22,14 +22,13 @@ function events_init(){
 
             json = JSON.parse(json);
             if (!json) {
-                $.smkAlert({text:'Ошибка разбора индекса', type:'danger', permanent:true});
+                $.smkAlert({text: 'Ошибка разбора индекса', type: 'danger', permanent: true});
                 $.smkProgressBar({element: 'body', status: 'end'});
             }
 
             global.index = json;
 
             callback();
-            return true;
         },
         function (callback) {
             $.smkAlert({text:'Получение шаблонов', type:'info', time:1});

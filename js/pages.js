@@ -28,11 +28,11 @@ pages._url_init = function(){
         pages.change(url);
     }
     
-     window.onhashchange = function(e){
+     window.onhashchange = function(){
         var href = location.hash;
         var url = pages.url_parse(href);
 
-        if (pages.if_exist(url) ) {
+        if (url != '' && pages.if_exist(url) ) {
             if (typeof pages.changeto_events[url] != 'undefined') {
                 pages.changeto_events[url](url);    
             }

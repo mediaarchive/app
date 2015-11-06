@@ -57,5 +57,9 @@ $(document).ready(function(){
     $.getJSON('js/config.json', function(msg){
         global.config = msg;
         main_init();
+    });
+
+    $('#update_index_button').click(function(){
+        index_update();
     })
 });
