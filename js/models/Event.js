@@ -109,7 +109,10 @@ var EventModel = Class({
 
                     // @TODO: формирование шаблона текста
                     // @TODO: предпросмотр текста перед публикацией
-                    // @TODO: загрузка фото
+
+                    $('#modal .modal-body img').click(function(){
+                        gui.Shell.openItem(path.normalize(global.config.root_dir + '/архив/' + self.dir + '/' + preview_photo));
+                    });
 
                     $('#modal .modal-body .vk_post').click(function(){
                         $button = $(this);
@@ -182,7 +185,7 @@ var EventModel = Class({
                                 var attachments = '';
 
                                 if(typeof photo_obj !== 'undefined')
-                                    attachments = photo_obj.id
+                                    attachments = photo_obj.id;
 
                                 vk.post('wall.post', {
                                     access_token: vk.settings.access_token,
