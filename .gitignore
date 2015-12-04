@@ -16,3 +16,4 @@ scripts.min.js.map
 builds
 .idea
 config.json
+static/styles/css/style.min.css

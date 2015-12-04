@@ -16,3 +16,6 @@
 #datepicker {
   width: 200px;
 }
+.page {
+  display: none;
+}
