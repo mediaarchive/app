@@ -41,5 +41,8 @@ var vk = {
     },
     get: function(url, params, callback){
         this.req('get', url, params, callback);
+    },
+    post: function(url, params, callback){
+        this.req('post', url, params, callback);
     }
 };

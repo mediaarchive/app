@@ -31,7 +31,6 @@
     "exec": "^0.2.0",
     "iconv-lite": "^0.4.11",
     "mammoth": "^0.3.27",
-    "office2html": "0.0.2",
     "restler": "^3.3.0",
     "vksdk": "^5.1.0"
   },
@@ -39,7 +38,7 @@
     "title": "Медиаархив",
     "icon": "static/images/favicon.png",
     "frame": true,
-    "toolbar": false,
+    "toolbar": true,
     "width": 1000,
     "height": 600,
     "min_width": 800,

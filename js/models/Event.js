@@ -184,7 +184,7 @@ var EventModel = Class({
                                 if(typeof photo_obj !== 'undefined')
                                     attachments = photo_obj.id
 
-                                vk.get('wall.post', {
+                                vk.post('wall.post', {
                                     access_token: vk.settings.access_token,
                                     owner_id: Number(config.api.vk.group_id) * -1, // id группы
                                     from_group: 1, // от имени группы
