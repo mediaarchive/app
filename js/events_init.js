@@ -43,8 +43,7 @@ function events_init(index){
             new EventsCollection(global.index);
 
             $.smkProgressBar({element: 'body', status: 'end'});
-
-            $('#search').fastLiveFilter('#events_table tbody tr');
+            $('#events_table tbody').liveFilter('#search', 'tr');
 
             callback();
         }
