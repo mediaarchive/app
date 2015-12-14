@@ -44,6 +44,8 @@ function events_init(index){
 
             $.smkProgressBar({element: 'body', status: 'end'});
 
+            $('#search').fastLiveFilter('#events_table tbody tr');
+
             callback();
         }
     ])

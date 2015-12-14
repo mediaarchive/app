@@ -25,6 +25,7 @@
     "less": "~2.5.1",
     "matreshka": "~1.0.6",
     "moment": "~2.10.3",
-    "smoke": "~2.2.4"
+    "smoke": "~2.2.4",
+    "jquery-fastlivefilter": "~1.0.3"
   }
 }
