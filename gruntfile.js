@@ -133,7 +133,8 @@ module.exports = function(grunt) {
         nwjs: {
             options: {
                 platforms: ['win'],
-                buildDir: './builds', // Where the build version of my node-webkit app is saved 
+                version: '0.12.0',
+                buildDir: './builds' // Where the build version of my node-webkit app is saved
             },
             build: [
                 './cache/app/**/*'
@@ -152,14 +153,14 @@ module.exports = function(grunt) {
                 options: {
                     mode: 700,
                     create: ['cache']
-                },
+                }
             },
             cache_app: {
                 options: {
                     mode: 700,
                     create: ['cache/app']
-                },
-            },
+                }
+            }
         },
         copy: {
             before_build: {
