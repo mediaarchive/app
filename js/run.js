@@ -52,7 +52,7 @@ function main_init() {
 $(document).ready(function(){
     //var ver_stable = true;
     //if (typeof ver_stable == 'undefined') // если не стабильная
-        win.showDevTools();
+    //    win.showDevTools();
 
     $.getJSON('js/config.json', function(msg){
         global.config = msg;

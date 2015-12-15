@@ -216,20 +216,4 @@ module.exports = function(grunt) {
         
         'remove:after_build'
     ]);
-    grunt.registerTask('test_build', [
-        'default',
-        
-        'uglify:scripts_stable',
-        
-        'mkdir:cache',
-        'mkdir:cache_app',
-        'copy:before_build',
-        'copy:before_test_build',
-        'exec:build_npm_install',
-        
-        'nwjs:build',
-        
-        'remove:after_build'
-    ]);
-    
-}
+};

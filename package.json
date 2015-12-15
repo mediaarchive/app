@@ -38,7 +38,7 @@
     "title": "Медиаархив",
     "icon": "static/images/favicon.png",
     "frame": true,
-    "toolbar": true,
+    "toolbar": false,
     "width": 1000,
     "height": 600,
     "min_width": 800,
