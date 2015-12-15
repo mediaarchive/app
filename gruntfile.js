@@ -205,8 +205,6 @@ module.exports = function(grunt) {
     grunt.registerTask('prod_build', [
         'default',
         
-        'uglify:scripts_stable',
-        
         'mkdir:cache',
         'mkdir:cache_app',
         'copy:before_build',
