@@ -5,7 +5,7 @@ vendor
 *.komodotools
 cache
 *.log
-builds
+build
 .idea
 config.json
 dist/

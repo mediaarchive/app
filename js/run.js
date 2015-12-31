@@ -53,11 +53,9 @@ $(document).ready(function(){
     //var ver_stable = true;
     //if (typeof ver_stable == 'undefined') // если не стабильная
         win.showDevTools();
-
-    $.getJSON('js/config.json', function(msg){
-        global.config = msg;
-        main_init();
-    });
+        
+    global.config = {}
+    main_init();
 
     $('#update_index_button').click(function(){
         index_update();

@@ -10,6 +10,9 @@ var concat = require('gulp-concat');
 var builder = require('gulp-nw-builder');
 var sourcemaps = require('gulp-sourcemaps');
 var runSequence = require('run-sequence');
+var exec = require('child_process').exec;
+var path = require('path');
+var gutil = require('gulp-util');
 
 var phpjs = require('phpjs');
 var date = phpjs.date('d.m.Y H:i:s');
@@ -97,30 +100,27 @@ gulp.task('uglify-src', function(){
 
 gulp.task('uglify', ['uglify-libs', 'uglify-src']);
 
-gulp.task('exec-npm-install', function() {
-    gulp.src('./cache/app')
-        .pipe(exec('npm install --production', {
-            continueOnError: false, // default = false, true means don't emit error event 
-            pipeStdout: false, // default = false, true means stdout is written to file.contents 
-        }))
-        .pipe(exec.reporter({
-            err: true, // default = true, false means don't write err 
-            stderr: true, // default = true, false means don't write stderr 
-            stdout: true // default = true, false means don't write stdout 
-        }));
+gulp.task('exec-npm-install', function(cb) {
+    return exec("npm i --production", {cwd: path.join(process.cwd(), './cache/app')}, function (error, stdout, stderr) {
+        gutil.log('stdout: ' + stdout);
+        gutil.log('stderr: ' + stderr);
+        if (error !== null) {
+            gutil.log('exec error: ' + error);
+        }
+        cb();
+    });
 });
 
-gulp.task('exec-bower-install', function() {
-    gulp.src('./cache/app')
-        .pipe(exec('bower install', {
-            continueOnError: false, // default = false, true means don't emit error event 
-            pipeStdout: false, // default = false, true means stdout is written to file.contents 
-        }))
-        .pipe(exec.reporter({
-            err: true, // default = true, false means don't write err 
-            stderr: true, // default = true, false means don't write stderr 
-            stdout: true // default = true, false means don't write stdout 
-        }));
+gulp.task('exec-bower-install', function(cb) {
+    return exec("bower i", {cwd: path.join(process.cwd(), './cache/app')}, function (error, stdout, stderr) {
+        gutil.log('stdout: ' + stdout);
+        gutil.log('stderr: ' + stderr);
+        
+        if (error !== null) 
+            gutil.log('exec error: ' + error);
+            
+        cb();
+    });
 });
 
 gulp.task('build-exe', function() {
@@ -170,8 +170,8 @@ gulp.task('default', function(){
 
 gulp.task('build', function(){
     return runSequence(
-        'dist-clean', // sync
-		['uglify', 'css-libs-concat', 'less'], // parallel
+        ['dist-clean', 'cache-app-clean'],
+		['uglify', 'css-libs-concat', 'less'],
         'build-copy',
 		['exec-npm-install', 'exec-bower-install'],
         'build-exe',
