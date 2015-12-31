@@ -31,13 +31,6 @@ function events_init(index){
             callback();
         },
         function (callback) {
-            $.smkAlert({text:'Получение шаблонов', type:'info', time:1});
-            $.get('client_templates.html', function(data){
-                $('body').append(data);
-                callback();
-            });
-        },
-        function (callback) {
             $.smkAlert({text:'Запуск', type:'info', time:1});
             datepicker_init();
             new EventsCollection(global.index);

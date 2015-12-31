@@ -4,10 +4,9 @@
     <meta charset="UTF-8">
     <title>Школьный медиаархив</title>
     
-    <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.min.css">
     <link rel="stylesheet" href="bower_components/font-awesome/css/font-awesome.min.css">
-    <link rel="stylesheet" href="static/styles/css/bootstrap_extend.css">
-    <link rel="stylesheet" type="text/css" href="static/styles/css/style.min.css">
+    <link rel="stylesheet" href="dist/libs.min.css">
+    <link rel="stylesheet" href="dist/src.min.css">
     
     <script>
         var gui = require('nw.gui');
@@ -123,21 +122,43 @@
         </div>
     </div>
     
-    <link rel="stylesheet" href="bower_components/datatables-bootstrap3-plugin/media/css/datatables-bootstrap3.min.css">
-    <link rel="stylesheet" href="bower_components/smoke/dist/css/smoke.min.css">
-    <link rel="stylesheet" href="bower_components/bootstrap-daterangepicker/daterangepicker-bs3.min.css">
+    <script src="dist/libs.min.js"></script>
+    <script src="dist/src.min.js"></script>
     
-    <script src="bower_components/jquery/dist/jquery.min.js"></script>
-    <script src="bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
-    <script src="bower_components/moment/min/moment.min.js"></script>
-    <script src="bower_components/handlebars/handlebars.min.js"></script>
-    <script src="bower_components/datatables/media/js/jquery.dataTables.min.js"></script>
-    <script src="bower_components/smoke/dist/js/smoke.min.js"></script>
-    <script src="bower_components/matreshka/matreshka.min.js"></script>
-    <script src="bower_components/bootstrap-daterangepicker/daterangepicker.min.js"></script>
-    <script src="bower_components/datatables-bootstrap3-plugin/media/js/datatables-bootstrap3.min.js"></script>
-    <script src="bower_components/jquery.livefilter/jquery.liveFilter.js"></script>
+    <script id="eventTemplate" type="text/x-handlebars-template">
+        <tr class="event_row" data-dir="{{dir}}">
+            <td class="name">{{name}}</td>
+            <td>
+                <span class="date_tech" style="display: none;">{{date.year}}-{{date.month}}-{{date.day}}</span>
+                <span class="data">{{date.day}}.{{date.month}}.{{date.year}}</span>
+            </td>
+            <td>
+                <a class="open_folder"><i class="fa fa-folder"></i></a>
+                <a class="show_modal"><i class="fa fa-external-link"></i></a>
+            </td>
+        </tr>
+    </script>
     
-    <script src="scripts.min.js"></script>
+    <script id="event_modal_template" type="text/x-handlebars-template">
+        <div class="row">
+            <div class="col-md-3">
+                {{#if preview_photo}}
+                    <img src="{{dir}}{{preview_photo}}" class="col-md-12" style="cursor: pointer" title="Нажмите, чтобы открыть фото">
+                {{else}}
+                    <small>нет главной фотографии</small>
+                {{/if}}
+            </div>
+            <div class="col-md-9" id="text">загрузка...</div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <hr>
+                <button class="open_dir btn btn-primary"><i class="fa fa-folder"></i> Открыть директорию</button>
+                <button class="vk_post btn btn-default pull-right"><i class="fa fa-vk"></i> Выложить ВКонтакте</button>
+            </div>
+        </div>
+    </script>
+
+    
 </body>
 </html>
