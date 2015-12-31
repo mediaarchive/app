@@ -4,22 +4,24 @@ var nano = require('gulp-cssnano');
 var rename = require('gulp-rename');
 var uglify = require('gulp-uglify');
 var header = require('gulp-header');
-//var handlebars = require('gulp-handlebars');
-//var wrap = require('gulp-wrap');
-//var declare = require('gulp-declare');
 var concat = require('gulp-concat');
-//var apidoc = require('gulp-apidoc');
-//var mocha = require('gulp-mocha');
 var sourcemaps = require('gulp-sourcemaps');
-//var livereload = require('gulp-livereload');
+var clean = require('gulp-clean');
+var runSequence = require('run-sequence');
 
 var phpjs = require('phpjs');
 var date = phpjs.date('d.m.Y H:i:s');
 
+gulp.task('dist-clean', function(cb){
+    return gulp.src('dist/', {read: false}).pipe(clean())
+})
+
 gulp.task('less-main', function() {
     return gulp.src('styles/less/style.less')
+        .pipe(sourcemaps.init())
         .pipe(less())
         .pipe(nano())
+        .pipe(sourcemaps.write('./'))
         .pipe(rename('src.min.css'))
         .pipe(gulp.dest('dist/'));
 });
@@ -93,15 +95,14 @@ gulp.task('uglify-src', function(){
 
 gulp.task('uglify', ['uglify-libs', 'uglify-src']);
 
-gulp.task('default', ['uglify', 'css-libs-concat', 'less']);
+gulp.task('default', function(){
+    runSequence(
+        'dist-clean', // sync
+		['uglify', 'css-libs-concat', 'less'] // parallel
+	);
+});
 
 gulp.task('watch', function(){
-    livereload.listen();
-    
-    function cb() {
-        livereload.reload();
-    }
-    
     gulp.watch('public/styles/admin/less/*', ['less-admin', cb]);
     gulp.watch('public/styles/site/less/*', ['less-site', cb]);
     
