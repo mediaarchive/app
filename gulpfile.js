@@ -1,12 +1,14 @@
 var gulp = require('gulp');
 var less = require('gulp-less');
+var exec = require('gulp-exec');
+var clean = require('gulp-clean');
 var nano = require('gulp-cssnano');
 var rename = require('gulp-rename');
 var uglify = require('gulp-uglify');
 var header = require('gulp-header');
 var concat = require('gulp-concat');
+var builder = require('gulp-nw-builder');
 var sourcemaps = require('gulp-sourcemaps');
-var clean = require('gulp-clean');
 var runSequence = require('run-sequence');
 
 var phpjs = require('phpjs');
@@ -95,12 +97,88 @@ gulp.task('uglify-src', function(){
 
 gulp.task('uglify', ['uglify-libs', 'uglify-src']);
 
+gulp.task('exec-npm-install', function() {
+    gulp.src('./cache/app')
+        .pipe(exec('npm install --production', {
+            continueOnError: false, // default = false, true means don't emit error event 
+            pipeStdout: false, // default = false, true means stdout is written to file.contents 
+        }))
+        .pipe(exec.reporter({
+            err: true, // default = true, false means don't write err 
+            stderr: true, // default = true, false means don't write stderr 
+            stdout: true // default = true, false means don't write stdout 
+        }));
+});
+
+gulp.task('exec-bower-install', function() {
+    gulp.src('./cache/app')
+        .pipe(exec('bower install', {
+            continueOnError: false, // default = false, true means don't emit error event 
+            pipeStdout: false, // default = false, true means stdout is written to file.contents 
+        }))
+        .pipe(exec.reporter({
+            err: true, // default = true, false means don't write err 
+            stderr: true, // default = true, false means don't write stderr 
+            stdout: true // default = true, false means don't write stdout 
+        }));
+});
+
+gulp.task('build-exe', function() {
+    return gulp.src(['./cache/app/**/*'])
+        .pipe(builder({
+            version: 'v0.12.2',
+            platforms: ['win']
+        }));
+});
+
+gulp.task('build-copy', function(){
+    return gulp.src([
+        './**/*',
+        '!./builds/**/*',
+        '!./builds',
+        '!./cache/**/*',
+        '!./cache',
+        '!./styles/**/*',
+        '!./styles',
+        '!./js/**/*',
+        '!./js',
+        '!./node_modules/**/*',
+        '!./node_modules',
+        '!./bower_components/**/*',
+        '!./bower_components',
+        '!./.gitignore',
+        '!./*.log',
+        '!./*.komodoproject',
+        '!./config_sample.json',
+        '!./start.bat',
+        '!./gruntfile.js',
+        '!./gulpfile.js',
+    ])
+        .pipe(gulp.dest('./cache/app/'));
+});
+
+gulp.task('cache-app-clean', function(){
+    return gulp.src('cache/app/', {read: false}).pipe(clean())
+});
+
 gulp.task('default', function(){
-    runSequence(
+    return runSequence(
         'dist-clean', // sync
 		['uglify', 'css-libs-concat', 'less'] // parallel
 	);
 });
+
+gulp.task('build', function(){
+    return runSequence(
+        'dist-clean', // sync
+		['uglify', 'css-libs-concat', 'less'], // parallel
+        'build-copy',
+		['exec-npm-install', 'exec-bower-install'],
+        'build-exe',
+        'cache-app-clean'
+	);
+});
+
 
 gulp.task('watch', function(){
     gulp.watch('styles/less/style.less', ['less-main']);
