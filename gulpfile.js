@@ -103,28 +103,6 @@ gulp.task('default', function(){
 });
 
 gulp.task('watch', function(){
-    gulp.watch('public/styles/admin/less/*', ['less-admin', cb]);
-    gulp.watch('public/styles/site/less/*', ['less-site', cb]);
-    
-    gulp.watch([
-        'public/js/admin/tests/edit/**/**',
-        'public/js/common/handlebars_helpers.js',
-        '!public/js/admin/tests/edit/all.min.js'
-    ], ['uglify-admin_test_editor', cb]);
-    
-    gulp.watch([
-        'public/js/external/tests/main.js'
-    ], ['uglify-test_viewer', cb]);
-    
-    gulp.watch([
-        'public/styles/external/tests/*',
-        '!public/styles/external/tests/*.min.css'
-    ], ['less-test_viewer', cb]);
-    
-    gulp.watch('public/js/external/tests/templates/src/**/**.html', ['handlebars-test_viewer', cb]);
-    
-    gulp.watch([
-        'public/js/admin/presenter/app/src/models/**.js',
-        'public/js/admin/presenter/app/src/**.js'
-    ], ['uglify-presenter', cb]);
-})
+    gulp.watch('styles/less/style.less', ['less-main']);
+    gulp.watch('js/**/**', ['uglify-src']);
+});
