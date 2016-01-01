@@ -22,7 +22,7 @@ function dataURItoBlob(dataURI) {
     return new Blob([ia], {type:mimeString});
 }
 
-var EventModel = Class({
+var Event = Class({
     'extends': MK.Object,
     constructor: function(data, collection) {
         this.jset(data);

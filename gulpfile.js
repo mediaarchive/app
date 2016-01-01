@@ -13,6 +13,7 @@ var runSequence = require('run-sequence');
 var exec = require('child_process').exec;
 var path = require('path');
 var gutil = require('gulp-util');
+var babel = require('gulp-babel');
 
 var phpjs = require('phpjs');
 var date = phpjs.date('d.m.Y H:i:s');
@@ -72,25 +73,16 @@ gulp.task('uglify-libs', function(){
 
 gulp.task('uglify-src', function(){
     return gulp.src([
-        'js/general.js',
-        'js/base.js',
-        'js/local_data.js',
-        'js/pages.js',
-        'js/events_init.js',
-        'js/index_update.js',
-        'js/vk.js',
-        'js/settings.js',
-        'js/view.js',
-        'js/data/base.js',
-        'js/data/file.js',
-        
-        'js/models/Event.js',
-        'js/collections/Events.js',
-        
-        'js/run.js',
+        'js/collections/*.js',
+        'js/models/*.js',
+        'js/data/*.js',
+        'js/*.js'
     ])
         .pipe(sourcemaps.init())
-        .pipe(uglify())
+        .pipe(babel({
+			presets: ['es2015']
+		}))
+        //.pipe(uglify())
         .pipe(concat('src.min.js'))
         .pipe(sourcemaps.write('./'))
         .pipe(header('/*! MediaArchiveApp src (build '+date+') ma.atnartur.ru */' + "\r\n"))

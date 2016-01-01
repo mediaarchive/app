@@ -26,7 +26,15 @@ function datepicker_init() {
     })
 }
 
-function main_init() {
+var main;
+
+$(document).ready(function(){
+    win.showDevTools();
+        
+    global.config = {}
+    
+    main = new Main();
+    
     var json;
     function error() {
         $('.screen').hide();
@@ -37,25 +45,12 @@ function main_init() {
             process.exit();  
     }
     
-    pages._start();
-    btn_selector_init();
-    settings_init();
-    
     if(check_settings())
         events_init();
     else{
         $("#pages .page").hide();
         $('#pages [data-page=settings]').show();
     }
-}
-
-$(document).ready(function(){
-    //var ver_stable = true;
-    //if (typeof ver_stable == 'undefined') // если не стабильная
-        win.showDevTools();
-        
-    global.config = {}
-    main_init();
 
     $('#update_index_button').click(function(){
         index_update();

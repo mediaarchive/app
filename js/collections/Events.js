@@ -1,6 +1,6 @@
 var EventsCollection = Class({
     'extends': MK.Array,
-    Model: EventModel,
+    Model: Event,
     itemRenderer: function(model){
         return render(false, '#eventTemplate', model);
     },
