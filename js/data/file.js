@@ -24,6 +24,7 @@ data.file.exec = exec;
 
 data.file.get_file = function(path){
     return new Promise(function(resolve, reject) {
+        console.log(11, global.main)
         fs.readFile(global.main.settings.root_dir + path, (err, data) => {
             if (err) { 
                 reject(false);

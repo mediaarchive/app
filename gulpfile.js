@@ -70,6 +70,7 @@ gulp.task('uglify-libs', function(){
         bc + 'smoke/dist/js/smoke.min.js',
         bc + 'matreshka/matreshka.min.js',
         bc + 'bootstrap-daterangepicker/daterangepicker.min.js',
+        bc + 'jquery-slimscroll/jquery.slimscroll.min.js',
         bc + 'AdminLTE/dist/js/app.min.js',
         bc + 'datatables-bootstrap3-plugin/media/js/datatables-bootstrap3.min.js',
         bc + 'jquery.livefilter/jquery.liveFilter.js',
@@ -83,6 +84,19 @@ gulp.task('uglify-libs', function(){
 });
 
 gulp.task('uglify-src', function(){
+    
+    var babel_plugins = [
+        'transform-async-to-generator',
+        'transform-runtime'
+    ];
+    
+    if (argv.src_uglify === true){
+        babel_plugins.push('transform-member-expression-literals');
+        babel_plugins.push('transform-merge-sibling-variables');
+        babel_plugins.push('transform-minify-booleans');
+        babel_plugins.push('transform-property-literals');
+    }
+    
     var g = gulp.src([
         'js/collections/*.js',
         'js/models/*.js',
@@ -92,10 +106,7 @@ gulp.task('uglify-src', function(){
         .pipe(sourcemaps.init())
         .pipe(babel({
 			presets: ['es2015'],
-            plugins: [
-                'transform-async-to-generator',
-                'transform-runtime'
-            ]
+            plugins: babel_plugins
 		}));
         
     if (argv.src_uglify === true) 

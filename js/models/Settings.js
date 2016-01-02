@@ -64,6 +64,7 @@ class Settings extends MK.Object {
         });
     }
     check(){
+        console.log(111, this.root_dir, this.data_type)
         return typeof this.root_dir !== 'undefined' && this.root_dir.length != 0 && this.data_type != '' && this.root_dir != '';
     }
 }

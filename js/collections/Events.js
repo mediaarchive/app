@@ -15,6 +15,9 @@ class EventsCollection extends MK.Array{
             //.bindNode('container', ':sandbox tbody')
             .recreate(data);
         console.log('events collection: after recreate');
+        
+        $('#events_content').liveFilter('#search', 'tr');
+
         //var dt = this.$(':sandbox').DataTable();
 
         //if(typeof events_datatable !== 'undefined')

@@ -156,7 +156,7 @@
     <script src="dist/src.min.js"></script>
     
     <script id="eventTemplate" type="text/x-handlebars-template">
-        <li>
+        <li class="event">
             <i class="fa fa-calendar-o bg-blue"></i>
             <div class="timeline-item">
                 <span class="time"><i class="fa fa-clock-o"></i> {{date.day}}.{{date.month}}.{{date.year}}</span>
@@ -165,17 +165,6 @@
         </li>
         
     </script>
-    <!--<tr class="event_row" data-dir="{{dir}}">
-            <td class="name">{{name}}</td>
-            <td>
-                <span class="date_tech" style="display: none;">{{date.year}}-{{date.month}}-{{date.day}}</span>
-                <span class="data">{{date.day}}.{{date.month}}.{{date.year}}</span>
-            </td>
-            <td>
-                <a class="open_folder"><i class="fa fa-folder"></i></a>
-                <a class="show_modal"><i class="fa fa-external-link"></i></a>
-            </td>
-    </tr>-->
     <script id="event_modal_template" type="text/x-handlebars-template">
         <div class="row">
             <div class="col-md-3">
@@ -195,7 +184,6 @@
             </div>
         </div>
     </script>
-    <script src="http://localhost:35729/livereload.js"></script>
     
 </body>
 </html>

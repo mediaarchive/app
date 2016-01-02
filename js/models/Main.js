@@ -10,10 +10,16 @@ class Main extends MK.Object {
         
         pages._start();
         this.settings = new Settings();
+        var self = this;
         
         if (this.settings.check()) {
+            $.smkProgressBar({element: 'body', status: 'start'});
+
             console.log('settings OK');
-            this.events_init();
+            
+            setTimeout(function(){
+                self.events_init();
+            }, 1000)
             
             this.datepicker_init();
 
@@ -27,15 +33,18 @@ class Main extends MK.Object {
     async events_init(){
         console.log('events init')
         $.smkProgressBar({element: 'body', status: 'start'});
+        console.log(1)
     
         $.smkAlert({text: 'Получение индекса', type: 'info', time: 1});
         let json = await data.get_file('/index.json');
+        console.log(2)
         
         if (json == false) {
             $.smkAlert({text: 'Не удалось загрузить список мероприятий', type: 'danger', permanent: true});
             $.smkProgressBar({element: 'body', status: 'end'});
         }
         else {
+            console.log(3)
             json = JSON.parse(json);
             if (!json) {
                 $.smkAlert({text: 'Ошибка разбора индекса', type: 'danger', permanent: true});
@@ -52,7 +61,6 @@ class Main extends MK.Object {
 
             
             $.smkProgressBar({element: 'body', status: 'end'});
-            $('#events_table tbody').liveFilter('#search', 'tr');
         }
         
         return;
