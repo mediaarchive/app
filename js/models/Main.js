@@ -57,6 +57,8 @@ class Main extends MK.Object {
             this.events = new EventsCollection(global.index);
             console.log('after events collection creation')
             
+            $('#events_count').text(this.events.length);
+            
             $.smkProgressBar({element: 'body', status: 'end'});
             this.show_app();
         }
