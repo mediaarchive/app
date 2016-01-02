@@ -15,7 +15,7 @@ class EventsCollection extends MK.Array{
             
         console.log('events collection: after recreate');
         
-        $('#events_content').liveFilter('#search', 'tr');
+        $('#events_content').liveFilter('#search', 'li');
         this.sort();
     }
     sort(){
