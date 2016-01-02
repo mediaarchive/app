@@ -36,6 +36,10 @@ class Main extends MK.Object {
             $.smkProgressBar({element: 'body', status: 'start'});
             self.index_update();
         });
+        
+        $('#open_folder_button').click(() => {
+            gui.Shell.openItem(path.normalize(self.settings.root_dir + '/архив/'));
+        });
     }
     async events_init(){
         console.log('events init')
