@@ -14,7 +14,22 @@
         var config = require('./config');
     </script>
 </head>
-<body class="skin-blue fixed  sidebar-mini">
+<body class="skin-blue fixed sidebar-mini lockscreen">
+    <div class="lockscreen-wrapper">
+        <div class="lockscreen-logo">
+            <a href="#">
+                <i class="fa fa-folder"></i><br>
+                Медиаархив
+            </a>
+            <br>
+            <small>загрузка приложения...</small>
+        </div>
+        
+        <div class="lockscreen-footer text-center">
+            &copy; 2015-2016 <a href="http://clienddev.ru">ClienDDev team</a> & others<br>
+        </div>
+    </div>
+    
     <div class="wrapper">
         <div id="main" class="screen">
             <header class="main-header">
@@ -27,14 +42,6 @@
                 </a>
                 <!-- Header Navbar: style can be found in header.less -->
                 <nav class="navbar navbar-static-top" role="navigation">
-                    <!-- Sidebar toggle button-->
-                    <a href="#" class="sidebar-toggle" data-toggle="offcanvas" role="button">
-                        <span class="sr-only">Toggle navigation</span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                    </a>
-              
                     <div class="navbar-custom-menu">
                         <ul class="nav navbar-nav">
                                 
@@ -69,7 +76,6 @@
                     </div>
                     
                     <ul class="sidebar-menu">
-                        <li class="header">MAIN NAVIGATION</li>
                         <li><a href="#" id="update_index_button"><i class="fa fa-refresh"></i> <span>Обновить</span></a></li>
                     </ul>
                 </section>

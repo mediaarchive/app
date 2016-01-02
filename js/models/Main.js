@@ -60,6 +60,7 @@ class Main extends MK.Object {
             console.log('after events collection creation')
             
             $.smkProgressBar({element: 'body', status: 'end'});
+            this.show_app();
         }
         
         return;
@@ -93,5 +94,10 @@ class Main extends MK.Object {
     show_page(name) {
         $('.page').hide();
         $('.page[data-page='+name+']').show();
+    }
+    show_app(){
+        $('body').removeClass('lockscreen')
+        $('.lockscreen-wrapper').hide();
+        $('.wrapper').show();
     }
 }; 
