@@ -47,6 +47,8 @@ var bc = 'bower_components/';
 gulp.task('css-libs-concat', function(){
     return gulp.src([
         bc + 'bootstrap/dist/css/bootstrap.min.css',
+        bc + 'AdminLTE/dist/css/AdminLTE.min.css',
+        bc + 'AdminLTE/dist/css/skins/skin-blue.min.css',
         bc + 'datatables-bootstrap3-plugin/media/css/datatables-bootstrap3.min.css',
         bc + 'smoke/dist/css/smoke.min.css',
         bc + 'bootstrap-daterangepicker/daterangepicker-bs3.min.css'
@@ -68,6 +70,7 @@ gulp.task('uglify-libs', function(){
         bc + 'smoke/dist/js/smoke.min.js',
         bc + 'matreshka/matreshka.min.js',
         bc + 'bootstrap-daterangepicker/daterangepicker.min.js',
+        bc + 'AdminLTE/dist/js/app.min.js',
         bc + 'datatables-bootstrap3-plugin/media/js/datatables-bootstrap3.min.js',
         bc + 'jquery.livefilter/jquery.liveFilter.js',
     ])

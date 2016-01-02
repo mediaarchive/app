@@ -27,7 +27,6 @@ class Main extends MK.Object {
     async events_init(){
         console.log('events init')
         $.smkProgressBar({element: 'body', status: 'start'});
-        
     
         $.smkAlert({text: 'Получение индекса', type: 'info', time: 1});
         let json = await data.get_file('/index.json');

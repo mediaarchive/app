@@ -26,6 +26,7 @@
     "matreshka": "~1.0.6",
     "moment": "~2.10.3",
     "smoke": "~2.2.4",
-    "jquery.livefilter": "cheeaun/jquery.livefilter"
+    "jquery.livefilter": "cheeaun/jquery.livefilter",
+    "AdminLTE": "adminlte#~2.3.2"
   }
 }

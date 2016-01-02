@@ -22,13 +22,13 @@ class Event extends MK.Object{
                     self.$(this).data('dir', v);
                 }
             });
-            this.$('.show_modal').click(() => {
+            this.$(':sandbox').click(() => {
                 self.show_modal();
             })
             
-            this.$('.open_folder').click(() => {
-                gui.Shell.openItem(path.normalize(global.main.settings.root_dir + '/архив/' + self.dir));
-            });
+            //this.$('.open_folder').click(() => {
+            //    gui.Shell.openItem(path.normalize(global.main.settings.root_dir + '/архив/' + self.dir));
+            //});
         });
     }
     async show_modal(){

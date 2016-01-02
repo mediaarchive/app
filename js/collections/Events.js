@@ -9,22 +9,24 @@ class EventsCollection extends MK.Array{
         this.Model = Event;
         
         this
-            .bindNode('sandbox', '.page[data-page=events] table')
-            .bindNode('container', ':sandbox tbody')
+            .bindNode('sandbox', '.page[data-page=events] #events_content')
+            .bindNode('container', ':sandbox')
+            //.bindNode('sandbox', '.page[data-page=events] table')
+            //.bindNode('container', ':sandbox tbody')
             .recreate(data);
         console.log('events collection: after recreate');
         //var dt = this.$(':sandbox').DataTable();
 
-        if(typeof events_datatable !== 'undefined')
-            events_datatable.destroy();
-
-        events_datatable = this.$(':sandbox').DataTable({
-            order: [ 1, 'desc' ],
-            language: {
-                url: 'client_libs/datatables_Russian.json'
-            },
-            paging: false,
-            searching: false
-        });
+        //if(typeof events_datatable !== 'undefined')
+        //    events_datatable.destroy();
+        //
+        //events_datatable = this.$(':sandbox').DataTable({
+        //    order: [ 1, 'desc' ],
+        //    language: {
+        //        url: 'client_libs/datatables_Russian.json'
+        //    },
+        //    paging: false,
+        //    searching: false
+        //});
     }
 };
