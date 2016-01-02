@@ -1,20 +1,4 @@
 var vk = {
-    init: function(){
-        this.settings = local_data.get('vk');
-        console.log(this.settings);
-        if(typeof this.settings === 'undefined') {
-            $("#vk_auth_start").click(function () {
-                $(this).attr('disabled', 'disabled');
-                vk.start_auth();
-            });
-        }
-        else{
-            $("#vk_auth_start").text('Загрузка...').attr('disabled', 'disabled');
-            this.get('users.get', {user_ids: this.settings.user_id}, function(res){
-                $("#vk_auth_start").text('Авторизованы как ' + res.response[0].first_name + ' ' + res.response[0].last_name);
-            });
-        }
-    },
     start_auth: function(){
         var vk_auth_link = 'https://oauth.vk.com/authorize?client_id=' + config.api.vk.app_id + '&'+
             'redirect_uri=https://oauth.vk.com/blank.html&display=page&scope=groups,wall,photos,offline&response_type=token&v=5.37';
@@ -24,15 +8,13 @@ var vk = {
             if(vk_win.window.location.hash.indexOf('access_token') !== -1){
                 vk_win.close();
                 var hash = vk_win.window.location.hash.replace('#', '');
-
-                vk.settings = {};
-
+                var settings = {}
                 hash.split('&').forEach(function(item){
                     var item_obj = item.split('=');
-                    vk.settings[item_obj[0]] = item_obj[1];
+                    settings[item_obj[0]] = item_obj[1];
                 });
-                local_data.set('vk', vk.settings);
-                vk.init();
+                
+                main.settings.vk = settings;
             }
         });
     },
