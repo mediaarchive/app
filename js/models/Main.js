@@ -23,12 +23,10 @@ class Main extends MK.Object {
             
             this.datepicker_init();
 
-            this.show_page('events');
+            pages.change('events');
         }
-        else{
-            $("#pages .page").hide();
-            $('#pages [data-page=settings]').show();
-        }
+        else
+            pages.change('settings');
     }
     async events_init(){
         console.log('events init')
@@ -90,10 +88,6 @@ class Main extends MK.Object {
                 endDate: new Date()
             });
         })
-    }
-    show_page(name) {
-        $('.page').hide();
-        $('.page[data-page='+name+']').show();
     }
     show_app(){
         $('body').removeClass('lockscreen')
