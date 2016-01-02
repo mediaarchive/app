@@ -1,3 +1,7 @@
+/**
+ * run with --src_uglify for run without uglifing src
+*/
+
 var gulp = require('gulp');
 var less = require('gulp-less');
 var exec = require('gulp-exec');
@@ -14,6 +18,10 @@ var exec = require('child_process').exec;
 var path = require('path');
 var gutil = require('gulp-util');
 var babel = require('gulp-babel');
+var livereload = require('gulp-livereload');
+
+var argv = require('optimist').argv;
+console.log(argv);
 
 var phpjs = require('phpjs');
 var date = phpjs.date('d.m.Y H:i:s');
@@ -72,7 +80,7 @@ gulp.task('uglify-libs', function(){
 });
 
 gulp.task('uglify-src', function(){
-    return gulp.src([
+    var g = gulp.src([
         'js/collections/*.js',
         'js/models/*.js',
         'js/data/*.js',
@@ -80,9 +88,17 @@ gulp.task('uglify-src', function(){
     ])
         .pipe(sourcemaps.init())
         .pipe(babel({
-			presets: ['es2015']
-		}))
-        .pipe(uglify())
+			presets: ['es2015'],
+            plugins: [
+                'transform-async-to-generator',
+                'transform-runtime'
+            ]
+		}));
+        
+    if (argv.src_uglify === true) 
+        g.pipe(uglify())
+    
+    return g
         .pipe(concat('src.min.js'))
         .pipe(sourcemaps.write('./'))
         .pipe(header('/*! MediaArchiveApp src (build '+date+') ma.atnartur.ru */' + "\r\n"))
@@ -154,6 +170,7 @@ gulp.task('cache-app-clean', function(){
 });
 
 gulp.task('default', function(){
+    argv.src_uglify = true;
     return runSequence(
         'dist-clean', // sync
 		['uglify', 'css-libs-concat', 'less'] // parallel
@@ -161,6 +178,7 @@ gulp.task('default', function(){
 });
 
 gulp.task('build', function(){
+    argv.src_uglify = true;
     return runSequence(
         ['dist-clean', 'cache-app-clean'],
 		['uglify', 'css-libs-concat', 'less'],
@@ -173,6 +191,12 @@ gulp.task('build', function(){
 
 
 gulp.task('watch', function(){
-    gulp.watch('styles/less/style.less', ['less-main']);
-    gulp.watch('js/**/**', ['uglify-src']);
+    livereload.listen();
+    
+    function cb() {
+        livereload.reload();
+    }
+    
+    gulp.watch('styles/less/style.less', ['less-main', cb]);
+    gulp.watch('js/**/**', ['uglify-src', cb]);
 });

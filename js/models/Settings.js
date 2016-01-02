@@ -45,13 +45,7 @@ class Settings extends MK.Object {
         vk.init();
     }
     check(){
-        var array = ['data_type', 'root_dir'];
-    
-        for(var key in array){
-            if (array[key] == undefined) 
-                return false;
-        }
-        
-        return true;
+        console.log('check', typeof this.root_dir !== 'undefined' && this.root_dir.length != 0 && this.data_type != '' && this.root_dir != '', this.root_dir )
+        return typeof this.root_dir !== 'undefined' && this.root_dir.length != 0 && this.data_type != '' && this.root_dir != '';
     }
 }

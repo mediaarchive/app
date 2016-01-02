@@ -8,8 +8,8 @@ var mammoth = require("mammoth");
 
 data.file = {};
 
-data.get = function(path, callback){
-    fs.readdir(global.config.root_dir + path, function(e, r){
+data.file.get = function(path, callback){
+    fs.readdir(global.main.settings.root_dir + path, function(e, r){
         if (e) {
             console.error(e);
             callback(false);
@@ -18,12 +18,13 @@ data.get = function(path, callback){
     })
 };
 
-data.exec = exec;
+data.file.exec = exec;
 
-data.get_file = function(path, callback){
-    fs.readFile(global.config.root_dir + path, function(err, data){
-            if (err) {
-                callback(false);
+data.file.get_file = function(path){
+    return new Promise(function(resolve, reject) {
+        fs.readFile(global.main.settings.root_dir + path, (err, data) => {
+            if (err) { 
+                reject(false);
                 console.error(err);
                 return false;
             }
@@ -32,27 +33,25 @@ data.get_file = function(path, callback){
             
             if (ext == '.txt') {
                 iconv.extendNodeEncodings();
-
+    
                 var new_data = data.toString('utf8');
-
+    
                 if(new_data.indexOf('�') !== -1)
                     new_data = data.toString('win1251');
-
+    
                 data = new_data;
                 iconv.undoExtendNodeEncodings();
-                callback(data);
+                resolve(data);
             }
-            else if (ext == '.doc') {
-
-            }
+            //else if (ext == '.doc') {}
             else if (ext == '.docx') {
                 mammoth.extractRawText({buffer: data}).then(function(result){
                     var data = result.value; // The raw text
-                    callback(data);
+                    resolve(data);
                 });
             }
             else
-                callback(data);
-        }
-    );
+                resolve(data);
+        });
+    });
 }

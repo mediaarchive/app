@@ -1,17 +1,18 @@
-var EventsCollection = Class({
-    'extends': MK.Array,
-    Model: Event,
-    itemRenderer: function(model){
+var events_datatable;
+
+class EventsCollection extends MK.Array{
+    itemRenderer (model){
         return render(false, '#eventTemplate', model);
-    },
-    constructor: function(data) {
-        var self = this;
+    }
+    constructor(data) {
+        super(data)
+        this.Model = Event;
         
         this
             .bindNode('sandbox', '.page[data-page=events] table')
             .bindNode('container', ':sandbox tbody')
             .recreate(data);
-
+        console.log('events collection: after recreate');
         //var dt = this.$(':sandbox').DataTable();
 
         if(typeof events_datatable !== 'undefined')
@@ -26,4 +27,4 @@ var EventsCollection = Class({
             searching: false
         });
     }
-});
+};
