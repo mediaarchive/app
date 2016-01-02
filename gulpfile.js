@@ -82,7 +82,7 @@ gulp.task('uglify-src', function(){
         .pipe(babel({
 			presets: ['es2015']
 		}))
-        //.pipe(uglify())
+        .pipe(uglify())
         .pipe(concat('src.min.js'))
         .pipe(sourcemaps.write('./'))
         .pipe(header('/*! MediaArchiveApp src (build '+date+') ma.atnartur.ru */' + "\r\n"))
