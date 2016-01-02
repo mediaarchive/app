@@ -56,9 +56,8 @@ class Main extends MK.Object {
 
             $.smkAlert({text:'Запуск', type:'info', time:1});
             
-            new EventsCollection(global.index);
+            this.events = new EventsCollection(global.index);
             console.log('after events collection creation')
-
             
             $.smkProgressBar({element: 'body', status: 'end'});
         }

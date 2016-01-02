@@ -125,16 +125,6 @@
                     <section class="content">
                         <ul class="timeline" id="events_content"></ul>
                     </section>
-                    <!--<table class="table table-condensed table-striped" id="events_table">
-                        <thead>
-                            <tr>
-                                <th>Название</th>
-                                <th>Дата</th>
-                                <th>Материалы</th>
-                            </tr>
-                        </thead>
-                        <tbody></tbody>
-                    </table>-->
                 </div>
             </div>
         </div>
@@ -156,7 +146,7 @@
     <script src="dist/src.min.js"></script>
     
     <script id="eventTemplate" type="text/x-handlebars-template">
-        <li class="event">
+        <li class="event" data-date="{{date.year}}{{date.month}}{{date.day}}">
             <i class="fa fa-calendar-o bg-blue"></i>
             <div class="timeline-item">
                 <span class="time"><i class="fa fa-clock-o"></i> {{date.day}}.{{date.month}}.{{date.year}}</span>

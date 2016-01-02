@@ -11,25 +11,27 @@ class EventsCollection extends MK.Array{
         this
             .bindNode('sandbox', '.page[data-page=events] #events_content')
             .bindNode('container', ':sandbox')
-            //.bindNode('sandbox', '.page[data-page=events] table')
-            //.bindNode('container', ':sandbox tbody')
             .recreate(data);
+            
         console.log('events collection: after recreate');
         
         $('#events_content').liveFilter('#search', 'tr');
-
-        //var dt = this.$(':sandbox').DataTable();
-
-        //if(typeof events_datatable !== 'undefined')
-        //    events_datatable.destroy();
-        //
-        //events_datatable = this.$(':sandbox').DataTable({
-        //    order: [ 1, 'desc' ],
-        //    language: {
-        //        url: 'client_libs/datatables_Russian.json'
-        //    },
-        //    paging: false,
-        //    searching: false
-        //});
+        this.sort();
+    }
+    sort(){
+        console.log('sorting');
+        var items = $('#events_content li').get();
+        items.sort(function(a,b){
+            var a = $(a).data('date');
+            var b = $(b).data('date');
+          
+            if (a > b) return -1;
+            if (a < b) return 1;
+            return 0;
+        });
+        var ul = $('#events_content');
+        $.each(items, function(i, li){
+            ul.append(li);
+        });
     }
 };
