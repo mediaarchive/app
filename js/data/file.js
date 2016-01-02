@@ -8,14 +8,16 @@ var mammoth = require("mammoth");
 
 data.file = {};
 
-data.file.get = function(path, callback){
-    fs.readdir(global.main.settings.root_dir + path, function(e, r){
-        if (e) {
-            console.error(e);
-            callback(false);
-        }
-        callback(r);
-    })
+data.file.get = function(path){
+    return new Promise(function(resolve, reject) {
+        fs.readdir(global.main.settings.root_dir + path, function(e, r){
+            if (e) {
+                console.error(e);
+                reject(false);
+            }
+            resolve(r);
+        });
+    });
 };
 
 data.file.exec = exec;

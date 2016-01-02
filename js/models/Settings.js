@@ -33,7 +33,7 @@ class Settings extends MK.Object {
             setValue: (v) => {
                 var $elem = $('#settings #vk_button');
                 
-                if(typeof v === 'undefined') 
+                if(typeof v === 'undefined' || v == '') 
                     $elem.removeAttr('disabled')
                 else{
                     $elem.text('Загрузка...').attr('disabled', 'disabled');
