@@ -85,44 +85,49 @@
         
             <div class="container-fluid content-wrapper" id="pages">
                 <div data-page="settings" class="page" id="settings">
-                    <form class="form-horizontal" id="settings_form">
-                        <div class="form-group">
-                            <label class="col-sm-2 control-label">Тип данных</label>
-                            <div class="col-sm-10">
-                                <select name="data_type" id="data_type" class="form-control">
-                                    <option value="">Выбрать</option>
-                                    <option value="files">Файлы</option>
-                                    <option value="yadisk">Яндекс Диск API</option>
-                                </select>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label class="col-sm-2 control-label">Корневая директория</label>
-                            <div class="col-sm-10" id="root_dir">
-                                <div id="files">
-                                    <input type="file" webkitdirectory id="file_root_dir_selector" />
+                    <div class="content-header">
+                        <h1>Настройки</h1>
+                    </div>
+                    <section class="content">
+                        <form class="form-horizontal" id="settings_form">
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label">Тип данных</label>
+                                <div class="col-sm-10">
+                                    <select name="data_type" id="data_type" class="form-control">
+                                        <option value="">Выбрать</option>
+                                        <option value="files">Файлы</option>
+                                        <option value="yadisk">Яндекс Диск API</option>
+                                    </select>
                                 </div>
-                                <div id="yadisk">
-                                    <div class="btn btn-default" id="choose">Выбрать</div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label">Корневая директория</label>
+                                <div class="col-sm-10" id="root_dir">
+                                    <div id="files">
+                                        <input type="file" webkitdirectory id="file_root_dir_selector" />
+                                    </div>
+                                    <div id="yadisk">
+                                        <div class="btn btn-default" id="choose">Выбрать</div>
+                                    </div>
+                                    <div id="nothing">
+                                        <p class="help-block">выберите тип данных</p>
+                                    </div>
+                                    <p class="help-block">Сейчас: <span id="dir">(пусто)</span></p>
                                 </div>
-                                <div id="nothing">
-                                    <p class="help-block">выберите тип данных</p>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label">ВКонтакте</label>
+                                <div class="col-sm-10" id="vk">
+                                    <button class="btn btn-primary" id="vk_button" type="button"><i class="fa fa-vk"></i> Подключить ВКонтакте</button>
                                 </div>
-                                <p class="help-block">Сейчас: <span id="dir">(пусто)</span></p>
                             </div>
-                        </div>
-                        <div class="form-group">
-                            <label class="col-sm-2 control-label">ВКонтакте</label>
-                            <div class="col-sm-10" id="vk">
-                                <button class="btn btn-primary" id="vk_button" type="button"><i class="fa fa-vk"></i> Подключить ВКонтакте</button>
+                            <div class="form-group">
+                                <div class="col-sm-offset-2 col-sm-10">
+                                    <button type="button" id="start_button" class="btn btn-primary">Продолжить</button>
+                                </div>
                             </div>
-                        </div>
-                        <div class="form-group">
-                            <div class="col-sm-offset-2 col-sm-10">
-                                <button type="button" id="start_button" class="btn btn-primary">Продолжить</button>
-                            </div>
-                        </div>
-                    </form>
+                        </form>
+                    </section>
                 </div>
                 <div data-page="events" class="page">
                     <div class="content-header">

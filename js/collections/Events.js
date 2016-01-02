@@ -8,6 +8,8 @@ class EventsCollection extends MK.Array{
         super(data)
         this.Model = Event;
         
+        $('#events_content').html('');
+        
         this
             .bindNode('sandbox', '.page[data-page=events] #events_content')
             .bindNode('container', ':sandbox')

@@ -55,7 +55,7 @@ class Settings extends MK.Object {
         })
                     
         $('#start_button').click(function(){
-            events_init();
+            main.events_init();
         });
     
         $("#vk_button").click(function () {
