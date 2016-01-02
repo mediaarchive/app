@@ -19,8 +19,7 @@ class EventsCollection extends MK.Array{
         
         this.sort();
         this.update_labels();
-        
-        $('#events_content').liveFilter('#search', 'li:not(.time-label)');
+        this.search();
     }
     sort(){
         console.log('sorting');
@@ -69,5 +68,17 @@ class EventsCollection extends MK.Array{
                   '<span class="bg-red">' + month + ' ' + year + '</span>'+
             '</li>')
         }
+    }
+    search(){
+        $('#events_content').liveFilter('#search', 'li:not(.time-label)', {
+            filterChildSelector: 'h3'
+        });
+        $('#search').keyup(function(){
+            var $elem = $(this);
+            if ($elem.val() == '') 
+                $('#events_content .time-label').show();
+            else
+                $('#events_content .time-label').hide();
+        });
     }
 };
