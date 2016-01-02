@@ -2,6 +2,10 @@
  * Created by ClienDDev team (clienddev.ru)
  * Developer: Artur Atnagulov (atnartur)
  */
+
+var indexer = require('SchoolMediaIndex');
+var path = require('path');
+
 class Main extends MK.Object {
     constructor() {
         super();
@@ -27,6 +31,11 @@ class Main extends MK.Object {
         }
         else
             pages.change('settings');
+            
+        $('#update_index_button').click(() => {
+            $.smkProgressBar({element: 'body', status: 'start'});
+            self.index_update();
+        });
     }
     async events_init(){
         console.log('events init')
@@ -95,5 +104,12 @@ class Main extends MK.Object {
         $('body').removeClass('lockscreen')
         $('.lockscreen-wrapper').hide();
         $('.wrapper').show();
+    }
+    index_update(){
+        var index = indexer.dirs.start(this.settings.root_dir + '/архив/');
+        console.log(index);
+        global.index = index;
+        indexer.render.json_generate(path.normalize(this.settings.root_dir + '/index.json'), index);
+        this.events_init();
     }
 }; 
