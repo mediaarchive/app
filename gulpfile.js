@@ -161,15 +161,17 @@ gulp.task('build-exe', function() {
     return gulp.src(['./cache/app/**/*'])
         .pipe(builder({
             version: 'v0.12.2',
-            platforms: ['win']
+            platforms: ['win'],
+            buildType: 'versioned',
+            quiet: true 
         }));
 });
 
 gulp.task('build-copy', function(){
     return gulp.src([
         './**/*',
-        '!./builds/**/*',
-        '!./builds',
+        '!./build/**/*',
+        '!./build',
         '!./cache/**/*',
         '!./cache',
         '!./styles/**/*',
@@ -207,9 +209,9 @@ gulp.task('build', function(){
     argv.src_uglify = true;
     return runSequence(
         ['dist-clean', 'cache-app-clean'],
-		['uglify', 'css-libs-concat', 'less'],
+		['uglify', 'css-libs-concat', 'less', 'fa-copy'],
         'build-copy',
-		['exec-npm-install', 'exec-bower-install'],
+		['exec-npm-install'], //'exec-bower-install'
         'build-exe',
         'cache-app-clean'
 	);
