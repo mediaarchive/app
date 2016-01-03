@@ -1,5 +1,5 @@
 /**
- * run with --src_uglify for run without uglifing src
+ * run with --src_uglify for run with uglifing src
 */
 
 var gulp = require('gulp');
@@ -19,9 +19,10 @@ var path = require('path');
 var gutil = require('gulp-util');
 var babel = require('gulp-babel');
 var livereload = require('gulp-livereload');
+var cssBase64 = require('gulp-css-base64');
+var replace = require('gulp-replace');
 
 var argv = require('optimist').argv;
-console.log(argv);
 
 var phpjs = require('phpjs');
 var date = phpjs.date('d.m.Y H:i:s');
@@ -32,10 +33,8 @@ gulp.task('dist-clean', function(cb){
 
 gulp.task('less-main', function() {
     return gulp.src('styles/less/style.less')
-        .pipe(sourcemaps.init())
         .pipe(less())
         .pipe(nano())
-        .pipe(sourcemaps.write('./'))
         .pipe(rename('src.min.css'))
         .pipe(gulp.dest('dist/'));
 });
@@ -44,18 +43,32 @@ gulp.task('less', ['less-main']);
 
 var bc = 'bower_components/';
 
+gulp.task('fa-copy', function(){
+    return gulp.src(bc + 'font-awesome/fonts/**')
+        .pipe(gulp.dest('./dist/fonts'));
+});
+
 gulp.task('css-libs-concat', function(){
     return gulp.src([
         bc + 'bootstrap/dist/css/bootstrap.min.css',
         bc + 'AdminLTE/dist/css/AdminLTE.min.css',
+        bc + 'font-awesome/css/font-awesome.min.css',
         bc + 'AdminLTE/dist/css/skins/skin-blue.min.css',
         bc + 'datatables-bootstrap3-plugin/media/css/datatables-bootstrap3.min.css',
         bc + 'smoke/dist/css/smoke.min.css',
         bc + 'bootstrap-daterangepicker/daterangepicker-bs3.min.css'
     ])
-        .pipe(sourcemaps.init())
+        .pipe(cssBase64({
+            baseDir: "./",
+            //maxWeightResource: 100,
+            extensionsAllowed: [
+                '.gif', '.jpg', '.png',
+                '.eot', '.svg', '.ttf', '.woff', '.woff2', '.otf',
+                //'.ttf?v=4.3.0', '.woff?v=4.3.0', '.woff2?v=4.3.0',
+            ]
+        }))
         .pipe(concat('libs.min.css'))
-        .pipe(sourcemaps.write('./'))
+        .pipe(replace('../', './'))
         .pipe(header('/*! MediaArchiveApp libs css (build '+date+') ma.atnartur.ru */' + "\r\n"))
         .pipe(gulp.dest('dist/'));
 });
@@ -78,13 +91,12 @@ gulp.task('uglify-libs', function(){
         .pipe(sourcemaps.init())
         .pipe(uglify())
         .pipe(concat('libs.min.js'))
-        .pipe(sourcemaps.write('./'))
+        .pipe(sourcemaps.write('.'))
         .pipe(header('/*! MediaArchiveApp libs (build '+date+') ma.atnartur.ru */' + "\r\n"))
         .pipe(gulp.dest('dist/'));
 });
 
 gulp.task('uglify-src', function(){
-    
     var babel_plugins = [
         'transform-async-to-generator',
         'transform-runtime'
@@ -114,7 +126,7 @@ gulp.task('uglify-src', function(){
     
     return g
         .pipe(concat('src.min.js'))
-        .pipe(sourcemaps.write('./'))
+        .pipe(sourcemaps.write('.'))
         .pipe(header('/*! MediaArchiveApp src (build '+date+') ma.atnartur.ru */' + "\r\n"))
         .pipe(gulp.dest('dist/'));
 });
@@ -187,7 +199,7 @@ gulp.task('default', function(){
     argv.src_uglify = true;
     return runSequence(
         'dist-clean', // sync
-		['uglify', 'css-libs-concat', 'less'] // parallel
+		['uglify', 'css-libs-concat', 'less', 'fa-copy'] // parallel
 	);
 });
 
