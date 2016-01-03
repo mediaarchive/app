@@ -44,7 +44,6 @@
     "babel-runtime": "^6.3.19",
     "SchoolMediaIndex": "git+https://github.com/mediaarchive/index.git#stable",
     "async": "^1.3.0",
-    "exec": "^0.2.0",
     "iconv-lite": "^0.4.11",
     "mammoth": "^0.3.27",
     "restler": "^3.3.0",

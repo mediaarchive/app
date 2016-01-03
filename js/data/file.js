@@ -3,7 +3,6 @@
 var fs = require('fs');
 var path_module = require('path');
 var iconv = require('iconv-lite');
-var exec = require('exec');
 var mammoth = require("mammoth");
 
 data.file = {};
@@ -20,11 +19,8 @@ data.file.get = function(path){
     });
 };
 
-data.file.exec = exec;
-
 data.file.get_file = function(path){
     return new Promise(function(resolve, reject) {
-        console.log(11, global.main)
         fs.readFile(global.main.settings.root_dir + path, (err, data) => {
             if (err) { 
                 reject(false);
