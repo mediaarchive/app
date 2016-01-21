@@ -196,7 +196,7 @@ class Event extends MK.Object{
                         var post_text = self.name + "\n" +
                                 "#news@school42_kazan\n\n" +
                                 text_file_data;                      
-                        console.log(data_json.authors);
+                        
                         if (typeof data_json !== 'undefined' && typeof data_json.authors !== 'undefined') {
                             post_text += "\n\n";
                             let names = []

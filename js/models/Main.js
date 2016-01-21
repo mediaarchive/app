@@ -3,10 +3,9 @@
  * Developer: Artur Atnagulov (atnartur)
  */
 
-var indexer = require('SchoolMediaIndex');
+var indexer = require('MediaArchiveIndex');
+var emailer = require('MediaArchiveEmail');
 var path = require('path');
-var emailer = require('mediaarchiveemail');
-// @TODO: mediaarchiveemail - изменить название на MediaArchiveEmail
 
 class Main extends MK.Object {
     constructor() {
