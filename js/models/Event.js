@@ -97,13 +97,13 @@ class Event extends MK.Object{
             }
             
             $('#modal .modal-body #text').text(text_file_data);
-            
+            var data_json;
             let data_file_data = await data.get_file('/архив/' + self.dir + '/data.json');
             console.log(data_file_data)
             if (data_file_data == false) 
                 $modal.find('#event_authors').text('(нет информации)');
             else{
-                var data_json = JSON.parse(data_file_data);
+                data_json = JSON.parse(data_file_data.toString());
                 if (!data_json) {
                     alert('Не удалось разобрать данные');
                 }
@@ -116,9 +116,6 @@ class Event extends MK.Object{
                             vk: author.vk
                         }));
                     });
-                    
-                    
-
                 }
                 
             }
@@ -196,15 +193,25 @@ class Event extends MK.Object{
                         if(typeof photo_obj !== 'undefined')
                             attachments = photo_obj.id;
 
+                        var post_text = self.name + "\n" +
+                                "#news@school42_kazan\n\n" +
+                                text_file_data;                      
+                        console.log(data_json.authors);
+                        if (typeof data_json !== 'undefined' && typeof data_json.authors !== 'undefined') {
+                            post_text += "\n\n";
+                            let names = []
+                            data_json.authors.forEach(function(author){
+                                names.push(author.name);
+                            });
+                            post_text += 'Авторы: ' + names.join(', ');
+                        }
+                            
                         vk.post('wall.post', {
                             access_token: global.main.settings.vk.access_token,
                             owner_id: Number(config.api.vk.group_id) * -1, // id группы
                             from_group: 1, // от имени группы
                             attachments: attachments,
-                            message:
-                                self.name + "\n" +
-                                "#news@school42_kazan\n\n" +
-                                text_file_data
+                            message: post_text
                         }, (res) => {
                             console.log(res);
 
