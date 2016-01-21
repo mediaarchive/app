@@ -130,7 +130,7 @@ class Event extends MK.Object{
 
                 async.series([
                     (callback) => {
-                        if (typeof preview_photo !== 'undefined') {
+                        if (typeof preview_photo !== 'undefined' && preview_photo != false) {
                             $button.text('Подготовка к загрузке фото...');
 
                             vk.get('photos.getWallUploadServer', {
