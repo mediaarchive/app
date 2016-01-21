@@ -73,28 +73,55 @@ class Event extends MK.Object{
             name: self.name
         }));
         
-        $('#modal .modal-body .open_dir').click(function(){
+        var $modal = $('#modal .modal-body');
+        
+        $modal.find('.open_dir').click(function(){
             gui.Shell.openItem(path.normalize(global.main.settings.root_dir + '/архив/' + self.dir));
         });
 
         // @TODO: формирование шаблона текста
         // @TODO: предпросмотр текста перед публикацией
 
-        $('#modal .modal-body img').click(function(){
+        $modal.find('img').click(function(){
             gui.Shell.openItem(path.normalize(global.main.settings.root_dir + '/архив/' + self.dir + '/' + preview_photo));
         });
         
         if (text_file == false) 
-            $('#modal .modal-body #text').text('(нет текста)');
+            $modal.find('#text').text('(нет текста)');
         else{
             let text_file_data = await data.get_file('/архив/' + self.dir + '/' + text_file);
                 
             if (text_file_data == false) {
-                $('#modal .modal-body #text').text('(не удалось получить текст)');
+                $modal.find('#text').text('(не удалось получить текст)');
                 return false;
             }
             
-            $('#modal .modal-body #text').text(text_file_data); 
+            $('#modal .modal-body #text').text(text_file_data);
+            
+            let data_file_data = await data.get_file('/архив/' + self.dir + '/data.json');
+            console.log(data_file_data)
+            if (data_file_data == false) 
+                $modal.find('#event_authors').text('(нет информации)');
+            else{
+                var data_json = JSON.parse(data_file_data);
+                if (!data_json) {
+                    alert('Не удалось разобрать данные');
+                }
+                else{
+                    var author_template = Handlebars.compile($('#event_author_template').html());
+                    data_json.authors.forEach(function(author){
+                        $('#event_authors').append(author_template({
+                            name: author.name,
+                            email: author.address,
+                            vk: author.vk
+                        }));
+                    });
+                    
+                    
+
+                }
+                
+            }
 
             $('#modal .modal-body .vk_post').click(function(){
                 var $button = $(this);

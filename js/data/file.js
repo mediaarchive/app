@@ -23,7 +23,7 @@ data.file.get_file = function(path){
     return new Promise(function(resolve, reject) {
         fs.readFile(global.main.settings.root_dir + path, (err, data) => {
             if (err) { 
-                reject(false);
+                resolve(false);
                 console.error(err);
                 return false;
             }

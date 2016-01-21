@@ -188,6 +188,13 @@
             <div class="col-md-9" id="text">загрузка...</div>
         </div>
         <div class="row">
+            <hr>
+            <div class="col-md-12">
+                <b>Авторы</b>
+            </div>
+        </div>
+        <div id="event_authors"></div>
+        <div class="row">
             <div class="col-md-12">
                 <hr>
                 <button class="open_dir btn btn-primary"><i class="fa fa-folder"></i> Открыть директорию</button>
@@ -199,6 +206,19 @@
         <div class="row">
             <div class="col-md-12">
                 <button id="add_event_modal_button" class="btn btn-primary pull-right"><i class="fa fa-plus"></i> Создать событие</button>
+            </div>
+        </div>
+    </script>
+    <script id="event_author_template" type="text/x-handlebars-template">
+        <div class="event_author col-md-12">
+            <div class="col-md-4">
+                <input type="text" class="form-control" placeholder="Имя" class="author_name" value="{{name}}">
+            </div>
+            <div class="col-md-4">
+                <input type="text" class="form-control" placeholder="E-mail" class="author_email" value="{{email}}">
+            </div>
+            <div class="col-md-4">
+                <input type="text" class="form-control" placeholder="Страница ВК" class="author_vk" value="{{vk}}">
             </div>
         </div>
     </script>
