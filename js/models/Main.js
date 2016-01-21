@@ -5,6 +5,8 @@
 
 var indexer = require('SchoolMediaIndex');
 var path = require('path');
+var emailer = require('mediaarchiveemail');
+// @TODO: mediaarchiveemail - изменить название на MediaArchiveEmail
 
 class Main extends MK.Object {
     constructor() {
@@ -35,10 +37,37 @@ class Main extends MK.Object {
         $('#update_index_button').click(() => {
             $.smkProgressBar({element: 'body', status: 'start'});
             self.index_update();
+            return false;
         });
         
         $('#open_folder_button').click(() => {
             gui.Shell.openItem(path.normalize(self.settings.root_dir + '/архив/'));
+            return false;
+        });
+        
+        
+        
+        $('#add_event').click(() => {
+            var template = Handlebars.compile($('#event_create_modal_template').html());
+            $('#modal .modal-title').text('Добавление мероприятия');
+            $('#modal .modal-body').html(template());
+            $('#modal').modal('show');
+            $('#add_event_modal_button').click(function(){
+                self.events.create(date.format('YYYY'), date.format('MM'), date.format('DD'));
+            });
+            
+            return false;
+        });
+        
+        $('#load_email_button').click(() => {
+            $.smkProgressBar({element: 'body', status: 'start'});
+            $.smkAlert({text: 'Загрузка писем...', type: 'info', time: 1});
+            emailer.email.config = config.api.imap;
+            emailer.email.config.root_dir = self.settings.root_dir + '/архив/';
+            emailer.email.start(function(){
+                $.smkAlert({text: 'Письма загружены', type: 'info', time: 1});
+                $.smkProgressBar({element: 'body', status: 'end'});
+            });
         });
     }
     async events_init(){

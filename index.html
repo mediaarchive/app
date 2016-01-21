@@ -75,8 +75,10 @@
                     </div>
                     
                     <ul class="sidebar-menu">
+                        <li><a href="#" id="add_event"><i class="fa fa-plus"></i> <span>Добавить событие</span></a></li>
                         <li><a href="#" id="open_folder_button"><i class="fa fa-folder-o"></i> <span>Открыть папку</span></a></li>
                         <li><a href="#" id="update_index_button"><i class="fa fa-refresh"></i> <span>Обновить список</span></a></li>
+                        <li><a href="#" id="load_email_button"><i class="fa fa-envelope-o"></i> <span>Загрузить с почты</span></a></li>
                     </ul>
                 </section>
             </aside>
@@ -150,7 +152,7 @@
         </div>
     
     </div>
-    <div class="modal modal-primary" id="modal" tabindex="-1" role="dialog" aria-labelledby="modal_header" aria-hidden="true">
+    <div class="modal" id="modal" tabindex="-1" role="dialog" aria-labelledby="modal_header" aria-hidden="true">
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
                 <div class="modal-header">
@@ -188,11 +190,17 @@
         <div class="row">
             <div class="col-md-12">
                 <hr>
-                <button class="open_dir btn btn-outline"><i class="fa fa-folder"></i> Открыть директорию</button>
-                <button class="vk_post btn btn-outline pull-right"><i class="fa fa-vk"></i> Выложить ВКонтакте</button>
+                <button class="open_dir btn btn-primary"><i class="fa fa-folder"></i> Открыть директорию</button>
+                <button class="vk_post btn btn-primary pull-right"><i class="fa fa-vk"></i> Выложить ВКонтакте</button>
             </div>
         </div>
     </script>
-    
+    <script id="event_create_modal_template" type="text/x-handlebars-template">
+        <div class="row">
+            <div class="col-md-12">
+                <button id="add_event_modal_button" class="btn btn-primary pull-right"><i class="fa fa-plus"></i> Создать событие</button>
+            </div>
+        </div>
+    </script>
 </body>
 </html>

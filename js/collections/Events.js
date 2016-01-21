@@ -81,4 +81,17 @@ class EventsCollection extends MK.Array{
                 $('#events_content .time-label').hide();
         });
     }
+    create(year, month, day, name){
+        
+        var date = moment();
+        self.events.push({
+            date: {
+                year: year,
+                month: month,
+                day: day
+            },
+            dir: year + '/' + month + '/' + day + '/' + name
+        });
+        self.events[self.events.length - 1].show_modal();
+    }
 };
