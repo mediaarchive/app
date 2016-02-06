@@ -2,7 +2,7 @@
   "name": "MediaArchiveApp",
   "version": "1.0.0",
   "description": "App for MediaArchive",
-  "main": "index.html",
+  "main": "main.js",
   "repository": {
     "type": "git",
     "url": "https://github.com/mediaarchive/app.git"
