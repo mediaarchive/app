@@ -22,7 +22,6 @@ var livereload = require('gulp-livereload');
 var cssBase64 = require('gulp-css-base64');
 var replace = require('gulp-replace');
 var electron = require('gulp-electron');
-var webpack = require('webpack-stream');
 var swig = require('gulp-swig');
 var fs = require('fs');
 var packageJson = require('./package.json');
@@ -73,8 +72,6 @@ gulp.task('uglify-libs', function(){
     return gulp.src(packageJson.assets.js.external)
         // .pipe(uglify())
         .pipe(concat('libs.min.js'))
-        // .pipe(webpack())
-        // .pipe(rename('libs.min.js'))
         .pipe(header('/*! MediaArchiveApp libs (build '+date+') ma.atnartur.ru */' + "\r\n"))
         .pipe(gulp.dest('dist/'));
 });
@@ -104,8 +101,8 @@ gulp.task('uglify-src', function(){
     
     return g
         .pipe(concat('src.min.js'))
-        .pipe(sourcemaps.write('.'))
         .pipe(header('/*! MediaArchiveApp src (build '+date+') ma.atnartur.ru */' + "\r\n"))
+        .pipe(sourcemaps.write('.'))
         .pipe(gulp.dest('dist/'));
 });
 

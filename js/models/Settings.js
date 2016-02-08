@@ -3,10 +3,13 @@
  * Developer: Artur Atnagulov (atnartur)
  */
  
+const dialog = require('remote').dialog;
+
 class Settings extends MK.Object {
     constructor() {
         super()
         this.data_type = this.root_dir = this.vk = '' ;
+        var self = this;
         
         this.bindNode('data_type', '#settings #data_type', {
             setValue: function( v ) {            
@@ -20,15 +23,32 @@ class Settings extends MK.Object {
             if (this.data_type != '') 
                 data_type = this.data_type;
                 
-            $('#settings_form #root_dir div').hide();
+            $('#settings_form #root_dir > div').hide();
             $('#settings_form #root_dir #' + data_type).show();
         });
-        
+
         this.bindNode('root_dir', '#settings #root_dir', {
+            on: 'click change',
             setValue: (v) => {
                 $('#settings_form #root_dir #dir').text(v);
+            },
+            getValue: () => {
+                return $('#settings_form #file_root_dir_selector').val();
             }
         });
+
+        $('#settings_form #root_dir_file_selector').click(() => {
+            dialog.showOpenDialog({ 
+                title: 'Выберите папку Медиаархива',
+                properties: ['openDirectory'],
+            }, (res) => {
+                if(typeof res !== 'undefined')
+                    self.root_dir = res[0];
+            })
+        });
+        // this.bindNode('root_dir', '#settings #root_dir', {
+        
+        // });
         
         this.bindNode('vk', '#settings #vk_button', {
             setValue: (v) => {
@@ -51,6 +71,7 @@ class Settings extends MK.Object {
         
         this.on('change', (a,b) => {
             ['data_type', 'root_dir', 'vk'].forEach((val) => {
+                console.log(val, this[val]);
                 local_data.set(val, this[val]);
             });
         })
