@@ -5,6 +5,7 @@ vendor
 *.komodotools
 cache
 *.log
+*.cache
 build
 .idea
 config.json

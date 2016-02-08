@@ -21,6 +21,8 @@ var babel = require('gulp-babel');
 var livereload = require('gulp-livereload');
 var cssBase64 = require('gulp-css-base64');
 var replace = require('gulp-replace');
+var electron = require('gulp-electron');
+var packageJson = require('./package.json');
 
 var argv = require('optimist').argv;
 
@@ -41,7 +43,7 @@ gulp.task('less-main', function() {
 
 gulp.task('less', ['less-main']);
 
-var bc = 'bower_components/';
+var bc = './bower_components/';
 
 gulp.task('fa-copy', function(){
     return gulp.src(bc + 'font-awesome/fonts/**')
@@ -88,10 +90,8 @@ gulp.task('uglify-libs', function(){
         bc + 'datatables-bootstrap3-plugin/media/js/datatables-bootstrap3.min.js',
         bc + 'jquery.livefilter/jquery.liveFilter.js',
     ])
-        .pipe(sourcemaps.init())
-        .pipe(uglify())
+        // .pipe(uglify())
         .pipe(concat('libs.min.js'))
-        .pipe(sourcemaps.write('.'))
         .pipe(header('/*! MediaArchiveApp libs (build '+date+') ma.atnartur.ru */' + "\r\n"))
         .pipe(gulp.dest('dist/'));
 });
@@ -165,6 +165,35 @@ gulp.task('build-exe', function() {
             buildType: 'versioned',
             quiet: true 
         }));
+});
+
+gulp.task('build-electron-exe', function() {
+    gulp.src("./")
+        .pipe(electron({
+            src: './',
+            packageJson: packageJson,
+            release: './build',
+            cache: './cache',
+            version: 'v0.26.1',
+            packaging: true,
+            platforms: ['win32-ia32', 'darwin-x64'],
+            platformResources: {
+                darwin: {
+                    CFBundleDisplayName: packageJson.name,
+                    CFBundleIdentifier: packageJson.name,
+                    CFBundleName: packageJson.name,
+                    CFBundleVersion: packageJson.version,
+                    // icon: 'gulp-electron.icns'
+                },
+                win: {
+                    "version-string": packageJson.version,
+                    "file-version": packageJson.version,
+                    "product-version": packageJson.version,
+                    // "icon": 'gulp-electron.ico'
+                }
+            }
+        }))
+        .pipe(gulp.dest(""));
 });
 
 gulp.task('build-copy', function(){
