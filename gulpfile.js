@@ -22,8 +22,10 @@ var livereload = require('gulp-livereload');
 var cssBase64 = require('gulp-css-base64');
 var replace = require('gulp-replace');
 var electron = require('gulp-electron');
+var webpack = require('webpack-stream');
+var swig = require('gulp-swig');
+var fs = require('fs');
 var packageJson = require('./package.json');
-
 var argv = require('optimist').argv;
 
 var phpjs = require('phpjs');
@@ -51,15 +53,7 @@ gulp.task('fa-copy', function(){
 });
 
 gulp.task('css-libs-concat', function(){
-    return gulp.src([
-        bc + 'bootstrap/dist/css/bootstrap.min.css',
-        bc + 'AdminLTE/dist/css/AdminLTE.min.css',
-        bc + 'font-awesome/css/font-awesome.min.css',
-        bc + 'AdminLTE/dist/css/skins/skin-blue.min.css',
-        bc + 'datatables-bootstrap3-plugin/media/css/datatables-bootstrap3.min.css',
-        bc + 'smoke/dist/css/smoke.min.css',
-        bc + 'bootstrap-daterangepicker/daterangepicker-bs3.min.css'
-    ])
+        return gulp.src(packageJson.assets.css.external)
         .pipe(cssBase64({
             baseDir: "./",
             //maxWeightResource: 100,
@@ -76,22 +70,11 @@ gulp.task('css-libs-concat', function(){
 });
 
 gulp.task('uglify-libs', function(){
-    return gulp.src([
-        bc + 'jquery/dist/jquery.min.js',
-        bc + 'bootstrap/dist/js/bootstrap.min.js',
-        bc + 'moment/min/moment.min.js',
-        bc + 'handlebars/handlebars.min.js',
-        bc + 'datatables/media/js/jquery.dataTables.min.js',
-        bc + 'smoke/dist/js/smoke.min.js',
-        bc + 'matreshka/matreshka.min.js',
-        bc + 'bootstrap-daterangepicker/daterangepicker.min.js',
-        bc + 'jquery-slimscroll/jquery.slimscroll.min.js',
-        bc + 'AdminLTE/dist/js/app.min.js',
-        bc + 'datatables-bootstrap3-plugin/media/js/datatables-bootstrap3.min.js',
-        bc + 'jquery.livefilter/jquery.liveFilter.js',
-    ])
+    return gulp.src(packageJson.assets.js.external)
         // .pipe(uglify())
         .pipe(concat('libs.min.js'))
+        // .pipe(webpack())
+        // .pipe(rename('libs.min.js'))
         .pipe(header('/*! MediaArchiveApp libs (build '+date+') ma.atnartur.ru */' + "\r\n"))
         .pipe(gulp.dest('dist/'));
 });
@@ -109,17 +92,12 @@ gulp.task('uglify-src', function(){
         babel_plugins.push('transform-property-literals');
     }
     
-    var g = gulp.src([
-        'js/collections/*.js',
-        'js/models/*.js',
-        'js/data/*.js',
-        'js/*.js'
-    ])
+    var g = gulp.src(packageJson.assets.js.internal)
         .pipe(sourcemaps.init())
         .pipe(babel({
-			presets: ['es2015'],
+            presets: ['es2015'],
             plugins: babel_plugins
-		}));
+        }));
         
     if (argv.src_uglify === true) 
         g.pipe(uglify())
@@ -209,14 +187,13 @@ gulp.task('build-copy', function(){
         '!./js',
         '!./node_modules/**/*',
         '!./node_modules',
-        '!./bower_components/**/*',
-        '!./bower_components',
+        '!./libs/**/*',
+        '!./libs',
         '!./.gitignore',
         '!./*.log',
         '!./*.komodoproject',
         '!./config_sample.json',
         '!./start.bat',
-        '!./gruntfile.js',
         '!./gulpfile.js',
     ])
         .pipe(gulp.dest('./cache/app/'));
@@ -225,12 +202,22 @@ gulp.task('build-copy', function(){
 gulp.task('cache-app-clean', function(){
     return gulp.src('cache/app/', {read: false}).pipe(clean())
 });
+ 
+gulp.task('swig', function() {
+    var data = packageJson;
+    data.client_templates = fs.readFileSync('./templates/client_templates.html');
+    return gulp.src('./templates/main.html')
+        .pipe(swig({
+            data: data
+        }))
+        .pipe(gulp.dest('./'));
+});
 
 gulp.task('default', function(){
     argv.src_uglify = true;
     return runSequence(
         'dist-clean', // sync
-		['uglify', 'css-libs-concat', 'less', 'fa-copy'] // parallel
+		['uglify', 'css-libs-concat', 'less', 'fa-copy', 'swig'] // parallel
 	);
 });
 
@@ -238,7 +225,7 @@ gulp.task('build', function(){
     argv.src_uglify = true;
     return runSequence(
         ['dist-clean', 'cache-app-clean'],
-		['uglify', 'css-libs-concat', 'less', 'fa-copy'],
+		['uglify', 'css-libs-concat', 'less', 'fa-copy', 'swig'],
         'build-copy',
 		['exec-npm-install'], //'exec-bower-install'
         'build-exe',
@@ -248,7 +235,12 @@ gulp.task('build', function(){
 
 
 gulp.task('watch', function(){
-    livereload.listen();
+    try{
+        livereload.listen();
+    }
+    catch(e){
+        console.log('livereload exception', e);
+    }
     
     function cb() {
         livereload.reload();

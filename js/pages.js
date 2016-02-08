@@ -50,7 +50,7 @@ pages.change = function(id){
     $(pages.all+'[data-page='+id+']').fadeIn(0);
     
     $('.header_menu').removeClass('active');
-    $('[href=#'+id+']').closest('.header_menu').addClass('active');
+    $('[href="#'+id+'"]').closest('.header_menu').addClass('active');
     
     document.location.hash = id;
 }

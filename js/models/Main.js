@@ -32,7 +32,9 @@ class Main extends MK.Object {
         }
         else
             pages.change('settings');
-            
+        
+        this.show_app();    
+
         $('#update_index_button').click(() => {
             $.smkProgressBar({element: 'body', status: 'start'});
             self.index_update();
@@ -101,7 +103,6 @@ class Main extends MK.Object {
             $('#events_count').text(this.events.length);
             
             $.smkProgressBar({element: 'body', status: 'end'});
-            this.show_app();
         }
         
         return;

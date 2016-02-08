@@ -2,6 +2,7 @@
  * Created by ClienDDev team (clienddev.ru)
  * Developer: Artur Atnagulov (atnartur)
  */
+ 
 class Settings extends MK.Object {
     constructor() {
         super()
@@ -24,7 +25,7 @@ class Settings extends MK.Object {
         });
         
         this.bindNode('root_dir', '#settings #root_dir', {
-            setValue: (v) => {            
+            setValue: (v) => {
                 $('#settings_form #root_dir #dir').text(v);
             }
         });

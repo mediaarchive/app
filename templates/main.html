@@ -4,14 +4,18 @@
     <meta charset="UTF-8">
     <title>Школьный медиаархив</title>
     
-    <link rel="stylesheet" href="dist/libs.min.css">
-    <link rel="stylesheet" href="dist/src.min.css">
-    
     <script>
+        const $ = jQuery = require('jquery');
         // var gui = require('nw.gui');
         // var win = gui.Window.get();
         var config = require('./config');
     </script>
+
+    {% for src in assets.js.external %} <script src="{{src}}"></script> {% endfor %}
+    <script src="dist/src.min.js"></script>
+    
+    {% for src in assets.css.external %} <link rel="stylesheet" href="{{src}}"> {% endfor %}
+    {% for src in assets.css.internal %} <link rel="stylesheet" href="{{src}}"> {% endfor %}
 </head>
 <body class="skin-blue fixed sidebar-mini lockscreen">
     <div class="lockscreen-wrapper">
@@ -163,64 +167,7 @@
             </div>
         </div>
     </div>
-    
-    <script src="dist/libs.min.js"></script>
-    <script src="dist/src.min.js"></script>
-    
-    <script id="eventTemplate" type="text/x-handlebars-template">
-        <li class="event" data-date="{{date.year}}{{date.month}}{{date.day}}" data-date-label="{{date.year}}{{date.month}}">
-            <i class="fa fa-calendar-o bg-blue"></i>
-            <div class="timeline-item">
-                <span class="time"><i class="fa fa-clock-o"></i> {{date.day}}.{{date.month}}.{{date.year}}</span>
-                <h3 class="timeline-header name">{{name}}</h3>
-            </div>
-        </li>
-    </script>
-    <script id="event_modal_template" type="text/x-handlebars-template">
-        <div class="row">
-            <div class="col-md-3">
-                {{#if preview_photo}}
-                    <img src="{{dir}}{{preview_photo}}" class="col-md-12" style="cursor: pointer" title="Нажмите, чтобы открыть фото">
-                {{else}}
-                    <small>нет главной фотографии</small>
-                {{/if}}
-            </div>
-            <div class="col-md-9" id="text">загрузка...</div>
-        </div>
-        <div class="row">
-            <hr>
-            <div class="col-md-12">
-                <b>Авторы</b>
-            </div>
-        </div>
-        <div id="event_authors"></div>
-        <div class="row">
-            <div class="col-md-12">
-                <hr>
-                <button class="open_dir btn btn-primary"><i class="fa fa-folder"></i> Открыть директорию</button>
-                <button class="vk_post btn btn-primary pull-right"><i class="fa fa-vk"></i> Выложить ВКонтакте</button>
-            </div>
-        </div>
-    </script>
-    <script id="event_create_modal_template" type="text/x-handlebars-template">
-        <div class="row">
-            <div class="col-md-12">
-                <button id="add_event_modal_button" class="btn btn-primary pull-right"><i class="fa fa-plus"></i> Создать событие</button>
-            </div>
-        </div>
-    </script>
-    <script id="event_author_template" type="text/x-handlebars-template">
-        <div class="event_author col-md-12">
-            <div class="col-md-4">
-                <input type="text" class="form-control" placeholder="Имя" class="author_name" value="{{name}}">
-            </div>
-            <div class="col-md-4">
-                <input type="text" class="form-control" placeholder="E-mail" class="author_email" value="{{email}}">
-            </div>
-            <div class="col-md-4">
-                <input type="text" class="form-control" placeholder="Страница ВК" class="author_vk" value="{{vk}}">
-            </div>
-        </div>
-    </script>
+
+    {{client_templates|safe}}
 </body>
 </html>

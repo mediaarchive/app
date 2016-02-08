@@ -33,19 +33,24 @@
     "gulp-rename": "^1.2.2",
     "gulp-replace": "^0.5.4",
     "gulp-sourcemaps": "^1.6.0",
+    "gulp-swig": "^0.8.0",
     "gulp-uglify": "^1.5.1",
     "gulp-util": "^3.0.7",
     "install": "^0.4.1",
     "optimist": "^0.6.1",
     "phpjs": "^1.3.2",
-    "run-sequence": "^1.1.5"
+    "run-sequence": "^1.1.5",
+    "swig": "^1.4.2",
+    "webpack-stream": "^3.1.0"
   },
   "dependencies": {
     "MediaArchiveEmail": "github:mediaarchive/email#stable",
     "MediaArchiveIndex": "github:mediaarchive/index#stable",
     "async": "^1.3.0",
+    "babel-register": "^6.5.1",
     "babel-runtime": "^6.3.19",
     "iconv-lite": "^0.4.11",
+    "jquery": "^2.2.0",
     "mammoth": "^0.3.27",
     "restler": "^3.3.0"
   },
@@ -60,5 +65,49 @@
     "min_height": 600,
     "max_width": "100%",
     "max_height": "100%"
+  },
+  "assets": {
+    "js": {
+      "external": [
+        "libs/jquery/dist/jquery.min.js",
+        "libs/bootstrap/dist/js/bootstrap.min.js",
+        "libs/moment/min/moment.min.js",
+        "libs/handlebars/handlebars.min.js",
+        "libs/datatables/media/js/jquery.dataTables.min.js",
+        "libs/smoke/dist/js/smoke.min.js",
+        "libs/matreshka/matreshka.min.js",
+        "libs/bootstrap-daterangepicker/daterangepicker.min.js",
+        "libs/jquery-slimscroll/jquery.slimscroll.min.js",
+        "libs/AdminLTE/dist/js/app.min.js",
+        "libs/datatables-bootstrap3-plugin/media/js/datatables-bootstrap3.min.js",
+        "libs/jquery.livefilter/jquery.liveFilter.js"
+      ],
+      "internal": [
+        "js/collections/Events.js",
+        "js/data/base.js",  
+        "js/data/file.js",
+        "js/models/Event.js",
+        "js/models/Main.js",
+        "js/models/Settings.js",
+        "js/base.js",
+        "js/general.js",
+        "js/local_data.js",
+        "js/pages.js",
+        "js/vk.js",
+        "js/run.js"
+      ]
+    },
+    "css": {
+      "external": [
+        "libs/bootstrap/dist/css/bootstrap.min.css",
+        "libs/AdminLTE/dist/css/AdminLTE.min.css",
+        "libs/font-awesome/css/font-awesome.min.css",
+        "libs/AdminLTE/dist/css/skins/skin-blue.min.css",
+        "libs/datatables-bootstrap3-plugin/media/css/datatables-bootstrap3.min.css",
+        "libs/smoke/dist/css/smoke.min.css",
+        "libs/bootstrap-daterangepicker/daterangepicker-bs3.min.css"
+      ],
+      "internal": []
+    }
   }
 }
