@@ -108,7 +108,7 @@ gulp.task('uglify-src', function(){
 });
 
 
-gulp.task('uglify', ['uglify-libs', 'uglify-src']);
+gulp.task('uglify', [ 'uglify-src']); //'uglify-libs',
 
 gulp.task('exec-npm-install', function(cb) {
     return exec("npm i --production", {cwd: path.join(process.cwd(), './cache/app')}, function (error, stdout, stderr) {
@@ -185,8 +185,8 @@ gulp.task('build-copy', function(){
         '!./js',
         '!./node_modules/**/*',
         '!./node_modules',
-        '!./libs/**/*',
-        '!./libs',
+        // '!./libs/**/*',
+        // '!./libs',
         '!./.gitignore',
         '!./*.log',
         '!./*.komodoproject',
@@ -239,8 +239,7 @@ gulp.task('build-electron-win', function(done) {
 });
 
 gulp.task('build', gulpSequence(
-    ['dist-clean', 'cache-app-clean'],
-	['uglify', 'css-libs-concat', 'less', 'fa-copy', 'swig'],
+    ['default', 'cache-app-clean'],
     'build-copy',
 	'exec-npm-install', //'exec-bower-install'
     ['build-electron-win'],
