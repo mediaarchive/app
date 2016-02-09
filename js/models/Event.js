@@ -1,6 +1,8 @@
 var path = require('path');
 var restler = require('restler');
 var async = require('async');
+var shell = require('remote').shell;
+
 
 class Event extends MK.Object{
     constructor(data, collection) {
@@ -22,7 +24,9 @@ class Event extends MK.Object{
                     self.$(this).data('dir', v);
                 }
             });
-            this.$(':sandbox').click(() => {
+            console.log(this.$sandbox);
+            this.$sandbox.click(() => {
+                console.log('click');
                 self.show_modal();
             })
             
@@ -76,14 +80,14 @@ class Event extends MK.Object{
         var $modal = $('#modal .modal-body');
         
         $modal.find('.open_dir').click(function(){
-            gui.Shell.openItem(path.normalize(global.main.settings.root_dir + '/архив/' + self.dir));
+            shell.openItem(path.normalize(global.main.settings.root_dir + '/архив/' + self.dir));
         });
 
         // @TODO: формирование шаблона текста
         // @TODO: предпросмотр текста перед публикацией
 
         $modal.find('img').click(function(){
-            gui.Shell.openItem(path.normalize(global.main.settings.root_dir + '/архив/' + self.dir + '/' + preview_photo));
+            shell.openItem(path.normalize(global.main.settings.root_dir + '/архив/' + self.dir + '/' + preview_photo));
         });
         
         if (text_file == false) 

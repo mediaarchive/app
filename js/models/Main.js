@@ -6,6 +6,7 @@
 var indexer = require('MediaArchiveIndex');
 var emailer = require('MediaArchiveEmail');
 var path = require('path');
+var shell = require('remote').shell;
 
 class Main extends MK.Object {
     constructor() {
@@ -42,7 +43,7 @@ class Main extends MK.Object {
         });
         
         $('#open_folder_button').click(() => {
-            gui.Shell.openItem(path.normalize(self.settings.root_dir + '/архив/'));
+            shell.openItem(path.normalize(self.settings.root_dir + '/архив/'));
             return false;
         });
         

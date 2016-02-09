@@ -18,7 +18,6 @@ var exec = require('child_process').exec;
 var path = require('path');
 var gutil = require('gulp-util');
 var babel = require('gulp-babel');
-var livereload = require('gulp-livereload');
 var cssBase64 = require('gulp-css-base64');
 var replace = require('gulp-replace');
 var electron = require('gulp-electron');
@@ -232,17 +231,6 @@ gulp.task('build', function(){
 
 
 gulp.task('watch', function(){
-    try{
-        livereload.listen();
-    }
-    catch(e){
-        console.log('livereload exception', e);
-    }
-    
-    function cb() {
-        livereload.reload();
-    }
-    
-    gulp.watch('styles/less/style.less', ['less-main', cb]);
-    gulp.watch('js/**/**', ['uglify-src', cb]);
+    gulp.watch('styles/less/style.less', ['less-main']);
+    gulp.watch('js/**/**', ['uglify-src']);
 });
