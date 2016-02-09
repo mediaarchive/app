@@ -54,7 +54,6 @@
     "MediaArchiveIndex": "github:mediaarchive/index#stable",
     "async": "^1.3.0",
     "babel-runtime": "^6.3.19",
-    "electron": "^0.4.1",
     "iconv-lite": "^0.4.11",
     "jquery": "^2.2.0",
     "mammoth": "^0.3.27",

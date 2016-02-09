@@ -230,10 +230,10 @@ gulp.task('build-electron-win', function(done) {
         name: packageJson.name,
         out: './build/' + packageJson.version + '-' + moment().format('DD-MM-YYYY'),
         version: '0.36.7', // electron version
-    }, function done (err, appPath) { 
+    }, function (err, appPath) { 
         if(err)
             throw err;
-        console.log('app created at', appPath);
+        
         done();
     });
 });
