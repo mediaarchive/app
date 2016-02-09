@@ -13,7 +13,6 @@ var header = require('gulp-header');
 var concat = require('gulp-concat');
 var builder = require('gulp-nw-builder');
 var sourcemaps = require('gulp-sourcemaps');
-var runSequence = require('run-sequence');
 var exec = require('child_process').exec;
 var path = require('path');
 var gutil = require('gulp-util');
@@ -21,10 +20,13 @@ var babel = require('gulp-babel');
 var cssBase64 = require('gulp-css-base64');
 var replace = require('gulp-replace');
 var electron = require('gulp-electron');
+var packager = require('electron-packager');
 var swig = require('gulp-swig');
 var fs = require('fs');
+var gulpSequence = require('gulp-sequence');
 var packageJson = require('./package.json');
 var argv = require('optimist').argv;
+var moment = require('moment');
 
 var phpjs = require('phpjs');
 var date = phpjs.date('d.m.Y H:i:s');
@@ -211,29 +213,39 @@ gulp.task('swig', function() {
 
 gulp.task('default', function(){
     argv.src_uglify = true;
-    return runSequence(
+    return gulpSequence(
         'dist-clean', // sync
 		['uglify', 'css-libs-concat', 'less', 'fa-copy', 'swig'] // parallel
 	);
 });
 
-var release_windows = require('./release_windows'); 
-gulp.task('build-exectron-win', function(done) {
-    release_windows(); 
-    done();
+gulp.task('build-electron-win', function(done) {
+    packager({
+        arch: 'ia32', // Allowed values: ia32, x64, all
+        dir: './cache/app',
+        platform: 'win32', // Allowed values: linux, win32, darwin, all
+        "app-version": packageJson.version,
+        cache: './cache',
+        //icon:
+        name: packageJson.name,
+        out: './build/' + packageJson.version + '-' + moment().format('DD-MM-YYYY'),
+        version: '0.36.7', // electron version
+    }, function done (err, appPath) { 
+        if(err)
+            throw err;
+        console.log('app created at', appPath);
+        done();
+    });
 });
 
-gulp.task('build', function(){
-    argv.src_uglify = true;
-    return runSequence(
-        ['dist-clean', 'cache-app-clean'],
-		['uglify', 'css-libs-concat', 'less', 'fa-copy', 'swig'],
-        'build-copy',
-		['exec-npm-install'] //'exec-bower-install'
-        // 'build-electron-win'
-        // 'cache-app-clean'
-	);
-});
+gulp.task('build', gulpSequence(
+    ['dist-clean', 'cache-app-clean'],
+	['uglify', 'css-libs-concat', 'less', 'fa-copy', 'swig'],
+    'build-copy',
+	'exec-npm-install', //'exec-bower-install'
+    ['build-electron-win'],
+    'cache-app-clean'
+));
 
 
 gulp.task('watch', function(){

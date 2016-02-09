@@ -44,25 +44,25 @@ var packageBuiltApp = function () {
 var finalize = function () {
     var deferred = Q.defer();
 
-    projectDir.copy('resources/windows/icon.ico', readyAppDir.path('icon.ico'));
+    // projectDir.copy('resources/windows/icon.ico', readyAppDir.path('icon.ico'));
 
     // Replace Electron icon for your own.
-    var rcedit = require('rcedit');
-    rcedit(readyAppDir.path('electron.exe'), {
-        'icon': projectDir.path('resources/windows/icon.ico'),
-        'version-string': {
-            'ProductName': manifest.productName,
-            'FileDescription': manifest.description,
-            'ProductVersion': manifest.version,
-            'CompanyName': manifest.author, // it might be better to add another field to package.json for this
-            'LegalCopyright': manifest.copyright,
-            'OriginalFilename': manifest.productName + '.exe'
-        }
-    }, function (err) {
-        if (!err) {
+    // var rcedit = require('rcedit');
+    // rcedit(readyAppDir.path('electron.exe'), {
+    //     // 'icon': projectDir.path('resources/windows/icon.ico'),
+    //     'version-string': {
+    //         'ProductName': manifest.productName,
+    //         'FileDescription': manifest.description,
+    //         'ProductVersion': manifest.version,
+    //         'CompanyName': manifest.author, // it might be better to add another field to package.json for this
+    //         'LegalCopyright': manifest.copyright,
+    //         'OriginalFilename': manifest.productName + '.exe'
+    //     }
+    // }, function (err) {
+    //     if (!err) {
             deferred.resolve();
-        }
-    });
+    //     }
+    // });
 
     return deferred.promise;
 };
@@ -84,16 +84,16 @@ var createInstaller = function () {
         version: manifest.version,
         src: readyAppDir.path(),
         dest: releasesDir.path(finalPackageName),
-        icon: readyAppDir.path('icon.ico'),
-        setupIcon: projectDir.path('resources/windows/setup-icon.ico'),
-        banner: projectDir.path('resources/windows/setup-banner.bmp'),
+        // icon: readyAppDir.path('icon.ico'),
+        // setupIcon: projectDir.path('resources/windows/setup-icon.ico'),
+        // banner: projectDir.path('resources/windows/setup-banner.bmp'),
     });
     tmpDir.write('installer.nsi', installScript);
 
     gulpUtil.log('Building installer with NSIS...');
 
     // Remove destination file if already exists.
-    releasesDir.remove(finalPackageName);
+    releasesDir.remove(finalPackageName);   
 
     // Note: NSIS have to be added to PATH (environment variables).
     var nsis = childProcess.spawn('makensis', [
