@@ -24,7 +24,7 @@ class Event extends MK.Object{
                     self.$(this).data('dir', v);
                 }
             });
-            console.log(this.$sandbox);
+            // console.log(this.$sandbox);
             this.$sandbox.click(() => {
                 console.log('click');
                 self.show_modal();

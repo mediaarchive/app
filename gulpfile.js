@@ -142,15 +142,15 @@ gulp.task('build-exe', function() {
 });
 
 gulp.task('build-electron-exe', function() {
-    gulp.src("./")
+    return gulp.src("./")
         .pipe(electron({
-            src: './',
+            src: './cache/app',
             packageJson: packageJson,
             release: './build',
             cache: './cache',
-            version: 'v0.26.1',
+            version: 'v0.36.7',
             packaging: true,
-            platforms: ['win32-ia32', 'darwin-x64'],
+            platforms: ['win32-ia32'],
             platformResources: {
                 darwin: {
                     CFBundleDisplayName: packageJson.name,
@@ -217,6 +217,11 @@ gulp.task('default', function(){
 	);
 });
 
+var release_windows = require('./build.windows'); 
+gulp.task('build-exectron-win', function() {
+    return release_windows.build(); 
+});
+
 gulp.task('build', function(){
     argv.src_uglify = true;
     return runSequence(
@@ -224,8 +229,8 @@ gulp.task('build', function(){
 		['uglify', 'css-libs-concat', 'less', 'fa-copy', 'swig'],
         'build-copy',
 		['exec-npm-install'], //'exec-bower-install'
-        'build-exe',
-        'cache-app-clean'
+        'build-electron-win'
+        // 'cache-app-clean'
 	);
 });
 

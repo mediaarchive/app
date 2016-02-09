@@ -105,7 +105,9 @@
         "libs/smoke/dist/css/smoke.min.css",
         "libs/bootstrap-daterangepicker/daterangepicker-bs3.min.css"
       ],
-      "internal": []
+      "internal": [
+        "dist/src.min.css"
+      ]
     }
   }
 }

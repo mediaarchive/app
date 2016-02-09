@@ -15,7 +15,7 @@ class EventsCollection extends MK.Array{
             .bindNode('container', ':sandbox')
             .recreate(data);
         
-        console.log('events collection: after recreate', this.$sandbox.html());
+        console.log('events collection: after recreate');
         
         this.sort();
         this.update_labels();
