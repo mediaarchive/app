@@ -217,9 +217,10 @@ gulp.task('default', function(){
 	);
 });
 
-var release_windows = require('./build.windows'); 
-gulp.task('build-exectron-win', function() {
-    return release_windows.build(); 
+var release_windows = require('./release_windows'); 
+gulp.task('build-exectron-win', function(done) {
+    release_windows(); 
+    done();
 });
 
 gulp.task('build', function(){
@@ -228,8 +229,8 @@ gulp.task('build', function(){
         ['dist-clean', 'cache-app-clean'],
 		['uglify', 'css-libs-concat', 'less', 'fa-copy', 'swig'],
         'build-copy',
-		['exec-npm-install'], //'exec-bower-install'
-        'build-electron-win'
+		['exec-npm-install'] //'exec-bower-install'
+        // 'build-electron-win'
         // 'cache-app-clean'
 	);
 });
