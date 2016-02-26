@@ -14,7 +14,7 @@ class EventsCollection extends MK.Array{
             .bindNode('sandbox', '.page[data-page=events] #events_content')
             .bindNode('container', ':sandbox')
             .recreate(data);
-            
+        
         console.log('events collection: after recreate');
         
         this.sort();

@@ -1,5 +1,6 @@
+
 node_modules
-bower_components
+libs
 vendor
 *.komodoproject
 *.komodotools
@@ -10,3 +11,4 @@ build
 .idea
 config.json
 dist/
+/main.html

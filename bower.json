@@ -23,12 +23,11 @@
     "jquery": "~2.1.4",
     "jquery-filedrop": "~0.1.0",
     "less": "~2.5.1",
-    "matreshka": "~1.0.6",
     "moment": "~2.10.3",
     "smoke": "~2.2.4",
     "jquery.livefilter": "cheeaun/jquery.livefilter",
     "AdminLTE": "adminlte#~2.3.2",
     "jquery-slimscroll": "~1.3.7",
-    "jquery-ui": "jqueryui#~1.11.4"
+    "Matreshka" "matreshka#1.5.2"
   }
 }

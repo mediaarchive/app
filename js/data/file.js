@@ -31,15 +31,12 @@ data.file.get_file = function(path){
             var ext = path_module.extname(path);
             
             if (ext == '.txt') {
-                iconv.extendNodeEncodings();
-    
-                var new_data = data.toString('utf8');
+                var new_data = iconv.decode(data, 'utf8');
     
                 if(new_data.indexOf('�') !== -1)
-                    new_data = data.toString('win1251');
+                    new_data = iconv.decode(data, 'win1251');
     
                 data = new_data;
-                iconv.undoExtendNodeEncodings();
                 resolve(data);
             }
             //else if (ext == '.doc') {}

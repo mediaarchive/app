@@ -2,7 +2,7 @@ var main;
 
 function debug() {
     //$.getScript('http://localhost:35729/livereload.js');
-    win.showDevTools();
+    // win.showDevTools();
 }
 
 $(document).ready(function(){
