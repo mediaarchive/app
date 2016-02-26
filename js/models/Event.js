@@ -3,7 +3,6 @@ var restler = require('restler');
 var async = require('async');
 var shell = require('remote').shell;
 
-
 class Event extends MK.Object{
     constructor(data, collection) {
         super()
@@ -222,7 +221,7 @@ class Event extends MK.Object{
                             $button.html('<i class="fa fa-vk"></i> <i class="fa fa-check"></i> Опубликовано');
 
                             if(confirm('Пост опубликован. Открыть его?'))
-                                gui.Shell.openItem('http://vk.com/wall-' + config.api.vk.group_id + '_' + res.response.post_id);
+                                shell.openItem('http://vk.com/wall-' + config.api.vk.group_id + '_' + res.response.post_id);
 
                             callback();
                         });
