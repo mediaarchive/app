@@ -8,6 +8,5 @@ function debug() {
 $(document).ready(function(){
     debug();
     
-    // global.config = {}
     global.main = main = new Main();
 });
