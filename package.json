@@ -91,14 +91,14 @@
         "js/collections/Events.js",
         "js/data/base.js",
         "js/data/file.js",
-        "js/models/Event.js",
-        "js/models/Main.js",
-        "js/models/Settings.js",
         "js/base.js",
         "js/general.js",
         "js/local_data.js",
         "js/pages.js",
         "js/vk.js",
+        "js/models/Event.js",
+        "js/models/Main.js",
+        "js/models/Settings.js",
         "js/run.js"
       ]
     },

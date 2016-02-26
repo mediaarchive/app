@@ -138,7 +138,7 @@ class Event extends MK.Object{
                             $button.text('Подготовка к загрузке фото...');
 
                             vk.get('photos.getWallUploadServer', {
-                                group_id: config.api.vk.group_id,
+                                group_id: global.config.api.vk.group_id,
                                 access_token: global.main.settings.vk.access_token
                             }, (res) => {
                                 if(typeof res.error !== 'undefined'){

@@ -5,10 +5,7 @@
     <title>Школьный медиаархив</title>
     
     <script>
-        const $ = jQuery = require('jquery');
-        // var gui = require('nw.gui');
-        // var win = gui.Window.get();
-        var config = require('./config');
+        $ = jQuery = require('jquery');
     </script>
 
     {% for src in assets.js.external %} <script src="{{src}}"></script> {% endfor %}

@@ -10,7 +10,11 @@ var BrowserWindow = electron.BrowserWindow
 // be closed automatically when the JavaScript object is garbage collected.
 var  mainWindow;
 
+var config = require('./config');
+global.config = config;
+
 function createWindow () {
+  
   // Create the browser window.
   mainWindow = new BrowserWindow({width: 800, height: 600});
 
