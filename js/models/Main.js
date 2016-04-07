@@ -47,6 +47,12 @@ class Main extends MK.Object {
             return false;
         });
         
+        $('#html_index_button').click(() => {
+            $.smkProgressBar({element: 'body', status: 'start'});
+            html_index(global.index, function(){
+                $.smkProgressBar({element: 'body', status: 'end'});
+            });
+        });
         
         
         $('#add_event').click(() => {

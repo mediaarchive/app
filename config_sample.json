@@ -1,9 +1,18 @@
 {
-  "api": {
-    "vk": {
-      "app_id": "",
-      "app_secret": "",
-      "group_id": ""
+    "api": {
+        "vk": {
+            "app_id": "",
+            "app_secret": "",
+            "group_id": ""
+        },
+        "imap": {
+            "host": "",
+            "port": "",
+            "user": "",
+            "pass": ""
+        },
+        "yandex": {
+            "public_url": ""
+        }
     }
-  }
 }

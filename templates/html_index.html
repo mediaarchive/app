@@ -1,0 +1,64 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Выгрузка {{date}} - Школьный медиаархив</title>
+    {{{assets}}}
+</head>
+<body class="skin-blue fixed sidebar-mini">
+    <div class="wrapper">
+        <div id="main" class="screen">
+            <header class="main-header">
+                <!-- Logo -->
+                <a href="#events" class="logo">
+                    <!-- mini logo for sidebar mini 50x50 pixels -->
+                    <span class="logo-mini"><b>М</b>А</span>
+                    <!-- logo for regular state and mobile devices -->
+                    <span class="logo-lg"><i class="fa fa-folder"></i> Медиаархив</span>
+                </a>
+            </header>
+        
+            <div class="container-fluid content-wrapper" id="pages">
+                <div data-page="events" class="page">
+                    <div class="content-header">
+                        <h1>Мероприятия - выгрузка {{date}}</h1>
+                    </div>
+                    <section class="content">
+                        <div class="small-box bg-aqua">
+                            <div class="inner">
+                                <h3 id="events_count">{{count}}</h3>
+                                <p>мероприятий</p>
+                            </div>
+                            <div class="icon">
+                                <i class="fa fa-calendar-o"></i>
+                            </div>
+                        </div>
+                        <ul class="timeline" id="events_content">
+                        	{{#each index}}
+                        		<li class="event">
+						            <i class="fa fa-calendar-o bg-blue"></i>
+						            <div class="timeline-item">
+						                <span class="time"><i class="fa fa-clock-o"></i> {{date.day}}.{{date.month}}.{{date.year}}</span>
+						                <h3 class="timeline-header">
+						                	<a href="{{../public_root_url}}/архив/{{dir}}/" target="_blank">
+						                		{{name}}
+						                	</a>
+										</h3>
+						            </div>
+					            </li>
+							{{/each}}
+                        </ul>
+                    </section>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>
+    	$(document).ready(function(){
+    		$('.event').click(function(){
+    			$(this).find('.timeline-item .timeline-header a').click();
+    		});
+    	});
+    </script>
+</body>
+</html>

@@ -94,6 +94,7 @@
         "js/base.js",
         "js/general.js",
         "js/local_data.js",
+        "js/html_index.js",
         "js/pages.js",
         "js/vk.js",
         "js/models/Event.js",
