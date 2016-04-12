@@ -35,22 +35,27 @@ class Event extends MK.Object{
         });
     }
     async show_modal(){
+        console.log('show modal');
         $.smkProgressBar({element: 'body', status: 'end'});
         var self = this;
         
         var date = this.date.day + '.' + this.date.month + '.' + this.date.year;
         var date_tech =  this.date.year + '-' + this.date.month + '-' + this.date.day;
         
+        console.log('get files');
+
         let files = await data.get('/архив/' + this.dir);
-        
+
         if (files == false) {
             alert('Ошибка при получении файлов мероприятия');
             return false;
         }
         
-        var preview_photo = false;
-        var text_file = false;
-        var photo_dir = false;
+        var preview_photo = null;
+        var text_file = null;
+        var photo_dir = null;
+
+        console.log('searching for standart files');
         
         for(var key in files){
             if (check_extension(files[key], ['jpg', 'png', 'gif', 'jpeg'])) 
@@ -62,8 +67,22 @@ class Event extends MK.Object{
             if (files[key].toLowerCase().indexOf('фото') !== -1)
                 photo_dir = true;
         }
+
+        console.log('template compile');
         
         var template = Handlebars.compile($('#event_modal_template').html());
+
+        console.log('render');
+console.log(template({
+            dir: global.main.settings.root_dir + '/архив/' + self.dir + '/',
+            preview_photo: preview_photo,
+            text_file: text_file,
+            photo_dir: photo_dir,
+            files: files,
+            date: date,
+            date_tech: date_tech,
+            name: self.name
+        }), $('#modal .modal-title'))
         $('#modal .modal-title').text(self.name);
         $('#modal .modal-body').html(template({
             dir: global.main.settings.root_dir + '/архив/' + self.dir + '/',
@@ -75,9 +94,11 @@ class Event extends MK.Object{
             date_tech: date_tech,
             name: self.name
         }));
-        
+
         var $modal = $('#modal .modal-body');
         
+        console.log('handlers init');
+
         $modal.find('.open_dir').click(function(){
             shell.openItem(path.normalize(global.main.settings.root_dir + '/архив/' + self.dir));
         });
@@ -85,24 +106,29 @@ class Event extends MK.Object{
         // @TODO: формирование шаблона текста
         // @TODO: предпросмотр текста перед публикацией
 
+        console.log('img handler');
+
         $modal.find('img').click(function(){
             shell.openItem(path.normalize(global.main.settings.root_dir + '/архив/' + self.dir + '/' + preview_photo));
         });
+
+        console.log('text');
         
-        if (text_file == false) 
+        if (text_file == null) 
             $modal.find('#text').text('(нет текста)');
         else{
             let text_file_data = await data.get_file('/архив/' + self.dir + '/' + text_file);
                 
-            if (text_file_data == false) {
+            if (text_file_data == false) 
                 $modal.find('#text').text('(не удалось получить текст)');
-                return false;
-            }
-            
-            $('#modal .modal-body #text').text(text_file_data);
+            else
+                 $('#modal .modal-body #text').text(text_file_data);
+           
             var data_json;
             let data_file_data = await data.get_file('/архив/' + self.dir + '/data.json');
+            
             console.log(data_file_data)
+
             if (data_file_data == false) 
                 $modal.find('#event_authors').text('(нет информации)');
             else{
@@ -120,7 +146,6 @@ class Event extends MK.Object{
                         }));
                     });
                 }
-                
             }
 
             $('#modal .modal-body .vk_post').click(function(){
@@ -232,6 +257,6 @@ class Event extends MK.Object{
             });
         }
         
-        $('#modal').modal();
+        $('#modal').modal('show');
     }
 };
