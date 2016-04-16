@@ -114,10 +114,12 @@ console.log(template({
 
 		console.log('text');
 		
+		let text_file_data;
+
 		if (text_file == null) 
 			$modal.find('#text').text('(нет текста)');
 		else{
-			let text_file_data = await data.get_file('/архив/' + self.dir + '/' + text_file);
+			text_file_data = await data.get_file('/архив/' + self.dir + '/' + text_file);
 				
 			if (text_file_data == false) 
 				$modal.find('#text').text('(не удалось получить текст)');
