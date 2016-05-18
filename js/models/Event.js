@@ -161,7 +161,8 @@ console.log(template({
 
 			async.series([
 				(callback) => {
-					if (typeof preview_photo !== 'undefined' && preview_photo != false) {
+					console.log(preview_photo)
+					if (typeof preview_photo !== 'undefined' && preview_photo != null && preview_photo != false) {
 						$button.text('Подготовка к загрузке фото...');
 
 						vk.get('photos.getWallUploadServer', {
