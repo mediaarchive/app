@@ -3,6 +3,7 @@ var md5 = require('md5');
 var moment = require('moment');
 var fs = require('fs');
 var phpjs = require('phpjs');
+var htmlToText = require('html-to-text');
 
 module.exports = {
     start: function(mail_object){ // files from email
@@ -45,9 +46,22 @@ module.exports = {
         var data_path = path.normalize(dir + '/data.json');
         fs.writeFileSync(data_path, JSON.stringify(data));
         
-        var txt_path = path.normalize(dir + '/text.txt');
-        fs.writeFileSync(txt_path, mail_object.text);
         
+        console.log(mail_object);
+
+        var txt_path = path.normalize(dir + '/text.txt');
+        var text = undefined;
+        
+        if(typeof mail_object.text !== 'undefined')
+            text = mail_object.text;
+        else
+            text = htmlToText.fromString(mail_object.html,  {
+                wordwrap: null // убираем деление по строкам
+            });
+        
+        if(typeof text !== 'undefined')
+            fs.writeFileSync(txt_path, text);
+
         var photo_dir_created = false;
         var photo_dir_base_path = path.normalize(dir + '/фото/');
         var photo_dir_path = path.normalize(photo_dir_base_path + data.authors[0].name + '/');
