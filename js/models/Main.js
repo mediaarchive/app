@@ -4,7 +4,7 @@
  */
 
 var indexer = require('MediaArchiveIndex');
-var emailer = require('MediaArchiveEmail');
+var emailer = require('./js/email_loader/email');
 var path = require('path');
 var shell = require('remote').shell;
 
@@ -70,9 +70,9 @@ class Main extends MK.Object {
         $('#load_email_button').click(() => {
             $.smkProgressBar({element: 'body', status: 'start'});
             $.smkAlert({text: 'Загрузка писем...', type: 'info', time: 1});
-            emailer.email.config = config.api.imap;
-            emailer.email.config.root_dir = self.settings.root_dir + '/архив/';
-            emailer.email.start(function(){
+            emailer.config = config.api.imap;
+            emailer.config.root_dir = self.settings.root_dir + '/архив/';
+            emailer.start(function(){
                 $.smkAlert({text: 'Письма загружены', type: 'info', time: 1});
                 $.smkProgressBar({element: 'body', status: 'end'});
             });
