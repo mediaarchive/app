@@ -84,35 +84,32 @@ class Main extends MK.Object {
         console.log(1)
     
         $.smkAlert({text: 'Получение индекса', type: 'info', time: 1});
-        let json = await data.get_file('/index.json');
-        console.log(2)
-        
-        if (json == false) {
-            $.smkAlert({text: 'Не удалось загрузить список мероприятий', type: 'danger', permanent: true});
-            $.smkProgressBar({element: 'body', status: 'end'});
-        }
-        else {
-            console.log(3)
-            json = JSON.parse(json);
-            if (!json) {
-                $.smkAlert({text: 'Ошибка разбора индекса', type: 'danger', permanent: true});
+        data.get_file('/index.json').then(function(json){
+            if (json == false) {
+                $.smkAlert({text: 'Не удалось загрузить список мероприятий', type: 'danger', permanent: true});
                 $.smkProgressBar({element: 'body', status: 'end'});
             }
+            else {
+                console.log(3)
+                json = JSON.parse(json);
+                if (!json) {
+                    $.smkAlert({text: 'Ошибка разбора индекса', type: 'danger', permanent: true});
+                    $.smkProgressBar({element: 'body', status: 'end'});
+                }
 
-            global.index = json;
-            console.log('before events collection creation')
+                global.index = json;
+                console.log('before events collection creation')
 
-            $.smkAlert({text:'Запуск', type:'info', time:1});
-            
-            this.events = new EventsCollection(global.index);
-            console.log('after events collection creation')
-            
-            $('#events_count').text(this.events.length);
-            
-            $.smkProgressBar({element: 'body', status: 'end'});
-        }
-        
-        return;
+                $.smkAlert({text:'Запуск', type:'info', time:1});
+                
+                this.events = new EventsCollection(global.index);
+                console.log('after events collection creation')
+                
+                $('#events_count').text(this.events.length);
+                
+                $.smkProgressBar({element: 'body', status: 'end'});
+            }
+        });
     }
     datepicker_init(){
         var datepicker = $('#datepicker_form #datepicker');
