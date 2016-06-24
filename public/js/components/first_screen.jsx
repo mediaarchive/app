@@ -2,7 +2,7 @@
 * @Author: Artur Atnagulov (ClienDDev team)
 */
 
-exports default class Root extends React.Component {
+class FirstScreen extends React.Component {
 	render(){
 		let date = new Date();
 		let year = date.getFullYear();
@@ -11,15 +11,15 @@ exports default class Root extends React.Component {
 		(<div className="lockscreen-wrapper">
 	        <div className="lockscreen-logo">
 	            <a href="#">
-	                <i className="fa fa-folder"></i><br>
+	                <i className="fa fa-folder"></i><br/>
 	                Медиаархив
 	            </a>
-	            <br>
+	            <br/>
 	            <small>загрузка приложения...</small>
 	        </div>
-	        <hr>
+	        <hr/>
 	        <div className="lockscreen-footer text-center">
-	            &copy; 2015-{year} <a href="http://clienddev.ru">ClienDDev team</a> & others<br>
+	            &copy; 2015-{year} <a href="http://clienddev.ru">ClienDDev team</a> & others<br/>
 	        </div>
 	    </div>)
 	}

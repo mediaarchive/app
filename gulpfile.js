@@ -4,6 +4,7 @@
 
 var gulp = require('gulp'); 
 var gulpSequence = require('gulp-sequence');
+var livereload = require('gulp-livereload');
 
 require('./gulp/build') 
 require('./gulp/clean') 
@@ -28,6 +29,12 @@ gulp.task('build', gulpSequence(
 
 
 gulp.task('watch', function(){
-    gulp.watch('public/styles/less/style.less', ['less-main']);
-    gulp.watch('public/js/**/**', ['uglify-src']);
+	livereload.listen();
+
+	function cb() {
+        livereload.reload();
+    }
+
+    gulp.watch('public/styles/less/style.less', ['less-main', cb]);
+    gulp.watch('public/js/**/**', ['uglify-src', cb]);
 });

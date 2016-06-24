@@ -2,8 +2,8 @@
 * @Author: Artur Atnagulov (ClienDDev team)
 */
 
-exports default class Root extends React.Component {
+class Root extends React.Component {
 	render(){
-		
+		return <FirstScreen />
 	}
 }

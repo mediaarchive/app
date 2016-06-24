@@ -86,6 +86,8 @@
     "js": {
       "external": [
         "libs/jquery/dist/jquery.min.js",
+        "libs/react/react.js",
+        "libs/react/react-dom.js",
         "libs/bootstrap/dist/js/bootstrap.min.js",
         "libs/moment/min/moment.min.js",
         "libs/handlebars/handlebars.min.js",
