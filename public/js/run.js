@@ -1,5 +1,6 @@
 /*
 * @Author: Artur Atnagulov (ClienDDev team)
 */
-
-ReactDOM.render(new Root(), document.getElementById('root'));
+jQuery(document).ready(function($) {
+	ReactDOM.render(React.createElement(Root, null), document.getElementById('root'));
+});

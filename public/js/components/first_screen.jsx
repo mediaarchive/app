@@ -7,8 +7,8 @@ class FirstScreen extends React.Component {
 		let date = new Date();
 		let year = date.getFullYear();
 
-		return 
-		(<div className="lockscreen-wrapper">
+		return (
+		<div className="lockscreen-wrapper">
 	        <div className="lockscreen-logo">
 	            <a href="#">
 	                <i className="fa fa-folder"></i><br/>

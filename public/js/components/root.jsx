@@ -7,3 +7,6 @@ class Root extends React.Component {
 		return <FirstScreen />
 	}
 }
+
+// ReactDOM.render(<Root />, document.getElementById('root'));
+
