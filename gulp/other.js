@@ -13,11 +13,11 @@ var cssBase64 = require('gulp-css-base64');
 var phpjs = require('phpjs');
 var date = phpjs.date('d.m.Y H:i:s');
 
-var bc = './bower_components/';
+var bc = './public/libs/';
 
 gulp.task('fa-copy', function(){
     return gulp.src(bc + 'font-awesome/fonts/**')
-        .pipe(gulp.dest('./dist/fonts'));
+        .pipe(gulp.dest('./public/dist/fonts'));
 });
 
 gulp.task('css-libs-concat', function(){
@@ -34,5 +34,5 @@ gulp.task('css-libs-concat', function(){
         .pipe(concat('libs.min.css'))
         .pipe(replace('../', './'))
         .pipe(header('/*! MediaArchiveApp libs css (build '+date+') ma.atnartur.ru */' + "\r\n"))
-        .pipe(gulp.dest('dist/'));
+        .pipe(gulp.dest('public/dist/'));
 });

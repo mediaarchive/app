@@ -19,7 +19,7 @@ gulp.task('uglify-libs', function(){
         // .pipe(uglify())
         .pipe(concat('libs.min.js'))
         .pipe(header('/*! MediaArchiveApp libs (build '+date+') ma.atnartur.ru */' + "\r\n"))
-        .pipe(gulp.dest('dist/'));
+        .pipe(gulp.dest('public/dist/'));
 });
 
 gulp.task('uglify-src', function(){
@@ -49,7 +49,7 @@ gulp.task('uglify-src', function(){
         .pipe(concat('src.min.js'))
         .pipe(header('/*! MediaArchiveApp src (build '+date+') ma.atnartur.ru */' + "\r\n"))
         .pipe(sourcemaps.write('.'))
-        .pipe(gulp.dest('dist/'));
+        .pipe(gulp.dest('public/dist/'));
 });
 
 

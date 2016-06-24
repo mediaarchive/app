@@ -11,4 +11,6 @@ build
 .idea
 config.json
 dist/
+public/dist/
+public/libs/
 /main.html
