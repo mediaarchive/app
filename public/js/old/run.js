@@ -6,7 +6,12 @@ function debug() {
 }
 
 $(document).ready(function(){
-    debug();
+    // debug();
     
-    global.main = main = new Main();
+    // global.main = main = new Main();
+
+    var socket = io();
+    socket.on('connect', function(){
+    	console.log('connected')
+    });
 });

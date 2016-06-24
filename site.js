@@ -6,9 +6,6 @@ var cookieParser = require('cookie-parser');
 var swig = require('swig');
 var bodyParser = require('body-parser');
 
-var routes = require('./routes/index');
-var users = require('./routes/users');
-
 var app = express();
 
 // view engine setup
@@ -26,8 +23,7 @@ app.use(bodyParser.urlencoded({
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
-app.use('/', routes);
-app.use('/users', users);
+app.use('/', require('./routes/index'));
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
@@ -87,6 +83,8 @@ var server = http.createServer(app);
 server.listen(port);
 server.on('error', onError);
 server.on('listening', onListening);
+
+require('./lib/socket')(server);
 
 /**
  * Normalize a port into a number, string, or false.

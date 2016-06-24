@@ -5,7 +5,7 @@
     <title>Школьный медиаархив</title>
     
     <script>
-        $ = jQuery = require('jquery');
+        // $ = jQuery = require('jquery');
     </script>
 
     {% for src in assets.js.external %} <script src="{{src}}"></script> {% endfor %}
@@ -13,22 +13,10 @@
     
     {% for src in assets.css.external %} <link rel="stylesheet" href="{{src}}"> {% endfor %}
     {% for src in assets.css.internal %} <link rel="stylesheet" href="{{src}}"> {% endfor %}
+    <script>document.write('<script src="http://' + (location.host || 'localhost').split(':')[0] + ':35729/livereload.js?snipver=1"></' + 'script>')</script>
 </head>
 <body class="skin-blue fixed sidebar-mini lockscreen">
-    <div class="lockscreen-wrapper">
-        <div class="lockscreen-logo">
-            <a href="#">
-                <i class="fa fa-folder"></i><br>
-                Медиаархив
-            </a>
-            <br>
-            <small>загрузка приложения...</small>
-        </div>
-        <hr>
-        <div class="lockscreen-footer text-center">
-            &copy; 2015-2016 <a href="http://clienddev.ru">ClienDDev team</a> & others<br>
-        </div>
-    </div>
+    
     
     <div class="wrapper">
         <div id="main" class="screen">

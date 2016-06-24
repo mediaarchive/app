@@ -16,6 +16,7 @@
     "babel-plugin-transform-merge-sibling-variables": "^6.3.13",
     "babel-plugin-transform-minify-booleans": "^6.3.13",
     "babel-plugin-transform-property-literals": "^6.3.13",
+    "babel-plugin-transform-react-jsx": "^6.8.0",
     "babel-plugin-transform-runtime": "^6.3.13",
     "babel-plugin-uglify": "^1.0.2",
     "babel-preset-es2015": "^6.3.13",
@@ -50,6 +51,7 @@
     "MediaArchiveIndex": "github:mediaarchive/index#stable",
     "async": "^1.3.0",
     "babel-runtime": "^6.3.19",
+    "basic-auth-connect": "^1.0.0",
     "body-parser": "~1.13.2",
     "cookie-parser": "~1.3.5",
     "debug": "~2.2.0",
@@ -57,15 +59,14 @@
     "html-to-text": "^2.1.0",
     "iconv-lite": "^0.4.13",
     "inbox": "^1.1.59",
-    "jade": "~1.11.0",
     "jquery": "^2.2.0",
     "mailparser": "^0.6.0",
     "mammoth": "^0.3.27",
-    "md5": "^2.1.0",
     "morgan": "~1.6.1",
     "phpjs": "^1.3.2",
     "restler": "^3.3.0",
     "serve-favicon": "~2.3.0",
+    "sha1": "^1.1.1",
     "socket.io": "^1.4.8",
     "swig": "^1.4.2"
   },
@@ -84,47 +85,38 @@
   "assets": {
     "js": {
       "external": [
-        "public/libs/jquery/dist/jquery.min.js",
-        "public/libs/bootstrap/dist/js/bootstrap.min.js",
-        "public/libs/moment/min/moment.min.js",
-        "public/libs/handlebars/handlebars.min.js",
-        "public/libs/datatables/media/js/jquery.dataTables.min.js",
-        "public/libs/smoke/dist/js/smoke.min.js",
-        "public/libs/matreshka/matreshka.min.js",
-        "public/libs/bootstrap-daterangepicker/daterangepicker.min.js",
-        "public/libs/jquery-slimscroll/jquery.slimscroll.min.js",
-        "public/libs/AdminLTE/dist/js/app.min.js",
-        "public/libs/datatables-bootstrap3-plugin/media/js/datatables-bootstrap3.min.js",
-        "public/libs/jquery.livefilter/jquery.liveFilter.js"
+        "libs/jquery/dist/jquery.min.js",
+        "libs/bootstrap/dist/js/bootstrap.min.js",
+        "libs/moment/min/moment.min.js",
+        "libs/handlebars/handlebars.min.js",
+        "libs/datatables/media/js/jquery.dataTables.min.js",
+        "libs/smoke/dist/js/smoke.min.js",
+        "libs/matreshka/matreshka.min.js",
+        "libs/bootstrap-daterangepicker/daterangepicker.min.js",
+        "libs/jquery-slimscroll/jquery.slimscroll.min.js",
+        "libs/AdminLTE/dist/js/app.min.js",
+        "libs/datatables-bootstrap3-plugin/media/js/datatables-bootstrap3.min.js",
+        "libs/jquery.livefilter/jquery.liveFilter.js",
+        "libs/socket.io-client/socket.io.js"
       ],
       "internal": [
-        "public/js/collections/Events.js",
-        "public/js/data/base.js",
-        "public/js/data/file.js",
-        "public/js/base.js",
-        "public/js/general.js",
-        "public/js/local_data.js",
-        "public/js/html_index.js",
-        "public/js/pages.js",
-        "public/js/vk.js",
-        "public/js/models/Event.js",
-        "public/js/models/Main.js",
-        "public/js/models/Settings.js",
-        "public/js/run.js"
+        "js/components/root.jsx",
+        "js/components/first_screen.jsx",
+        "js/run.js"
       ]
     },
     "css": {
       "external": [
-        "public/libs/bootstrap/dist/css/bootstrap.min.css",
-        "public/libs/AdminLTE/dist/css/AdminLTE.min.css",
-        "public/libs/font-awesome/css/font-awesome.min.css",
-        "public/libs/AdminLTE/dist/css/skins/skin-blue.min.css",
-        "public/libs/datatables-bootstrap3-plugin/media/css/datatables-bootstrap3.min.css",
-        "public/libs/smoke/dist/css/smoke.min.css",
-        "public/libs/bootstrap-daterangepicker/daterangepicker-bs3.min.css"
+        "libs/bootstrap/dist/css/bootstrap.min.css",
+        "libs/AdminLTE/dist/css/AdminLTE.min.css",
+        "libs/font-awesome/css/font-awesome.min.css",
+        "libs/AdminLTE/dist/css/skins/skin-blue.min.css",
+        "libs/datatables-bootstrap3-plugin/media/css/datatables-bootstrap3.min.css",
+        "libs/smoke/dist/css/smoke.min.css",
+        "libs/bootstrap-daterangepicker/daterangepicker-bs3.min.css"
       ],
       "internal": [
-        "public/dist/src.min.css"
+        "dist/src.min.css"
       ]
     }
   }

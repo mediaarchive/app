@@ -28,6 +28,6 @@ gulp.task('build', gulpSequence(
 
 
 gulp.task('watch', function(){
-    gulp.watch('styles/less/style.less', ['less-main']);
-    gulp.watch('js/**/**', ['uglify-src']);
+    gulp.watch('public/styles/less/style.less', ['less-main']);
+    gulp.watch('public/js/**/**', ['uglify-src']);
 });

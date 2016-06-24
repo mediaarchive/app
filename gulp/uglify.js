@@ -8,8 +8,8 @@ var babel = require('gulp-babel');
 var concat = require('gulp-concat');
 var header = require('gulp-header');
 var argv = require('optimist').argv;
-var packageJson = require('./../package.json');
 var sourcemaps = require('gulp-sourcemaps');
+var packageJson = require('./../package.json');
 
 var phpjs = require('phpjs');
 var date = phpjs.date('d.m.Y H:i:s');
@@ -25,7 +25,8 @@ gulp.task('uglify-libs', function(){
 gulp.task('uglify-src', function(){
     var babel_plugins = [
         'transform-async-to-generator',
-        'transform-runtime'
+        'transform-runtime',
+        "transform-react-jsx"
     ];
     
     if (argv.src_uglify === true){
@@ -35,7 +36,13 @@ gulp.task('uglify-src', function(){
         babel_plugins.push('transform-property-literals');
     }
     
-    var g = gulp.src(packageJson.assets.js.internal)
+    let arr = [];
+    
+    packageJson.assets.js.internal.forEach((val) => {
+        arr.push('public/' + val);
+    });
+
+    var g = gulp.src(arr)
         .pipe(sourcemaps.init())
         .pipe(babel({
             presets: ['es2015'],
