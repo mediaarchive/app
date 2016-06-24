@@ -7,6 +7,12 @@ var uglify = require('gulp-uglify');
 var babel = require('gulp-babel');
 var concat = require('gulp-concat');
 var header = require('gulp-header');
+var argv = require('optimist').argv;
+var packageJson = require('./../package.json');
+var sourcemaps = require('gulp-sourcemaps');
+
+var phpjs = require('phpjs');
+var date = phpjs.date('d.m.Y H:i:s');
 
 gulp.task('uglify-libs', function(){
     return gulp.src(packageJson.assets.js.external)

@@ -3,7 +3,8 @@
 */
 
 var gulp = require('gulp'); 
-var exec = require('gulp-exec');
+var gutil = require('gulp-util');
+var exec = require('child_process').exec;
 
 gulp.task('exec-npm-install', function(cb) {
     return exec("npm i --production", {cwd: path.join(process.cwd(), './cache/app')}, function (error, stdout, stderr) {

@@ -7,6 +7,11 @@ var concat = require('gulp-concat');
 var header = require('gulp-header');
 var replace = require('gulp-replace');
 var nano = require('gulp-cssnano');
+var packageJson = require('./../package.json');
+var cssBase64 = require('gulp-css-base64');
+
+var phpjs = require('phpjs');
+var date = phpjs.date('d.m.Y H:i:s');
 
 var bc = './bower_components/';
 
