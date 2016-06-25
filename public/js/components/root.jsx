@@ -2,7 +2,9 @@
 * @Author: Artur Atnagulov (ClienDDev team)
 */
 
-class Root extends React.Component {
+import React from 'react';
+
+exports default class Root extends React.Component {
 	render(){
 		return <FirstScreen />
 	}

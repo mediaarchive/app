@@ -2,7 +2,9 @@
 * @Author: Artur Atnagulov (ClienDDev team)
 */
 
-class FirstScreen extends React.Component {
+import React from 'react';
+
+exports default class FirstScreen extends React.Component {
 	render(){
 		let date = new Date();
 		let year = date.getFullYear();
