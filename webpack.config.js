@@ -4,13 +4,12 @@
 
 var path = require('path')
 var webpack = require('webpack')
-var NpmInstallPlugin = require('npm-install-webpack-plugin')
 
 module.exports = {
 	context: path.normalize(__dirname + '/public/js/'),
     devtool: 'cheap-module-eval-source-map',
     entry: [
-        'babel-polyfill',
+        // 'babel-polyfill',
         './index'
     ],
     output: {
@@ -33,10 +32,17 @@ module.exports = {
         loaders: [{
             loaders: ['react-hot', 'babel-loader'],
             include: [
-                path.resolve(__dirname, "/public/js"),
+                path.resolve(__dirname, "public/js"),
             ],
             test: /\.js$/,
-            // plugins: ['transform-runtime'],
+            query: {
+                presets: [
+                    "react",
+                    "es2015",
+                    "stage-0"
+                ]
+            },
+            plugins: ['transform-runtime'],
         }]
     }
 }

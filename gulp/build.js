@@ -3,19 +3,7 @@
 */
 
 var gulp = require('gulp'); 
-var builder = require('gulp-nw-builder');
 var electron = require('gulp-electron');
-
-
-gulp.task('build-exe', function() {
-    return gulp.src(['./cache/app/**/*'])
-        .pipe(builder({
-            version: 'v0.12.2',
-            platforms: ['win'],
-            buildType: 'versioned',
-            quiet: true 
-        }));
-});
 
 gulp.task('build-electron-exe', function() {
     return gulp.src("./")

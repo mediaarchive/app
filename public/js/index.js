@@ -11,8 +11,8 @@ import App from './containers/App'
 const store = createStore( () => {}, {}) //WAT ;)
 
 render(
-  	<Provider store={store}>
-	    <App />
+	<Provider store={store}>
+	    <h1>Test</h1>
   	</Provider>,
   	document.getElementById('root')
 )
