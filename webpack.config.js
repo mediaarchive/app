@@ -6,16 +6,16 @@ var path = require('path')
 var webpack = require('webpack')
 
 module.exports = {
-	context: path.normalize(__dirname + '/public/js/'),
+	context: path.normalize(__dirname + '/public/js'),
     devtool: 'cheap-module-eval-source-map',
     entry: [
-        // 'babel-polyfill',
-        './index'
+        'babel-polyfill',
+        './js/index.jsx'
     ],
     output: {
-        path: path.join(__dirname, '/public/dist'),
-        filename: 'src.min.js',
-        publicPath: '/public/'
+        path: path.join(__dirname, '/public/'),
+        publicPath: '/',
+        filename: path.normalize(__dirname + './public/dist/src.min.js')
     },
     plugins: [
         new webpack.optimize.OccurenceOrderPlugin(),
@@ -29,13 +29,15 @@ module.exports = {
         //         path.resolve(__dirname, "public/js"),
         //     ],
         // }],
-        loaders: [{
-            loaders: ['react-hot', 'babel-loader'],
-            include: [
-                path.resolve(__dirname, "public/js"),
-            ],
-            test: /\.js$/,
-            plugins: ['transform-runtime'],
-        }]
+        loaders: [
+            {
+                test: /\.jsx$/,
+                include: [
+                    path.resolve(__dirname, "/public/js"),
+                ],
+                loaders: ['react-hot', 'babel-loader'],
+                plugins: ['transform-runtime', 'transform-decorators-legacy'],
+            }
+        ]
     }
 }
