@@ -12,6 +12,7 @@ var argv = require('optimist').argv;
 var gutil = require("gulp-util");
 var webpack = require("webpack");
 var path = require('path');
+var webpack_conf = require('./../webpack.config.js');
 var packageJson = require('./../package.json');
 
 var phpjs = require('phpjs');
@@ -26,40 +27,15 @@ gulp.task('uglify-libs', function() {
 });
 
 gulp.task('uglify-src', function(callback) {
-    webpack({
-        context: __dirname + '/public/js',
-        entry: [
-            'babel-polyfill',
-            "./run"
-        ],
-        output: {
-            filename: 'src.min.js',
-            path: './public/dist'
-        },
-        module: {
-            preLoaders: [{
-                test: /\.jsx?$/,
-                loaders: ['eslint'],
-                include: [
-                    path.resolve(__dirname, "public/js")
-                ]
-            }],
-            loaders: [{
-                test: /\.jsx?$/,
-                exclude: /\/node_modules\//,
-                include: [
-                    path.resolve(__dirname, "public/js")
-                ],
-                loaders: ['react-hot', 'babel-loader'],
-                plugins: ['transform-runtime', 'transform-decorators-legacy']
-            }]
-        },
-        plugins: [
-            new webpack.optimize.OccurrenceOrderPlugin(),
-            new webpack.NoErrorsPlugin()
-        ]
-    }, function(err, stats) {
+    webpack(webpack_conf, function(err, stats) {
         if (err) throw new gutil.PluginError("webpack", err);
+        
+        gutil.log("[webpack]", stats.toString({
+            colors: true,
+            minimal: true,
+            chunks: false
+        }));
+        
         callback();
     });
 });
