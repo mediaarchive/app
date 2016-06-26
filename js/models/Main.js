@@ -6,7 +6,7 @@
 var indexer = require('MediaArchiveIndex');
 var emailer = require('./js/email_loader/email');
 var path = require('path');
-var shell = require('remote').shell;
+var shell = require('electron').remote.shell;
 
 class Main extends MK.Object {
     constructor() {

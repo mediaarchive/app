@@ -3,7 +3,7 @@
  * Developer: Artur Atnagulov (atnartur)
  */
  
-const dialog = require('remote').dialog;
+const dialog = require('electron').remote.dialog;
 
 class Settings extends MK.Object {
     constructor() {

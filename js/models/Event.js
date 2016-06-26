@@ -1,7 +1,7 @@
 var path = require('path');
 var restler = require('restler');
 var async = require('async');
-var shell = require('remote').shell;
+var shell = require('electron').remote.shell;
 
 class Event extends MK.Object{
 	constructor(data, collection) {
