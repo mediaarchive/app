@@ -35,13 +35,6 @@ module.exports = {
                 path.resolve(__dirname, "public/js"),
             ],
             test: /\.js$/,
-            query: {
-                presets: [
-                    "react",
-                    "es2015",
-                    "stage-0"
-                ]
-            },
             plugins: ['transform-runtime'],
         }]
     }
