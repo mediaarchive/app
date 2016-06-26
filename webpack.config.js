@@ -10,7 +10,6 @@ module.exports = {
 	context: path.normalize(__dirname + '/public/js/'),
     devtool: 'cheap-module-eval-source-map',
     entry: [
-        'webpack-hot-middleware/client',
         'babel-polyfill',
         './index'
     ],
@@ -21,8 +20,7 @@ module.exports = {
     },
     plugins: [
         new webpack.optimize.OccurenceOrderPlugin(),
-        new webpack.HotModuleReplacementPlugin(),
-        new NpmInstallPlugin()
+        new webpack.HotModuleReplacementPlugin()
     ],
     module: {
         // preLoaders: [{
