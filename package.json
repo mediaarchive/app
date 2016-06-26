@@ -29,6 +29,7 @@
     "babel-runtime": "^6.9.2",
     "electron-packager": "^5.2.1",
     "electron-prebuilt": "^1.2.5",
+    "eslint": "^2.13.1",
     "fs-jetpack": "^0.7.1",
     "gulp": "^3.9.1",
     "gulp-babel": "^6.1.1",
