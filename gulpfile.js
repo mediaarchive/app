@@ -211,13 +211,10 @@ gulp.task('swig', function() {
         .pipe(gulp.dest('./'));
 });
 
-gulp.task('default', function(){
-    argv.src_uglify = true;
-    return gulpSequence(
-        'dist-clean', // sync
-		['uglify', 'css-libs-concat', 'less', 'fa-copy', 'swig'] // parallel
-	);
-});
+gulp.task('default', gulpSequence(
+    'dist-clean', // sync
+	['uglify', 'css-libs-concat', 'less', 'fa-copy', 'swig'] // parallel
+));
 
 gulp.task('build-electron-win', function(done) {
     packager({
