@@ -10,12 +10,12 @@ module.exports = {
     devtool: 'cheap-module-eval-source-map',
     entry: [
         'babel-polyfill',
-        './js/index.jsx'
+        './index.jsx'
     ],
     output: {
         path: path.join(__dirname, '/public/'),
         publicPath: '/',
-        filename: path.normalize(__dirname + './public/dist/src.min.js')
+        filename: './dist/src.min.js'
     },
     plugins: [
         new webpack.optimize.OccurenceOrderPlugin(),
@@ -32,11 +32,12 @@ module.exports = {
         loaders: [
             {
                 test: /\.jsx$/,
+                exclude: /\/node_modules\//,
                 include: [
-                    path.resolve(__dirname, "/public/js"),
+                    path.resolve(__dirname, "public/js"),
                 ],
                 loaders: ['react-hot', 'babel-loader'],
-                plugins: ['transform-runtime', 'transform-decorators-legacy'],
+                plugins: ['transform-runtime'],
             }
         ]
     }
