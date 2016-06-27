@@ -9,7 +9,6 @@
     </script>
 
     {% for src in assets.js.external %} <script src="{{src}}"></script> {% endfor %}
-    <script src="dist/src.min.js"></script>
     
     {% for src in assets.css.external %} <link rel="stylesheet" href="{{src}}"> {% endfor %}
     {% for src in assets.css.internal %} <link rel="stylesheet" href="{{src}}"> {% endfor %}
@@ -155,5 +154,6 @@
 
     {{client_templates|safe}}
     
+    <script src="dist/src.min.js"></script>
 </body>
 </html>

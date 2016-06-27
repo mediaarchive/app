@@ -38,6 +38,15 @@ module.exports = {
                 ],
                 loaders: ['react-hot', 'babel-loader'],
                 plugins: ['transform-runtime'],
+            },
+            {
+                test: /\.js$/,
+                exclude: /\/node_modules\//,
+                include: [
+                    path.resolve(__dirname, "public/js"),
+                ],
+                loaders: ['babel-loader'],
+                plugins: ['transform-runtime'],
             }
         ]
     }
