@@ -6,14 +6,14 @@ var path = require('path')
 var webpack = require('webpack')
 
 module.exports = {
-	context: path.normalize(__dirname + '/public/js'),
+	context: path.join(__dirname, 'public/js'),
     devtool: 'cheap-module-eval-source-map',
     entry: [
         'babel-polyfill',
         './index.jsx'
     ],
     output: {
-        path: path.join(__dirname, '/public/'),
+        path: path.join(__dirname, 'public'),
         publicPath: '/',
         filename: './dist/src.min.js'
     },
