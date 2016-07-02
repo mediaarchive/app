@@ -7,6 +7,7 @@ import { connect } from 'react-redux'
 
 class App extends Component {
   	render() {
+  		console.log(this)
 	    const { name, surname, age } = this.props.user
 	    return <div>
 	      	<p>Привет из App, {name} {surname}!</p>
@@ -16,6 +17,7 @@ class App extends Component {
 }
 
 function mapStateToProps (state) {
+	console.log(state)
   	return {
 	    user: state
   	}
