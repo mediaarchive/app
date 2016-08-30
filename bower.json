@@ -28,6 +28,6 @@
     "jquery.livefilter": "cheeaun/jquery.livefilter",
     "AdminLTE": "adminlte#~2.3.2",
     "jquery-slimscroll": "~1.3.7",
-    "Matreshka" "matreshka#1.5.2"
+    "Matreshka": "matreshka#1.5.2"
   }
 }
