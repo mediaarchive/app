@@ -82,7 +82,7 @@ class Main extends MK.Object {
         console.log('events init')
         $.smkProgressBar({element: 'body', status: 'start'});
         console.log(1)
-    
+        var self = this
         $.smkAlert({text: 'Получение индекса', type: 'info', time: 1});
         data.get_file('/index.json').then(function(json){
             if (json == false) {
@@ -102,10 +102,10 @@ class Main extends MK.Object {
 
                 $.smkAlert({text:'Запуск', type:'info', time:1});
                 
-                this.events = new EventsCollection(global.index);
+                self.events = new EventsCollection(global.index);
                 console.log('after events collection creation')
                 
-                $('#events_count').text(this.events.length);
+                $('#events_count').text(self.events.length);
                 
                 $.smkProgressBar({element: 'body', status: 'end'});
             }
